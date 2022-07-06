@@ -10,6 +10,12 @@ Menu, Tray, Add, About, Tray_About
 Menu, Tray, Add
 Menu, Tray, Add, Exit, Tray_Exit
 Menu, Tray, Tip, Stronghold
+
+; The window title groups
+GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
+GroupAdd, Crusader, Crusader ahk_class FFwinClass
+GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
+
 Return
 
 Tray_About:
@@ -30,7 +36,7 @@ ExitApp
 
 
 ; Only Stronghold
-#IfWinActive Stronghold ahk_class FFwinClass
+#IfWinActive ahk_group Stronghold
 ; Map navigation begin
 a::Left
 s::Down
@@ -40,11 +46,11 @@ w::Up
 
 
 ; Only Crusader and Extreme
-#IfWinActive Crusader ahk_class FFwinClass
+#IfWinActive ahk_group Crusader
 
 
 ; All (Crusader and Stronghold)
-#IfWinActive ahk_class FFwinClass
+#IfWinActive ahk_group StrongholdAndCrusader
 
 MButton::
     While (GetKeyState("MButton", "P"))
@@ -64,11 +70,12 @@ PerformLeftClick()
 {
     static WM_LBUTTONDOWN := 0x201
          , WM_LBUTTONUP := 0x202
+         , MK_LBUTTON := 0x0001
 
     MouseGetPos, x, y, hwnd
     lParam := (y << 16) | x
 
-    PostMessage, WM_LBUTTONDOWN, 1, lParam,, % "ahk_id" hwnd
+    PostMessage, WM_LBUTTONDOWN, MK_LBUTTON, lParam,, % "ahk_id" hwnd
     Sleep, 10
     PostMessage, WM_LBUTTONUP, 0, lParam,, % "ahk_id" hwnd
     Sleep, 10
