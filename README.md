@@ -21,5 +21,9 @@ This program now adds the ability to navigate the map in Stronghold.
 > **Warning**  
 > This makes the a, s, d, f keys impossible to use in any other way (e.g. when saving the game)
 
+### Toggle Map navigation
+A Hotkey can be set to toggle the Map navigation on and off.  
+This option is disabled by default.
+
 ### How to enable map navigation in Crusader?
-If you do not have the Crusader Patcher installed, but want to enable the map navigation, just move the `Map navigation` section into the `All (Crusader and Stronghold)` section of the program.
+If you do not have the Crusader Patcher installed, but want to enable the map navigation, just change the group to `StrongholdAndCrusader`.
