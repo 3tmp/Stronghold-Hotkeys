@@ -1,5 +1,7 @@
 ﻿#NoEnv
-SetWorkingDir %A_ScriptDir%
+#KeyHistory, 0
+#SingleInstance, Force
+SetWorkingDir, %A_ScriptDir%
 ListLines, Off
 SetBatchLines, -1
 
@@ -11,6 +13,11 @@ GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
 ; If you want Map navigation with the wasd keys enabled, set this to true, otherwise set it to false
 ; Off by default, as the Unofficial Crusader Patch adds this ability
 global EnableMapNav := false
+
+; Creates a hotkey that toggles the Map navigation on and off. Is only available in the group that GroupMapNav points to
+; To disable this option, make it blank (A good option can be "CapsLock")
+global HotkeyToggleMapNav := ""
+
 ; In which games should the Map navigation be enabled?
 ; Options are
 ; - "Stronghold"            (Stronghold)
@@ -18,23 +25,23 @@ global EnableMapNav := false
 ; - "StrongholdAndCrusader" (Stronghold, Crusader and Extreme)
 global GroupMapNav := "Stronghold"
 
+; If the user wants a Map navigation toggle, this creates the Hotkey
+If (HotkeyToggleMapNav && GetKeyName(HotkeyToggleMapNav))
+{
+    Hotkey, IfWinActive, ahk_group %GroupMapNav%
+    Hotkey, %HotkeyToggleMapNav%, ToggleMapNavigation
+}
+
 ; Initialize the tray menu
 BuildTrayMenu()
 
 Return
 
 
-; Only Stronghold
-#IfWinActive ahk_group Stronghold
-
-
-; Only Crusader and Extreme
-#IfWinActive ahk_group Crusader
-
-
-; All (Crusader and Stronghold)
+; Stronghold, Crusader and Extreme
 #IfWinActive ahk_group StrongholdAndCrusader
 
+; The middle mouse button
 MButton::
     While (GetKeyState("MButton", "P"))
     {
@@ -42,6 +49,7 @@ MButton::
         Sleep, 15
     }
 Return
+
 
 ; Map navigation
 #If ShouldNavMap()
@@ -60,6 +68,11 @@ ShouldNavMap()
     Return EnableMapNav && WinActive("ahk_group" GroupMapNav)
 }
 
+; Toggles the Map navigation on and off
+ToggleMapNavigation()
+{
+    EnableMapNav := !EnableMapNav
+}
 
 ; Helper methods
 
@@ -104,8 +117,10 @@ _performClick(msgDown, msgUp, keysUp, keysDown)
 
 Tray_About:
     MsgBox,, % "Stronghold Hotkeys - About", % "A small helper program for Stronghold.`n`n"
-           . "Press and hold the middle mouse button for an auto clicker.`n`n"
-           . Chr(0x00A9) " 2022 3tmp"
+           . "Press and hold the middle mouse button for an auto clicker.`n"
+           . "If enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n"
+           . Chr(0x00A9) " 2022 3tmp`n`n"
+           . "Project website: https://github.com/3tmp/Stronghold-Hotkeys"
 Return
 
 Tray_OpenWebsite:
