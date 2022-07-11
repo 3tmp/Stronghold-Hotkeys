@@ -97,8 +97,9 @@ PerformLeftClick()
     static WM_LBUTTONDOWN := 0x201
          , WM_LBUTTONUP := 0x202
          , MK_LBUTTON := 0x0001
+         , MK_NONE := 0x0000
 
-    _performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, 0)
+    _performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, MK_NONE)
 }
 
 ; Performs a click. Posts a window message with the given number to the target window
