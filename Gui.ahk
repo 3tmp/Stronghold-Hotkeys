@@ -53,33 +53,12 @@
         width := 300
         height := 300
 
-        Gui, % this._hwnd ":Add", Tab3, hwndhwnd w%width% h%height%, Infos|Autoclicker|Map navigation
+        Gui, % this._hwnd ":Add", Tab3, hwndhwnd w%width% h%height%, Autoclicker|Map navigation
         this._controls.Tab := this._hwnd
-
-            ; Infos
-
-            Gui, % this._hwnd ":Tab", 1
-
-            w := width - 20
-            blue := "2057B7"
-            Gui, Font, s12 c%blue%
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, Autoclicker
-            Gui, Font
-
-            text := "Press and hold the configured mouse button to send left mouse clicks to Stronghold and Crusader"
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % text
-
-            Gui, Font, s12 c%blue%
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, Map navigator
-            Gui, Font
-
-            text := "Use the 'w' 'a' 's' 'd' keys to navigate the map." 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % text
-
 
             ; AutoClicker
 
-            Gui, % this._hwnd ":Tab", 2
+            Gui, % this._hwnd ":Tab", 1
 
             text := "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`n"
                   . "This option takes effect in Stronghold and Crusader"
@@ -99,11 +78,9 @@
             Gui, % this._hwnd ":Add", DropDownList, hwndhwnd Disabled%clickerDisable% +AltSubmit Choose1 w125, Middle mouse button|Side mouse button 1|Side mouse button 2
             this._controls.AC_DDL := hwnd
 
-
-
             ; Map navigation
 
-            Gui, % this._hwnd ":Tab", 3
+            Gui, % this._hwnd ":Tab", 2
 
             text := "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`n"
                   . "This option is also included in the UCP. It is recommended to use the UCP option over this.`n"
@@ -135,8 +112,6 @@
             keyString := this._listToString(this._settings.MapNavToggleKeys)
             Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w80, %keyString%
             this._controls.MN_DDL2 := hwnd
-
-
 
         ; Outside of the Tab
 
