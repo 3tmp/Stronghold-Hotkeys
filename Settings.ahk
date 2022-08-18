@@ -275,14 +275,16 @@ class SettingsController
     {
         scs := A_StringCaseSense
         StringCaseSense, Off
+        result := false
         For each, val in values
         {
             If (value = val)
             {
-                Return true
+                result := true
+                break
             }
         }
         StringCaseSense, %scs%
-        Return false
+        Return result
     }
 }
