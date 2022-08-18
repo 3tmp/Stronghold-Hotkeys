@@ -1,8 +1,13 @@
 ﻿#NoEnv
 #KeyHistory, 0
 #SingleInstance, Force
+
+#Include Settings.ahk
+#Include Gui.ahk
+#Include Events.ahk
+
 SetWorkingDir, %A_ScriptDir%
-ListLines, Off
+ListLines, % IsDebuggerAttatched() ? "On" : "Off"
 SetBatchLines, -1
 
 ; The window title groups
@@ -10,48 +15,41 @@ GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
 GroupAdd, Crusader, Crusader ahk_class FFwinClass
 GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
 
-; If you want Map navigation with the wasd keys enabled, set this to true, otherwise set it to false
-; Off by default, as the Unofficial Crusader Patch adds this ability
-global EnableMapNav := false
+; The path where the settings get stored
+global IniPath := "Config.ini"
 
-; Creates a hotkey that toggles the Map navigation on and off. Is only available in the group that GroupMapNav points to
-; To disable this option, make it blank (A good option can be "CapsLock")
-global HotkeyToggleMapNav := ""
-
-; In which games should the Map navigation be enabled?
-; Options are
-; - "Stronghold"            (Stronghold)
-; - "Crusader"              (Crusader and Extreme)
-; - "StrongholdAndCrusader" (Stronghold, Crusader and Extreme)
-global GroupMapNav := "Stronghold"
-
-; If the user wants a Map navigation toggle, this creates the Hotkey
-If (HotkeyToggleMapNav && GetKeyName(HotkeyToggleMapNav))
-{
-    Hotkey, IfWinActive, ahk_group %GroupMapNav%
-    Hotkey, %HotkeyToggleMapNav%, ToggleMapNavigation
-}
+; The settings manager object
+global Settings := SettingsController.Static_Parse(IniPath)
+; Subscribe to events from the settings object
+Settings.OnBeforeMapNavigationChange(Func("BeforeMapNavChange"))
+Settings.OnAfterMapNavigationChange(Func("AfterMapNavChange"))
+Settings.OnBeforeAutoClickerChange(Func("BeforeAutoClickerChange"))
+Settings.OnAfterAutoClickerChange(Func("AfterAutoClickerChange"))
 
 ; Initialize the tray menu
 BuildTrayMenu()
 
-Return
+; Init the autoclicker
+If (Settings.AutoClicker.Enable)
+{
+    _setAutoClickerHotkey(true)
+}
 
+; Init the map navigation
+If (Settings.MapNavigation.Enable)
+{
+    _setMapNavHotkey(true)
+}
 
-; Stronghold, Crusader and Extreme
-#IfWinActive ahk_group StrongholdAndCrusader
+; A toggle that stores the temp state of the map navigation
+global MapNavIsToggleEnabled := Settings.MapNavigation.Enable
 
-; The middle mouse button
-MButton::
-    While (GetKeyState("MButton", "P"))
-    {
-        PerformLeftClick()
-        Sleep, 15
-    }
 Return
 
 
 ; Map navigation
+; The map navigation hotkeys have to be defined like this, because otherwise the
+; auto fire does not work correct
 #If ShouldNavMap()
 
 a::Left
@@ -62,16 +60,78 @@ w::Up
 #If
 
 
-; Determines if the Map should be navigated with the 
+; Determines if the Map should be navigated with the wasd keys
 ShouldNavMap()
 {
-    Return EnableMapNav && WinActive("ahk_group" GroupMapNav)
+    nav := Settings.MapNavigation
+    Return MapNavIsToggleEnabled && nav.Enable && WinActive("ahk_group" nav.WhereToEnable)
 }
 
 ; Toggles the Map navigation on and off
 ToggleMapNavigation()
 {
-    EnableMapNav := !EnableMapNav
+    MapNavIsToggleEnabled := !MapNavIsToggleEnabled
+}
+
+MouseClicks()
+{
+    While (GetKeyState(Settings.AutoClicker.Key, "P"))
+    {
+        PerformLeftClick()
+        Sleep, 15
+    }
+}
+
+; Event handlers
+
+BeforeMapNavChange()
+{
+    _setMapNavHotkey(false)
+}
+
+AfterMapNavChange()
+{
+    If (Settings.MapNavigation.Enable)
+    {
+        _setMapNavHotkey(true)
+        MapNavIsToggleEnabled := true
+    }
+    Else
+    {
+        MapNavIsToggleEnabled := false
+    }
+}
+
+BeforeAutoClickerChange()
+{
+    _setAutoClickerHotkey(false)
+}
+
+AfterAutoClickerChange()
+{
+    If (Settings.AutoClicker.Enable)
+    {
+        _setAutoClickerHotkey(true)
+    }
+}
+
+; Hotkey modifications
+
+_setMapNavHotkey(enable)
+{
+    _modifyHotkey(Settings.MapNavigation.ToggleKey, Settings.MapNavigation.WhereToEnable, "ToggleMapNavigation", enable)
+}
+
+_setAutoClickerHotkey(enable)
+{
+    _modifyHotkey(Settings.AutoClicker.Key, "StrongholdAndCrusader", "MouseClicks", enable)
+}
+
+_modifyHotkey(key, group, funcName, enable)
+{
+    onOff := enable ? "On" : "Off"
+    Hotkey, IfWinActive, ahk_group %group%
+    Hotkey, %key%, %funcName%, %onOff%
 }
 
 ; Helper methods
@@ -80,9 +140,11 @@ BuildTrayMenu()
 {
     Menu, Tray, NoStandard
     Menu, Tray, DeleteAll
+    Menu, Tray, Add, ListLines, Tray_ListLines
     Menu, Tray, Add, Stronghold Hotkeys, Tray_Void
     Menu, Tray, Default, Stronghold Hotkeys
     Menu, Tray, Add
+    Menu, Tray, Add, Configure Program, Tray_Config
     Menu, Tray, Add, Open website, Tray_OpenWebsite
     Menu, Tray, Add, About, Tray_About
     Menu, Tray, Add
@@ -114,7 +176,17 @@ _performClick(msgDown, msgUp, keysUp, keysDown)
     Sleep, 10
 }
 
+; Only used for debugging purposes
+IsDebuggerAttatched()
+{
+    Return !!InStr(DllCall("Kernel32.dll\GetCommandLine", "Str"), "/debug")
+}
+
 ; Tray Menu labels
+
+Tray_ListLines:
+    ListLines
+Return
 
 Tray_About:
     MsgBox,, % "Stronghold Hotkeys - About", % "A small helper program for Stronghold.`n`n"
@@ -126,6 +198,15 @@ Return
 
 Tray_OpenWebsite:
     Run, https://github.com/3tmp/Stronghold-Hotkeys
+Return
+
+Tray_Config:
+    If (!ConfigGui.IsRunning)
+    {
+        gui := new ConfigGui(Settings, IniPath)
+    }
+
+    gui.Show()
 Return
 
 Tray_Void:
