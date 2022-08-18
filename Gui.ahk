@@ -12,7 +12,7 @@
 
         this._controls := []
 
-        this._title := "Stronghold - Config"
+        this._title := "Stronghold - Config v" Stronghold_Version()
         Gui, New, % "+hwndhwnd +labelConfigGui_On", % this._title
         this._hwnd := hwnd
 

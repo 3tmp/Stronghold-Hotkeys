@@ -10,6 +10,11 @@ SetWorkingDir, %A_ScriptDir%
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
 SetBatchLines, -1
 
+Stronghold_Version()
+{
+    Return "1.0.0"
+}
+
 ; The window title groups
 GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
 GroupAdd, Crusader, Crusader ahk_class FFwinClass
@@ -200,7 +205,7 @@ Tray_ListLines:
 Return
 
 Tray_About:
-    MsgBox,, % "Stronghold - About", % "A small helper program for Stronghold.`n`n"
+    MsgBox,, % "Stronghold - About v" Stronghold_Version(), % "A small helper program for Stronghold.`n`n"
              . "Press and hold the configured mouse button for an auto clicker.`n"
              . "If enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n"
              . Chr(0x00A9) " 2022 3tmp`n`n"
