@@ -156,9 +156,12 @@ BuildTrayMenu()
 {
     Menu, Tray, NoStandard
     Menu, Tray, DeleteAll
-    Menu, Tray, Add, ListLines, Tray_ListLines
-    Menu, Tray, Add, Stronghold Hotkeys, Tray_Void
-    Menu, Tray, Default, Stronghold Hotkeys
+    If (IsDebuggerAttatched())
+    {
+        Menu, Tray, Add, ListLines, Tray_ListLines
+    }
+    Menu, Tray, Add, % "Stronghold Hotkeys v" Stronghold_Version(), Tray_Void
+    Menu, Tray, Default, % "Stronghold Hotkeys v" Stronghold_Version()
     Menu, Tray, Add
     Menu, Tray, Add, Configure Program, Tray_Config
     Menu, Tray, Add, Open website, Tray_OpenWebsite
@@ -166,7 +169,7 @@ BuildTrayMenu()
     Menu, Tray, Add
     Menu, Tray, Add, Reload this script, Tray_Reload
     Menu, Tray, Add, Exit, Tray_Exit
-    Menu, Tray, Tip, Stronghold
+    Menu, Tray, Tip, % "Stronghold v" Stronghold_Version()
 }
 
 ; Perform a mouse click with the left mouse button
