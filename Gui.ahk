@@ -58,6 +58,23 @@
 
             ; Infos
 
+            Gui, % this._hwnd ":Tab", 1
+
+            w := width - 20
+            blue := "2057B7"
+            Gui, Font, s12 c%blue%
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, Autoclicker
+            Gui, Font
+
+            text := "Press and hold the configured mouse button to send left mouse clicks to Stronghold and Crusader"
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % text
+
+            Gui, Font, s12 c%blue%
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, Map navigator
+            Gui, Font
+
+            text := "Use the 'w' 'a' 's' 'd' keys to navigate the map." 
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % text
 
 
             ; AutoClicker
