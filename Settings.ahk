@@ -1,7 +1,7 @@
 ﻿class SettingsController
 {
     static _defaultConfig := {"General": {}
-                            , "MapNavigation": {"Enable": 0
+                            , "MapNavigation": {"Enable": 1
                                               , "WhereToEnable": "Stronghold"
                                               , "ToggleKey": "CapsLock"}
                             , "AutoClicker": {"Enable": 1
