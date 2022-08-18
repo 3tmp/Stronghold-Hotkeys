@@ -199,11 +199,6 @@
         this._apply()
     }
 
-    _apply()
-    {
-
-    }
-
     _verifyConfig(config)
     {
         If (config.HasKey("General"))

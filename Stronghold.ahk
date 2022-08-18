@@ -200,11 +200,11 @@ Tray_ListLines:
 Return
 
 Tray_About:
-    MsgBox,, % "Stronghold Hotkeys - About", % "A small helper program for Stronghold.`n`n"
-           . "Press and hold the middle mouse button for an auto clicker.`n"
-           . "If enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n"
-           . Chr(0x00A9) " 2022 3tmp`n`n"
-           . "Project website: https://github.com/3tmp/Stronghold-Hotkeys"
+    MsgBox,, % "Stronghold - About", % "A small helper program for Stronghold.`n`n"
+             . "Press and hold the configured mouse button for an auto clicker.`n"
+             . "If enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n"
+             . Chr(0x00A9) " 2022 3tmp`n`n"
+             . "Project website: https://github.com/3tmp/Stronghold-Hotkeys"
 Return
 
 Tray_OpenWebsite:
