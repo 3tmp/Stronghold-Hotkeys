@@ -44,6 +44,17 @@ If (Settings.MapNavigation.Enable)
 ; A toggle that stores the temp state of the map navigation
 global MapNavIsToggleEnabled := Settings.MapNavigation.Enable
 
+If (!FileExist(IniPath))
+{
+    Settings.Save(IniPath)
+    If (!ConfigGui.IsRunning)
+    {
+        gui := new ConfigGui(Settings, IniPath)
+    }
+
+    gui.Show()
+}
+
 Return
 
 
