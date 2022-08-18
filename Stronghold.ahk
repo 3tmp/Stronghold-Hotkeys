@@ -12,7 +12,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.0.0"
+    Return "1.0.1"
 }
 
 ; The window title groups

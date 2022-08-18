@@ -1,4 +1,5 @@
-﻿class SettingsController
+﻿; Holds all settings of the program
+class SettingsController
 {
     static _defaultConfig := {"General": {}
                             , "MapNavigation": {"Enable": 1
@@ -17,6 +18,8 @@
         this._autoClickerAfterEvent := new SettingsChangeEvent()
     }
 
+    ; Create a new instance of the SettingsController. Always use this method to create a new instance
+    ; filePath: If the filePath does not exist, it gets created with the default settings
     Static_Parse(filePath)
     {
         encoding := A_FileEncoding
@@ -45,6 +48,7 @@
         Return new SettingsController(config)
     }
 
+    ; Saves the current settings to the given file path. If the file already exists, it gets replaced
     Save(filePath)
     {
         If (FileExist(filePath))
@@ -66,26 +70,33 @@
         FileEncoding, %encoding%
     }
 
+    ; The event that gets fired before map navigation settings get changed
+    ; Used to unregister any toggle hotkey
     OnBeforeMapNavigationChange(callback)
     {
         this._mapNavBeforeEvent.AddListener(callback)
     }
 
+    ; The event that gets fired after map navigation settings got changed
     OnAfterMapNavigationChange(callback)
     {
         this._mapNavAfterEvent.AddListener(callback)
     }
 
+    ; The event that gets fired before auto clicker settings get changed
+    ; Used to unregister any hotkey
     OnBeforeAutoClickerChange(callback)
     {
         this._autoClickerBeforeEvent.AddListener(callback)
     }
-
+    
+    ; The event that gets fired after auto clicker settings got changed
     OnAfterAutoClickerChange(callback)
     {
         this._autoClickerAfterEvent.AddListener(callback)
     }
 
+    ; Get/Set an object that represents the current general settings (currently there are none)
     General[]
     {
         Get
@@ -99,6 +110,7 @@
         }
     }
 
+    ; Get/Set an object that represents the current map navigation settings (Enable, WhereToEnable, ToggleKey)
     MapNavigation[]
     {
         Get
@@ -112,6 +124,7 @@
         }
     }
 
+    ; Get/Set an object that represents the current auto clicker settings (Enable, Key)
     AutoClicker[]
     {
         Get
@@ -125,6 +138,7 @@
         }
     }
 
+    ; Get a list of names of the groups that represent the games
     GameGroupNames[]
     {
         Get
@@ -133,6 +147,7 @@
         }
     }
 
+    ; Get a list of all key names that are valid auto clicker keys
     AutoClickerKeys[]
     {
         Get
@@ -141,6 +156,7 @@
         }
     }
 
+    ; Get a list of all key names that are valid map navigation toggle keys
     MapNavToggleKeys[]
     {
         Get
@@ -159,6 +175,9 @@
         }
     }
 
+    ; For internal use only
+
+    ; Sets and applies new settings
     _set(config)
     {
         If (!this._verifyConfig(config))
@@ -199,6 +218,7 @@
         this._apply()
     }
 
+    ; Ensures that the given config object is valid
     _verifyConfig(config)
     {
         If (config.HasKey("General"))
@@ -239,6 +259,7 @@
         Return true
     }
 
+    ; Returns a deep clone of the SettingsController._defaultConfig
     _deepClone()
     {
         result := {}
@@ -249,6 +270,7 @@
         Return result
     }
 
+    ; Determines if the given value (first param) is inside of any of the following params (the variadic values param)
     _valueIn(value, values*)
     {
         scs := A_StringCaseSense

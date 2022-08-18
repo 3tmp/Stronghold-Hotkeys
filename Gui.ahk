@@ -1,7 +1,11 @@
 ﻿class ConfigGui
 {
+    ; Store a static instance to the last gui that was created. Used with the GuiClose event
     static _instance := ""
 
+    ; Create a new instance of the config gui
+    ; settings: An instance of the SettingsController
+    ; iniPath: A path/file name of the config file
     __New(settings, iniPath)
     {
         ConfigGui._instance := this
@@ -19,21 +23,26 @@
         this._buildGui()
     }
 
+    ; Destroy and close the window
     Destroy()
     {
         try Gui, % this._hwnd ":Destroy"
+        ConfigGui._instance := ""
     }
 
+    ; Show the window
     Show()
     {
         Gui, % this._hwnd ":Show"
     }
 
+    ; Hide the window
     Hide()
     {
         Gui, % this._hwnd ":Hide"
     }
 
+    ; Static property. Determines if any instance is running
     IsRunning[]
     {
         Get
@@ -42,12 +51,13 @@
         }
     }
 
+    ; The GuiClose event
     OnClose()
     {
         this.Destroy()
-        ConfigGui._instance := ""
     }
 
+    ; Create the gui
     _buildGui()
     {
         width := 300
@@ -127,17 +137,20 @@
         this._guiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnApply"))
     }
 
+    ; A wrapper of the GuiControl command
     _guiControl(hwnd, command := "", options := "")
     {
         GuiControl, % command, % hwnd, % options
     }
 
+    ; A wrapper of the GuiControlGet command
     _guiControlGet(hwnd, command := "", options := "")
     {
         GuiControlGet, value, % command, % hwnd, % options
         Return value
     }
 
+    ; En/Disable every control in the hwnds list
     _batchEnDisable(hwnds, enable)
     {
         command := enable ? "Enable": "Disable"
@@ -147,6 +160,7 @@
         }
     }
 
+    ; As AutoHotkey guis work with pipe delimitered lists instead of arrays, this converts an array into a string
     _listToString(list)
     {
         result := ""
@@ -157,6 +171,7 @@
         Return result
     }
 
+    ; The gLabel of the autoclicker check box
     _eventAC_Checkbox(hwnd, guiEvent, eventInfo)
     {
         isChecked := this._guiControlGet(hwnd)
@@ -167,6 +182,7 @@
         this._batchEnDisable([txt1, ddl], isChecked)
     }
 
+    ; The gLabel of the Map navigate check box
     _eventMN_Checkbox(hwnd, guiEvent, eventInfo)
     {
         isChecked := this._guiControlGet(hwnd)
@@ -180,11 +196,13 @@
         this._batchEnDisable([txt1, ddl1, txt2, ddl2, txt3], isChecked)
     }
 
+    ; The gLabel of the cancel button
     _eventBtnCancel(hwnd, guiEvent, eventInfo)
     {
         this.Destroy()
     }
 
+    ; The gLabel of the apply button
     _eventBtnApply(hwnd, guiEvent, eventInfo)
     {
         this.Hide()
@@ -210,6 +228,7 @@
     }
 }
 
+; The GuiClose event
 ConfigGui_OnClose(hwnd)
 {
     If (ConfigGui.IsRunning)

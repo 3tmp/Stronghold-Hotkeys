@@ -1,4 +1,5 @@
-﻿class SettingsChangeEvent
+﻿; An event emitter that gets fired when a setting changes
+class SettingsChangeEvent
 {
     __New()
     {
@@ -14,7 +15,7 @@
         }
     }
 
-    ; Fires the event
+    ; Fires the event and passes the given parameters to the listeners
     Fire(params*)
     {
         If (params.Length())
