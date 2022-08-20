@@ -98,7 +98,7 @@
                   . "the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable "
                   . "this option."
             w := width - 20
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % textGuiControl
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % text
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             mapEnable := this._settings.MapNavigation.Enable
