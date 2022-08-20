@@ -80,7 +80,7 @@
             clickerDisable := !clickerEnable
             Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%clickerEnable%, Enable Autoclicker
             this._controls.AC_CheckBox := hwnd
-            this._guiControl(hwnd, "+g", ObjBindMethod(this, "_eventAC_Checkbox"))
+            GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventAC_Checkbox"))
 
             Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%clickerDisable%, Perform left clicks while the following button is pressed
             this._controls.AC_Text1 := hwnd
@@ -98,14 +98,14 @@
                   . "the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable "
                   . "this option."
             w := width - 20
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % text
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % textGuiControl
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             mapEnable := this._settings.MapNavigation.Enable
             mapDisable := !mapEnable
             Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%mapEnable%, Enable Map navigation
             this._controls.MN_CheckBox := hwnd
-            this._guiControl(hwnd, "+g", ObjBindMethod(this, "_eventMN_Checkbox"))
+            GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventMN_Checkbox"))
 
             Gui, % this._hwnd ":Add", Text, hwndhwnd Section Disabled%mapDisable%, Enable map navigation when
             this._controls.MN_Text1 := hwnd
@@ -119,7 +119,7 @@
             Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable%, Toggle key
             this._controls.MN_Text3 := hwnd
 
-            keyString := this._listToString(this._settings.MapNavToggleKeys)
+            keyString := ListToString(this._settings.MapNavToggleKeys)
             Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w80, %keyString%
             this._controls.MN_DDL2 := hwnd
 
@@ -130,24 +130,11 @@
         xPos := width - 80 * 2 - 10
         Gui, % this._hwnd ":Add", Button, hwndhwnd xm+%xPos% w80, Cancel
         this._controls.BtnCancel := hwnd
-        this._guiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnCancel"))
+        GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnCancel"))
 
         Gui, % this._hwnd ":Add", Button, hwndhwnd x+10 w80 Default, Apply
         this._controls.ApplyOk := hwnd
-        this._guiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnApply"))
-    }
-
-    ; A wrapper of the GuiControl command
-    _guiControl(hwnd, command := "", options := "")
-    {
-        GuiControl, % command, % hwnd, % options
-    }
-
-    ; A wrapper of the GuiControlGet command
-    _guiControlGet(hwnd, command := "", options := "")
-    {
-        GuiControlGet, value, % command, % hwnd, % options
-        Return value
+        GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnApply"))
     }
 
     ; En/Disable every control in the hwnds list
@@ -156,25 +143,14 @@
         command := enable ? "Enable": "Disable"
         For each, hwnd in hwnds
         {
-            this._guiControl(hwnd, command)
+            GuiControl(hwnd, command)
         }
-    }
-
-    ; As AutoHotkey guis work with pipe delimitered lists instead of arrays, this converts an array into a string
-    _listToString(list)
-    {
-        result := ""
-        For each, item in list
-        {
-            result .= item "|"
-        }
-        Return result
     }
 
     ; The gLabel of the autoclicker check box
     _eventAC_Checkbox(hwnd, guiEvent, eventInfo)
     {
-        isChecked := this._guiControlGet(hwnd)
+        isChecked := GuiControlGet(hwnd)
 
         txt1 := this._controls.AC_Text1
         ddl := this._controls.AC_DDL
@@ -185,7 +161,7 @@
     ; The gLabel of the Map navigate check box
     _eventMN_Checkbox(hwnd, guiEvent, eventInfo)
     {
-        isChecked := this._guiControlGet(hwnd)
+        isChecked := GuiControlGet(hwnd)
 
         txt1 := this._controls.MN_Text1
         ddl1 := this._controls.MN_DDL1
@@ -207,15 +183,15 @@
     {
         this.Hide()
 
-        mouseBtn := this._guiControlGet(this._controls.AC_DDL)
-        enable := this._guiControlGet(this._controls.AC_CheckBox)
+        mouseBtn := GuiControlGet(this._controls.AC_DDL)
+        enable := GuiControlGet(this._controls.AC_CheckBox)
         keys := this._settings.AutoClickerKeys
         this._settings.AutoClicker := {"Enable": enable
                                      , "Key": keys[mouseBtn]}
 
-        whereEnable := this._guiControlGet(this._controls.MN_DDL1)
-        enable := this._guiControlGet(this._controls.MN_CheckBox)
-        toggleKey := this._guiControlGet(this._controls.MN_DDL2)
+        whereEnable := GuiControlGet(this._controls.MN_DDL1)
+        enable := GuiControlGet(this._controls.MN_CheckBox)
+        toggleKey := GuiControlGet(this._controls.MN_DDL2)
         gameGroupNames := this._settings.GameGroupNames
         mapNavToggleKeys := this._settings.MapNavToggleKeys
         this._settings.MapNavigation := {"Enable": enable

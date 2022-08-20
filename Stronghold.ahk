@@ -5,6 +5,7 @@
 #Include Settings.ahk
 #Include Gui.ahk
 #Include Events.ahk
+#Include Helper.ahk
 
 SetWorkingDir, %A_ScriptDir%
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
@@ -12,7 +13,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.0.1"
+    Return "1.1.0"
 }
 
 ; The window title groups

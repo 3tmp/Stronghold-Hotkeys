@@ -229,15 +229,15 @@ class SettingsController
         {
             nav := config.MapNavigation
 
-            If (nav.HasKey("Enable") && !this._valueIn(nav.Enable, "0", "1"))
+            If (nav.HasKey("Enable") && !ValueIn(nav.Enable, "0", "1"))
             {
                 Return false
             }
-            If (nav.HasKey("WhereToEnable") && !this._valueIn(nav.WhereToEnable, this.GameGroupNames*))
+            If (nav.HasKey("WhereToEnable") && !ValueIn(nav.WhereToEnable, this.GameGroupNames*))
             {
                 Return false
             }
-            If (nav.HasKey("ToggleKey") && !this._valueIn(nav.ToggleKey, this.MapNavToggleKeys*))
+            If (nav.HasKey("ToggleKey") && !ValueIn(nav.ToggleKey, this.MapNavToggleKeys*))
             {
                 Return false
             }
@@ -246,11 +246,11 @@ class SettingsController
         {
             clicker := config.AutoClicker
 
-            If (clicker.HasKey("Enable") && !this._valueIn(clicker.Enable, "0", "1"))
+            If (clicker.HasKey("Enable") && !ValueIn(clicker.Enable, "0", "1"))
             {
                 Return false
             }
-            If (clicker.HasKey("Key") && !this._valueIn(clicker.Key, this.AutoClickerKeys*))
+            If (clicker.HasKey("Key") && !ValueIn(clicker.Key, this.AutoClickerKeys*))
             {
                 Return false
             }
@@ -267,24 +267,6 @@ class SettingsController
         {
             result[key] := SettingsController._defaultConfig[key].Clone()
         }
-        Return result
-    }
-
-    ; Determines if the given value (first param) is inside of any of the following params (the variadic values param)
-    _valueIn(value, values*)
-    {
-        scs := A_StringCaseSense
-        StringCaseSense, Off
-        result := false
-        For each, val in values
-        {
-            If (value = val)
-            {
-                result := true
-                break
-            }
-        }
-        StringCaseSense, %scs%
         Return result
     }
 }
