@@ -1,4 +1,4 @@
-# Stronghold utilities
+# Stronghold Hotkeys
 
 Supported Stronghold versions are Stronghold, Stronghold Crusader, Stronghold Crusader Extreme
 
