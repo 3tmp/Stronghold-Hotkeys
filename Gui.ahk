@@ -85,7 +85,8 @@
             Gui, % this._hwnd ":Add", Text, hwndhwnd w%w% Disabled%clickerDisable%, % lang.AC_Text1
             this._controls.AC_Text1 := hwnd
 
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd Disabled%clickerDisable% +AltSubmit Choose1 w125, % ListToString([lang.AC_MButton, lang.AC_XButton1, lang.AC_XButton2])
+            index := IndexOf(this._settings.Autoclicker.Key, this._settings.AutoClickerKeys)
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd Disabled%clickerDisable% +AltSubmit Choose%index% w125, % ListToString([lang.AC_MButton, lang.AC_XButton1, lang.AC_XButton2])
             this._controls.AC_DDL := hwnd
 
             ; Map navigation
@@ -104,7 +105,8 @@
             Gui, % this._hwnd ":Add", Text, hwndhwnd Section Disabled%mapDisable%, % lang.MN_Text1
             this._controls.MN_Text1 := hwnd
 
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w145, % ListToString([lang.MN_Stronghold, lang.MN_Crusader, lang.MN_StrongholdAndCrusader])
+            index := IndexOf(this._settings.MapNavigation.WhereToEnable, this._settings.GameGroupNames)
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose%index% x+5 yp-3 w145, % ListToString([lang.MN_Stronghold, lang.MN_Crusader, lang.MN_StrongholdAndCrusader])
             this._controls.MN_DDL1 := hwnd
 
             Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable% xs y+-1, % lang.MN_Text2
@@ -113,7 +115,8 @@
             Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable%, % lang.MN_ToggleKey
             this._controls.MN_Text3 := hwnd
 
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w80, % ListToString(this._settings.MapNavToggleKeys)
+            index := IndexOf(this._settings.MapNavigation.ToggleKey, this._settings.MapNavToggleKeys)
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose%index% x+5 yp-3 w80, % ListToString(this._settings.MapNavToggleKeys)
             this._controls.MN_DDL2 := hwnd
 
         ; Outside of the Tab
