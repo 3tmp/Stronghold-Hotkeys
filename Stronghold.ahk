@@ -7,7 +7,7 @@
 #Include Events.ahk
 #Include Helper.ahk
 
-SetWorkingDir, %A_ScriptDir%
+SetWorkingDir, % A_ScriptDir
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
 SetBatchLines, -1
 
@@ -84,12 +84,13 @@ ShouldNavMap()
     Return MapNavIsToggleEnabled && nav.Enable && WinActive("ahk_group" nav.WhereToEnable)
 }
 
-; Toggles the Map navigation on and off
+; Toggles the Map navigation on and off (This is not a persistent setting, only for the lifetime of the application)
 ToggleMapNavigation()
 {
     MapNavIsToggleEnabled := !MapNavIsToggleEnabled
 }
 
+; Performs left mouse clicks as long as the trigger key is pressed down
 MouseClicks()
 {
     While (GetKeyState(Settings.AutoClicker.Key, "P"))
@@ -188,6 +189,8 @@ PerformLeftClick()
 _performClick(msgDown, msgUp, keysUp, keysDown)
 {
     MouseGetPos, x, y, hwnd
+    ; lo-order word: x coordinate of the cursor
+    ; hi-order word: y coordinate of the cursor
     lParam := (y << 16) | x
 
     PostMessage, msgDown, keysUp, lParam,, % "ahk_id" hwnd
