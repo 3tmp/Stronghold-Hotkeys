@@ -6,6 +6,7 @@
 #Include Gui.ahk
 #Include Events.ahk
 #Include Helper.ahk
+#Include Localization.ahk
 
 SetWorkingDir, % A_ScriptDir
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
@@ -156,22 +157,24 @@ _modifyHotkey(key, group, funcName, enable)
 
 BuildTrayMenu()
 {
+    lang := GetLanguage()
     Menu, Tray, NoStandard
     Menu, Tray, DeleteAll
     If (IsDebuggerAttatched())
     {
+        ; Just for debugging purposes
         Menu, Tray, Add, ListLines, Tray_ListLines
     }
-    Menu, Tray, Add, % "Stronghold Hotkeys v" Stronghold_Version(), Tray_Void
-    Menu, Tray, Default, % "Stronghold Hotkeys v" Stronghold_Version()
+    Menu, Tray, Add, % StrReplace(lang.Tray_Title, "%1", Stronghold_Version()), Tray_Void
+    Menu, Tray, Default, % StrReplace(lang.Tray_Title, "%1", Stronghold_Version())
     Menu, Tray, Add
-    Menu, Tray, Add, Configure Program, Tray_Config
-    Menu, Tray, Add, Open website, Tray_OpenWebsite
-    Menu, Tray, Add, About, Tray_About
+    Menu, Tray, Add, % lang.Tray_Config, Tray_Config
+    Menu, Tray, Add, % lang.Tray_Website, Tray_OpenWebsite
+    Menu, Tray, Add, % lang.Tray_About, Tray_About
     Menu, Tray, Add
-    Menu, Tray, Add, Reload this script, Tray_Reload
-    Menu, Tray, Add, Exit, Tray_Exit
-    Menu, Tray, Tip, % "Stronghold v" Stronghold_Version()
+    Menu, Tray, Add, % lang.Tray_Reload, Tray_Reload
+    Menu, Tray, Add, % lang.Tray_Exit, Tray_Exit
+    Menu, Tray, Tip, % StrReplace(lang.Tray_Tip, "%1", Stronghold_Version())
 }
 
 ; Perform a mouse click with the left mouse button
@@ -212,11 +215,7 @@ Tray_ListLines:
 Return
 
 Tray_About:
-    MsgBox,, % "Stronghold - About v" Stronghold_Version(), % "A small helper program for Stronghold.`n`n"
-             . "Press and hold the configured mouse button for an auto clicker.`n"
-             . "If enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n"
-             . Chr(0x00A9) " 2022 3tmp`n`n"
-             . "Project website: https://github.com/3tmp/Stronghold-Hotkeys"
+    MsgBox,, % StrReplace(GetLanguage().Tray_About_MsgBoxTitle, "%1", Stronghold_Version()), % StrReplace(GetLanguage().Tray_About_MsgBoxBody, "%1", Chr(0x00A9))
 Return
 
 Tray_OpenWebsite:

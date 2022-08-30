@@ -16,7 +16,7 @@
 
         this._controls := []
 
-        this._title := "Stronghold - Config v" Stronghold_Version()
+        this._title := StrReplace(GetLanguage().Title, "%1", Stronghold_Version())
         Gui, New, % "+hwndhwnd +labelConfigGui_On", % this._title
         this._hwnd := hwnd
 
@@ -60,67 +60,60 @@
     ; Create the gui
     _buildGui()
     {
+        lang := GetLanguage()
+
         width := 300
         height := 300
+        w := width - 20
 
-        Gui, % this._hwnd ":Add", Tab3, hwndhwnd w%width% h%height%, Autoclicker|Map navigation
+        Gui, % this._hwnd ":Add", Tab3, hwndhwnd w%width% h%height%, % lang.TabTitle
         this._controls.Tab := this._hwnd
 
             ; AutoClicker
 
             Gui, % this._hwnd ":Tab", 1
 
-            text := "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`n"
-                  . "This option takes effect in Stronghold and Crusader"
-            w := width - 20
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % text
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % lang.AC_Desc
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             clickerEnable := this._settings.AutoClicker.Enable
             clickerDisable := !clickerEnable
-            Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%clickerEnable%, Enable Autoclicker
+            Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%clickerEnable%, % lang.AC_Enable
             this._controls.AC_CheckBox := hwnd
             GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventAC_Checkbox"))
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%clickerDisable%, Perform left clicks while the following button is pressed
+            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w% Disabled%clickerDisable%, % lang.AC_Text1
             this._controls.AC_Text1 := hwnd
 
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd Disabled%clickerDisable% +AltSubmit Choose1 w125, Middle mouse button|Side mouse button 1|Side mouse button 2
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd Disabled%clickerDisable% +AltSubmit Choose1 w125, % ListToString([lang.AC_MButton, lang.AC_XButton1, lang.AC_XButton2])
             this._controls.AC_DDL := hwnd
 
             ; Map navigation
 
             Gui, % this._hwnd ":Tab", 2
 
-            text := "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`n"
-                  . "This option is also included in the UCP. It is recommended to use the UCP option over this.`n"
-                  . "This option intercepts the key presses and simulates the arrow keys, therefore it also disables "
-                  . "the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable "
-                  . "this option."
-            w := width - 20
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % text
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % lang.MN_Desc
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             mapEnable := this._settings.MapNavigation.Enable
             mapDisable := !mapEnable
-            Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%mapEnable%, Enable Map navigation
+            Gui, % this._hwnd ":Add", CheckBox, hwndhwnd Checked%mapEnable%, % lang.MN_Enable
             this._controls.MN_CheckBox := hwnd
             GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventMN_Checkbox"))
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Section Disabled%mapDisable%, Enable map navigation when
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Section Disabled%mapDisable%, % lang.MN_Text1
             this._controls.MN_Text1 := hwnd
 
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w135, Stronghold|Crusader|Stronghold or Crusader
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w145, % ListToString([lang.MN_Stronghold, lang.MN_Crusader, lang.MN_StrongholdAndCrusader])
             this._controls.MN_DDL1 := hwnd
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable% xs y+-1, is the active game
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable% xs y+-1, % lang.MN_Text2
             this._controls.MN_Text2 := hwnd
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable%, Toggle key
+            Gui, % this._hwnd ":Add", Text, hwndhwnd Disabled%mapDisable%, % lang.MN_ToggleKey
             this._controls.MN_Text3 := hwnd
 
-            keyString := ListToString(this._settings.MapNavToggleKeys)
-            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w80, %keyString%
+            Gui, % this._hwnd ":Add", DropDownList, hwndhwnd +AltSubmit Disabled%mapDisable% Choose1 x+5 yp-3 w80, % ListToString(this._settings.MapNavToggleKeys)
             this._controls.MN_DDL2 := hwnd
 
         ; Outside of the Tab
@@ -128,11 +121,11 @@
         Gui, % this._hwnd ":Tab"
 
         xPos := width - 80 * 2 - 10
-        Gui, % this._hwnd ":Add", Button, hwndhwnd xm+%xPos% w80, Cancel
+        Gui, % this._hwnd ":Add", Button, hwndhwnd xm+%xPos% w80, % lang.Cancel
         this._controls.BtnCancel := hwnd
         GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnCancel"))
 
-        Gui, % this._hwnd ":Add", Button, hwndhwnd x+10 w80 Default, Apply
+        Gui, % this._hwnd ":Add", Button, hwndhwnd x+10 w80 Default, % lang.Apply
         this._controls.ApplyOk := hwnd
         GuiControl(hwnd, "+g", ObjBindMethod(this, "_eventBtnApply"))
     }
