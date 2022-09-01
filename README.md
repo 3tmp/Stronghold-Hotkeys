@@ -18,8 +18,8 @@ In Stronghold and Crusader it can get very anoying to make dozens of clicks for 
 ## Autoclicker
 This program adds an auto clicker. Just press and hold the middle mouse button to send clicks to the game.
 
-## Map navigation (disabled by default)
-In Stronghold it is possible to navigate the map with the arrow keys, the [Unofficial Crusader Patcher](https://unofficialcrusaderpatch.github.io/) adds the option to navigate with the `w`, `a`, `s`, `d` keys. (This is the prefered method for Crusader)
+## Map navigation (By default only enabled in Stronghold)
+In Stronghold it is possible to navigate the map with the arrow keys, the [Unofficial Crusader Patcher](https://unofficialcrusaderpatch.github.io/) adds the option to navigate with the `w`, `a`, `s`, `d` keys to Crusader. (This is the prefered method for Crusader)
 
 This program now adds the ability to navigate the map in the game.
 
