@@ -14,7 +14,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.1.2"
+    Return "1.2.0"
 }
 
 ; The window title groups
@@ -205,6 +205,12 @@ _performClick(msgDown, msgUp, keysUp, keysDown)
 IsDebuggerAttatched()
 {
     Return !!InStr(DllCall("Kernel32.dll\GetCommandLine", "Str"), "/debug")
+}
+
+; Returns the website of the Unofficial Crusader Patch
+UCPWebsite()
+{
+    Return "https://unofficialcrusaderpatch.github.io"
 }
 
 ; Tray Menu labels

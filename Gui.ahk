@@ -93,7 +93,7 @@
 
             Gui, % this._hwnd ":Tab", 2
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd Section w%w%, % lang.MN_Desc
+            Gui, % this._hwnd ":Add", Link, hwndhwnd Section w%w%, % StrReplace(lang.MN_Desc, "%1", UCPWebsite())
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             mapEnable := this._settings.MapNavigation.Enable

@@ -27,7 +27,7 @@ _language_en()
           , "AC_XButton1": "Side mouse button 1"
           , "AC_XButton2": "Side mouse button 2"
           ; Map navigation
-          , "MN_Desc": "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`nThis option is also included in the UCP. It is recommended to use the UCP option over this.`nThis option intercepts the key presses and simulates the arrow keys, therefore it also disables the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable this option."
+          , "MN_Desc": "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`nThis option is also included in the <a href=""%1"">UCP</a>. It is recommended to use the UCP option over this.`nThis option intercepts the key presses and simulates the arrow keys, therefore it also disables the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable this option."
           , "MN_Enable": "Enable Map navigation"
           , "MN_Stronghold": "Stronghold"
           , "MN_Crusader": "Crusader"
@@ -60,7 +60,7 @@ _language_de()
           , "AC_XButton1": "Seitliche Maustaste 1"
           , "AC_XButton2": "Seitliche Maustaste 2"
           ; Map navigation
-          , "MN_Desc": "Mit Hilfe dieser Option kann die Karte mit den 'w' 'a' 's' 'd' Tasten navigiert werden.`nDiese Option ist ebenfalls im UCP enthalten. Es ist empfohlen die UPC Einstellung zu verwenden anstatt dieser.`nDa diese Option die gedrückten Tasten konsumiert und dafür Pfeiltastenklicks simuliert, kann mit diesen vier Tasten kein Text geschrieben werden (z.B. um das Spiel zu speichern). Verwende die Toggle Option um diese Einstellung schnell und temporär zu ändern."
+          , "MN_Desc": "Mit Hilfe dieser Option kann die Karte mit den 'w' 'a' 's' 'd' Tasten navigiert werden.`nDiese Option ist ebenfalls im <a href=""%1"">UCP</a> enthalten. Es ist empfohlen die UCP Einstellung zu verwenden anstatt dieser.`nDa diese Option die gedrückten Tasten konsumiert und dafür Pfeiltastenklicks simuliert, kann mit diesen vier Tasten kein Text geschrieben werden (z.B. um das Spiel zu speichern). Verwende die Toggle Option um diese Einstellung schnell und temporär zu ändern."
           , "MN_Enable": "Kartennavigation aktivieren"
           , "MN_Stronghold": "Stronghold"
           , "MN_Crusader": "Crusader"
