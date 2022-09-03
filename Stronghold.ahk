@@ -14,7 +14,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.1.1"
+    Return "1.1.2"
 }
 
 ; The window title groups
@@ -172,7 +172,6 @@ BuildTrayMenu()
     Menu, Tray, Add, % lang.Tray_Website, Tray_OpenWebsite
     Menu, Tray, Add, % lang.Tray_About, Tray_About
     Menu, Tray, Add
-    Menu, Tray, Add, % lang.Tray_Reload, Tray_Reload
     Menu, Tray, Add, % lang.Tray_Exit, Tray_Exit
     Menu, Tray, Tip, % StrReplace(lang.Tray_Tip, "%1", Stronghold_Version())
 }
@@ -232,10 +231,6 @@ Tray_Config:
 Return
 
 Tray_Void:
-Return
-
-Tray_Reload:
-    Reload
 Return
 
 Tray_Exit:
