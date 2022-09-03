@@ -2,7 +2,8 @@
 
 global keepComments := true
 global removeIndent := false
-global resultFile := "Stronghold_compressed.ahk"
+global resultFileAhk := "Stronghold.ahk"
+global resultFileExe := "Stronghold.exe"
 
 global mainPath := GetFullPathName(A_ScriptDir "\..\")
 SetWorkingDir, % mainPath
@@ -36,13 +37,19 @@ For each, line in FileToLineArray(FileRead("Stronghold.ahk"))
 
 output := StrReplace(output, "    ", A_Tab)
 
-If (FileExist("Build\" resultFile))
+If (FileExist("Build\" resultFileAhk))
 {
-    FileDelete("Build\" resultFile)
+    FileDelete("Build\" resultFileAhk)
 }
-FileAppend("Build\" resultFile, output)
+FileAppend("Build\" resultFileAhk, output)
 
-Msgbox,, Finish, Compiling the file finished
+If (FileExist("Build\" resultFileExe))
+{
+    FileDelete("Build\" resultFileExe)
+}
+CompileWithAhk2Exe("Stronghold.ahk")
+
+Msgbox,, Finish, Compiling the files finished
 
 ExitApp
 
@@ -60,6 +67,13 @@ CompressFile(file)
         result .= line "`r`n"
     }
     Return result
+}
+
+CompileWithAhk2Exe(file)
+{
+    SplitPath, A_AhkPath,, ahkDir
+    ahk2Exe := """" ahkDir "\Compiler\Ahk2Exe.exe"""
+    Run % ahk2Exe " /in """ A_WorkingDir "\" file """ /out """ A_WorkingDir "\Build\" resultFileExe """"
 }
 
 StartsWith(ByRef var, ByRef string)
