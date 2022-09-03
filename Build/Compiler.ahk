@@ -73,7 +73,7 @@ CompileWithAhk2Exe(file)
 {
     SplitPath, A_AhkPath,, ahkDir
     ahk2Exe := """" ahkDir "\Compiler\Ahk2Exe.exe"""
-    Run % ahk2Exe " /in """ A_WorkingDir "\" file """ /out """ A_WorkingDir "\Build\" resultFileExe """"
+    Run % ahk2Exe " /in """ A_WorkingDir "\" file """ /out """ A_WorkingDir "\Build\" resultFileExe """ /compress 0"
 }
 
 StartsWith(ByRef var, ByRef string)
