@@ -166,15 +166,15 @@ BuildTrayMenu()
         ; Just for debugging purposes
         Menu, Tray, Add, ListLines, Tray_ListLines
     }
-    Menu, Tray, Add, % StrReplace(lang.Tray_Title, "%1", Stronghold_Version()), Tray_Void
-    Menu, Tray, Default, % StrReplace(lang.Tray_Title, "%1", Stronghold_Version())
+    Menu, Tray, Add, % Format(lang.Tray_Title, Stronghold_Version()), Tray_Void
+    Menu, Tray, Default, % Format(lang.Tray_Title, Stronghold_Version())
     Menu, Tray, Add
     Menu, Tray, Add, % lang.Tray_Config, Tray_Config
     Menu, Tray, Add, % lang.Tray_Website, Tray_OpenWebsite
     Menu, Tray, Add, % lang.Tray_About, Tray_About
     Menu, Tray, Add
     Menu, Tray, Add, % lang.Tray_Exit, Tray_Exit
-    Menu, Tray, Tip, % StrReplace(lang.Tray_Tip, "%1", Stronghold_Version())
+    Menu, Tray, Tip, % Format(lang.Tray_Tip, Stronghold_Version())
 }
 
 ; Perform a mouse click with the left mouse button
@@ -221,7 +221,7 @@ Tray_ListLines:
 Return
 
 Tray_About:
-    MsgBox,, % StrReplace(GetLanguage().Tray_About_MsgBoxTitle, "%1", Stronghold_Version()), % StrReplace(GetLanguage().Tray_About_MsgBoxBody, "%1", Chr(0x00A9))
+    MsgBox,, % Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), % Format(GetLanguage().Tray_About_MsgBoxBody, Chr(0x00A9))
 Return
 
 Tray_OpenWebsite:

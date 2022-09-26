@@ -12,7 +12,7 @@
         this._iniPath := iniPath
         this._controls := []
 
-        this._title := StrReplace(GetLanguage().Title, "%1", Stronghold_Version())
+        this._title := Format(GetLanguage().Title, Stronghold_Version())
         Gui, New, % "+hwndhwnd +labelConfigGui_On", % this._title
         this._hwnd := hwnd + 0
         ConfigGui._instances[hwnd] := this
@@ -90,7 +90,7 @@
 
             Gui, % this._hwnd ":Tab", 2
 
-            Gui, % this._hwnd ":Add", Link, hwndhwnd Section w%w%, % StrReplace(lang.MN_Desc, "%1", UCPWebsite())
+            Gui, % this._hwnd ":Add", Link, hwndhwnd Section w%w%, % Format(lang.MN_Desc, UCPWebsite())
             Gui, % this._hwnd ":Add", Text, hwndhwnd
 
             mapEnable := this._settings.MapNavigation.Enable
