@@ -1,4 +1,5 @@
 ﻿#NoEnv
+#Warn
 #KeyHistory, 0
 #SingleInstance, Force
 

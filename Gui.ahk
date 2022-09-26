@@ -1,24 +1,21 @@
 ﻿class ConfigGui
 {
     ; Store a static instance to the last gui that was created. Used with the GuiClose event
-    static _instance := ""
+    static _instances := []
 
     ; Create a new instance of the config gui
     ; settings: An instance of the SettingsController
     ; iniPath: A path/file name of the config file
     __New(settings, iniPath)
     {
-        ConfigGui._instance := this
-
         this._settings := settings
-
         this._iniPath := iniPath
-
         this._controls := []
 
         this._title := StrReplace(GetLanguage().Title, "%1", Stronghold_Version())
         Gui, New, % "+hwndhwnd +labelConfigGui_On", % this._title
-        this._hwnd := hwnd
+        this._hwnd := hwnd + 0
+        ConfigGui._instances[hwnd] := this
 
         this._buildGui()
     }
@@ -27,7 +24,7 @@
     Destroy()
     {
         try Gui, % this._hwnd ":Destroy"
-        ConfigGui._instance := ""
+        ConfigGui._instances.Delete(this._hwnd)
     }
 
     ; Show the window
@@ -47,7 +44,7 @@
     {
         Get
         {
-            Return ConfigGui._instance != ""
+            Return ConfigGui._instances.Length() > 0
         }
     }
 
@@ -136,7 +133,7 @@
     ; En/Disable every control in the hwnds list
     _batchEnDisable(hwnds, enable)
     {
-        command := enable ? "Enable": "Disable"
+        command := enable ? "Enable" : "Disable"
         For each, hwnd in hwnds
         {
             GuiControl(hwnd, command)
@@ -203,8 +200,9 @@
 ; The GuiClose event
 ConfigGui_OnClose(hwnd)
 {
-    If (ConfigGui.IsRunning)
+    local gui
+    If (gui := ConfigGui._instances[hwnd + 0])
     {
-        Return ConfigGui._instance.OnClose()
+        Return gui.OnClose()
     }
 }
