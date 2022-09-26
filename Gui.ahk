@@ -64,14 +64,14 @@
         w := width - 20
 
         Gui, % this._hwnd ":Add", Tab3, hwndhwnd w%width% h%height%, % lang.TabTitle
-        this._controls.Tab := this._hwnd
+        this._controls.Tab := hwnd
 
             ; AutoClicker
 
             Gui, % this._hwnd ":Tab", 1
 
-            Gui, % this._hwnd ":Add", Text, hwndhwnd w%w%, % lang.AC_Desc
-            Gui, % this._hwnd ":Add", Text, hwndhwnd
+            Gui, % this._hwnd ":Add", Text, w%w%, % lang.AC_Desc
+            Gui, % this._hwnd ":Add", Text
 
             clickerEnable := this._settings.AutoClicker.Enable
             clickerDisable := !clickerEnable
@@ -90,8 +90,8 @@
 
             Gui, % this._hwnd ":Tab", 2
 
-            Gui, % this._hwnd ":Add", Link, hwndhwnd Section w%w%, % Format(lang.MN_Desc, UCPWebsite())
-            Gui, % this._hwnd ":Add", Text, hwndhwnd
+            Gui, % this._hwnd ":Add", Link, Section w%w%, % Format(lang.MN_Desc, UCPWebsite())
+            Gui, % this._hwnd ":Add", Text
 
             mapEnable := this._settings.MapNavigation.Enable
             mapDisable := !mapEnable
