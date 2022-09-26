@@ -4,6 +4,8 @@ global keepComments := true
 global removeIndent := false
 global resultFileAhk := "Stronghold.ahk"
 global resultFileExe := "Stronghold.exe"
+global buildMinimal := true
+global resultFileExeMinimal := "Stronghold_minimal.exe"
 
 global mainPath := GetFullPathName(A_ScriptDir "\..\")
 SetWorkingDir, % mainPath
@@ -47,7 +49,16 @@ If (FileExist("Build\" resultFileExe))
 {
     FileDelete("Build\" resultFileExe)
 }
-CompileWithAhk2Exe("Stronghold.ahk")
+CompileWithAhk2Exe("Stronghold.ahk", resultFileExe)
+
+If (buildMinimal)
+{
+    If (FileExist("Build\" resultFileExeMinimal))
+    {
+        FileDelete("Build\" resultFileExeMinimal)
+    }
+    CompileWithAhk2Exe("Minimal_Autoclicker.ahk", resultFileExeMinimal)
+}
 
 Msgbox,, Finish, Compiling the files finished
 
@@ -69,11 +80,11 @@ CompressFile(file)
     Return result
 }
 
-CompileWithAhk2Exe(file)
+CompileWithAhk2Exe(file, result)
 {
     SplitPath, A_AhkPath,, ahkDir
     ahk2Exe := """" ahkDir "\Compiler\Ahk2Exe.exe"""
-    Run % ahk2Exe " /in """ A_WorkingDir "\" file """ /out """ A_WorkingDir "\Build\" resultFileExe """ /compress 0"
+    Run % ahk2Exe " /in """ A_WorkingDir "\" file """ /out """ A_WorkingDir "\Build\" result """ /compress 0"
 }
 
 StartsWith(ByRef var, ByRef string)

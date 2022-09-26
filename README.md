@@ -29,3 +29,9 @@ This program now adds the ability to navigate the map in the game.
 ### Toggle Map navigation
 A Hotkey can be set to toggle the Map navigation on and off.  
 This option is set to the `CapsLock` key by default.
+
+# Stronghold minimal Autoclicker
+
+You only need a minimal autoclicker and nothing else?
+
+Just use the file `Minimal_Autoclicker.ahk` and run it, it will enable a simple autoclicker as long as you press and hold the middle mouse button
