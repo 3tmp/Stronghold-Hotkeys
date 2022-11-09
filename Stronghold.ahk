@@ -15,7 +15,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.2.0"
+    Return "1.3.0"
 }
 
 ; The window title groups
@@ -175,6 +175,25 @@ BuildTrayMenu()
     Menu, Tray, Add
     Menu, Tray, Add, % lang.Tray_Exit, Tray_Exit
     Menu, Tray, Tip, % Format(lang.Tray_Tip, Stronghold_Version())
+
+    TrySetTrayIcon()
+}
+
+TrySetTrayIcon()
+{
+    EnvGet, progFiles86, % "ProgramFiles(x86)"
+
+    shSteam := progFiles86 "\Steam\steamapps\common\Stronghold\Stronghold.exe"
+    shcSteam := progFiles86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold Crusader.exe"
+
+    If (FileExist(shcSteam))
+    {
+        try Menu, Tray, Icon, % shcSteam
+    }
+    Else If (FileExist(shSteam))
+    {
+        try Menu, Tray, Icon, % shSteam
+    }
 }
 
 ; Perform a mouse click with the left mouse button
