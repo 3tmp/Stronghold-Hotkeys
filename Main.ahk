@@ -6,8 +6,6 @@
 #Include Lib\VarFuncs.ahk
 
 #Include Lib\ArrayList.ahk
-#Include Lib\BaseEvent.ahk
-#Include Lib\BaseEvent.ahk
 #Include Lib\ClassFunctions.ahk
 #Include Lib\CommandsAsFunction.ahk
 #Include Lib\Debugger.ahk
@@ -15,6 +13,11 @@
 #Include Lib\Null.ahk
 #Include Lib\OBM.ahk
 #Include Lib\WinApi.ahk
+
+#Include Lib\Events\BaseEvent.ahk
+#Include Lib\Events\PropertyChangeEvent.ahk
+#Include Lib\Events\PropertyChangeListener.ahk
+#Include Lib\Events\PropertyChangeSupport.ahk
 
 #Include Lib\Gui\ControlEvent.ahk
 #Include Lib\Gui\GuiBase.ahk
@@ -31,11 +34,11 @@
 #Include Lib\Gui\Controls\Tab.ahk
 #Include Lib\Gui\Controls\Text.ahk
 
-#Include Settings.ahk
-#Include SettingsGui.ahk
-#Include Events.ahk
-#Include Helper.ahk
+;#Include Settings.ahk
+;#Include Helper.ahk
 #Include Localization.ahk
+#Include TrayMenu.ahk
+#Include StrongholdManager.ahk
 
 
 SetWorkingDir, % A_ScriptDir
@@ -55,42 +58,7 @@ GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
 ; The path where the settings get stored
 global IniPath := "Config.ini"
 
-; The settings manager object
-global Settings := SettingsController.Static_Parse(IniPath)
-; Subscribe to events from the settings object
-Settings.OnBeforeMapNavigationChange(Func("BeforeMapNavChange"))
-Settings.OnAfterMapNavigationChange(Func("AfterMapNavChange"))
-Settings.OnBeforeAutoClickerChange(Func("BeforeAutoClickerChange"))
-Settings.OnAfterAutoClickerChange(Func("AfterAutoClickerChange"))
-
-; Initialize the tray menu
-BuildTrayMenu()
-
-; Init the autoclicker
-If (Settings.AutoClicker.Enable)
-{
-    _setAutoClickerHotkey(true)
-}
-
-; Init the map navigation
-If (Settings.MapNavigation.Enable)
-{
-    _setMapNavHotkey(true)
-}
-
-; A toggle that stores the temp state of the map navigation
-global MapNavIsToggleEnabled := Settings.MapNavigation.Enable
-
-If (!FileExist(IniPath) || IsDebuggerAttatched())
-{
-    Settings.Save(IniPath)
-    If (!ConfigGui.IsRunning)
-    {
-        gui := new ConfigGui(Settings, IniPath)
-    }
-
-    gui.Show()
-}
+TrayMenu.Instance.Init()
 
 Return
 
@@ -122,131 +90,9 @@ ToggleMapNavigation()
 }
 
 
-; Event handlers
-
-BeforeMapNavChange()
-{
-    _setMapNavHotkey(false)
-}
-
-AfterMapNavChange()
-{
-    If (Settings.MapNavigation.Enable)
-    {
-        _setMapNavHotkey(true)
-        MapNavIsToggleEnabled := true
-    }
-    Else
-    {
-        MapNavIsToggleEnabled := false
-    }
-}
-
-BeforeAutoClickerChange()
-{
-    _setAutoClickerHotkey(false)
-}
-
-AfterAutoClickerChange()
-{
-    If (Settings.AutoClicker.Enable)
-    {
-        _setAutoClickerHotkey(true)
-    }
-}
-
-; Hotkey modifications
-
-_setMapNavHotkey(enable)
-{
-    _modifyHotkey(Settings.MapNavigation.ToggleKey, Settings.MapNavigation.WhereToEnable, "ToggleMapNavigation", enable)
-}
-
-_setAutoClickerHotkey(enable)
-{
-    _modifyHotkey(Settings.AutoClicker.Key, "StrongholdAndCrusader", "MouseClicks", enable)
-}
-
-_modifyHotkey(key, group, funcName, enable)
-{
-    onOff := enable ? "On" : "Off"
-    Hotkey, IfWinActive, ahk_group %group%
-    Hotkey, %key%, %funcName%, %onOff%
-}
-
-; Helper methods
-
-BuildTrayMenu()
-{
-    lang := GetLanguage()
-    Menu, Tray, NoStandard
-    Menu, Tray, DeleteAll
-    If (IsDebuggerAttatched())
-    {
-        ; Just for debugging purposes
-        Menu, Tray, Add, ListLines, Tray_ListLines
-    }
-    Menu, Tray, Add, % Format(lang.Tray_Title, Stronghold_Version()), Tray_Void
-    Menu, Tray, Default, % Format(lang.Tray_Title, Stronghold_Version())
-    Menu, Tray, Add
-    Menu, Tray, Add, % lang.Tray_Config, Tray_Config
-    Menu, Tray, Add, % lang.Tray_Website, Tray_OpenWebsite
-    Menu, Tray, Add, % lang.Tray_About, Tray_About
-    Menu, Tray, Add
-    Menu, Tray, Add, % lang.Tray_Exit, Tray_Exit
-    Menu, Tray, Tip, % Format(lang.Tray_Tip, Stronghold_Version())
-
-    TrySetTrayIcon()
-}
-
-TrySetTrayIcon()
-{
-    EnvGet, progFiles86, % "ProgramFiles(x86)"
-
-    shSteam := progFiles86 "\Steam\steamapps\common\Stronghold\Stronghold.exe"
-    shcSteam := progFiles86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold Crusader.exe"
-
-    If (FileExist(shcSteam))
-    {
-        try Menu, Tray, Icon, % shcSteam
-    }
-    Else If (FileExist(shSteam))
-    {
-        try Menu, Tray, Icon, % shSteam
-    }
-}
 
 ; Returns the website of the Unofficial Crusader Patch
 UCPWebsite()
 {
     Return "https://unofficialcrusaderpatch.github.io"
 }
-
-; Tray Menu labels
-
-Tray_ListLines:
-    ListLines
-Return
-
-Tray_About:
-    MsgBox,, % Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), % Format(GetLanguage().Tray_About_MsgBoxBody, Chr(0x00A9))
-Return
-
-Tray_OpenWebsite:
-    Run, https://github.com/3tmp/Stronghold-Hotkeys
-Return
-
-Tray_Config:
-    If (!ConfigGui.IsRunning)
-    {
-        gui := new ConfigGui(Settings, IniPath)
-    }
-
-    gui.Show()
-Return
-
-Tray_Void:
-Return
-
-Tray_Exit:
-ExitApp
