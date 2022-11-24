@@ -3,11 +3,40 @@
 #KeyHistory, 0
 #SingleInstance, Force
 
+#Include Lib\VarFuncs.ahk
+
+#Include Lib\ArrayList.ahk
+#Include Lib\BaseEvent.ahk
+#Include Lib\BaseEvent.ahk
+#Include Lib\ClassFunctions.ahk
+#Include Lib\CommandsAsFunction.ahk
+#Include Lib\Debugger.ahk
+#Include Lib\DefaultIterator.ahk
+#Include Lib\Null.ahk
+#Include Lib\OBM.ahk
+#Include Lib\WinApi.ahk
+
+#Include Lib\Gui\ControlEvent.ahk
+#Include Lib\Gui\GuiBase.ahk
+#Include Lib\Gui\GuiEvents.ahk
+#Include Lib\Gui\Controls\Button.ahk
+#Include Lib\Gui\Controls\Checkbox.ahk
+#Include Lib\Gui\Controls\ComboBoxBase.ahk
+#Include Lib\Gui\Controls\ContentControl.ahk
+#Include Lib\Gui\Controls\Control.ahk
+#Include Lib\Gui\Controls\DropDownList.ahk
+#Include Lib\Gui\Controls\Hotkey.ahk
+#Include Lib\Gui\Controls\Link.ahk
+#Include Lib\Gui\Controls\ListView.ahk
+#Include Lib\Gui\Controls\Tab.ahk
+#Include Lib\Gui\Controls\Text.ahk
+
 #Include Settings.ahk
-#Include Gui.ahk
+#Include SettingsGui.ahk
 #Include Events.ahk
 #Include Helper.ahk
 #Include Localization.ahk
+
 
 SetWorkingDir, % A_ScriptDir
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
@@ -15,7 +44,7 @@ SetBatchLines, -1
 
 Stronghold_Version()
 {
-    Return "1.3.0"
+    Return "2.0.0_alpha"
 }
 
 ; The window title groups
@@ -92,15 +121,6 @@ ToggleMapNavigation()
     MapNavIsToggleEnabled := !MapNavIsToggleEnabled
 }
 
-; Performs left mouse clicks as long as the trigger key is pressed down
-MouseClicks()
-{
-    While (GetKeyState(Settings.AutoClicker.Key, "P"))
-    {
-        PerformLeftClick()
-        Sleep, 15
-    }
-}
 
 ; Event handlers
 
@@ -194,37 +214,6 @@ TrySetTrayIcon()
     {
         try Menu, Tray, Icon, % shSteam
     }
-}
-
-; Perform a mouse click with the left mouse button
-PerformLeftClick()
-{
-    static WM_LBUTTONDOWN := 0x201
-         , WM_LBUTTONUP := 0x202
-         , MK_LBUTTON := 0x0001
-         , MK_NONE := 0x0000
-
-    _performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, MK_NONE)
-}
-
-; Performs a click. Posts a window message with the given number to the target window
-_performClick(msgDown, msgUp, keysUp, keysDown)
-{
-    MouseGetPos, x, y, hwnd
-    ; lo-order word: x coordinate of the cursor
-    ; hi-order word: y coordinate of the cursor
-    lParam := (y << 16) | x
-
-    PostMessage, msgDown, keysUp, lParam,, % "ahk_id" hwnd
-    Sleep, 10
-    PostMessage, msgUp, keysDown, lParam,, % "ahk_id" hwnd
-    Sleep, 10
-}
-
-; Only used for debugging purposes
-IsDebuggerAttatched()
-{
-    Return !!InStr(DllCall("Kernel32.dll\GetCommandLine", "Str"), "/debug")
 }
 
 ; Returns the website of the Unofficial Crusader Patch

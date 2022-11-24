@@ -1,0 +1,153 @@
+﻿; Performs various functions in the game. Assumes that Stronghold is the foreground window
+class StrongholdManager extends _Object
+{
+    ; The window titles of the games that can directly be used with the Ahk window commands
+    class WindowTitles extends _Enum
+    {
+        static Stronghold := "Stronghold ahk_class FFwinClass"
+             , Crusader := "Crusader ahk_class FFwinClass"
+             , Both := "ahk_class FFwinClass"
+    }
+
+    class InstallPaths extends _Enum
+    {
+        static __Progx86 := EnvGet("ProgramFiles(x86)")
+             , __Progx64 := EnvGet("ProgramFiles")
+             , StrongholdSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold\Stronghold.exe"
+             , CrusaderSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold Crusader.exe"
+             , ExtremeSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold_Crusader_Extreme.exe"
+    }
+
+    ; Perform a mouse click with the left mouse button at the current cursor position
+    ClickAtCurrentMousePos()
+    {
+        static WM_LBUTTONDOWN := 0x201
+             , WM_LBUTTONUP := 0x202
+             , MK_LBUTTON := 0x0001
+             , MK_NONE := 0x0000
+             , sleepTime := 10
+
+        this._performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, MK_NONE, sleepTime)
+    }
+
+    OpenGranary()
+    {
+        this._sendKeyWithCtrlModifier("g")
+    }
+
+    OpenArmoury()
+    {
+        this._sendKeyWithCtrlModifier("a")
+    }
+
+    OpenEngineersGuild()
+    {
+        this._sendKeyWithCtrlModifier("i")
+    }
+
+    OpenKeep()
+    {
+        this._sendKeyWithCtrlModifier("h")
+    }
+
+    OpenTunnlerGuild()
+    {
+        this._sendKeyWithCtrlModifier("t")
+    }
+
+    OpenBarracks()
+    {
+        this._sendKeyWithCtrlModifier("b")
+    }
+
+    OpenMercenaries()
+    {
+        If (this._isCrusaderActive())
+        {
+            this._sendKeyWithCtrlModifier("n")
+        }
+    }
+
+    OpenMarket()
+    {
+        this._sendKeyWithCtrlModifier("m")
+    }
+
+    OpenAdministration()
+    {
+        this._send("tab")
+    }
+
+    RotateScreen()
+    {
+        this._sendKeyWithCtrlModifier("a")
+    }
+
+    ; Valid input: numbers 1 - 12, "random"
+    SendTauntMessage(message := "random")
+    {
+        If (message = "random")
+        {
+            Random, message, 1, 12
+        }
+
+        If (message >= 1 && message <= 12)
+        {
+            this._send("F" message)
+        }
+    }
+
+    IncreaseGameSpeed()
+    {
+        this._send("NumpadAdd")
+    }
+
+    DecreaseGameSpeed()
+    {
+        this._send("NumpadSub")
+    }
+
+    ; Private helper
+
+    ; Returns true if Stronghold is the active game
+    _isStrongholdActive()
+    {
+        Return WinActive(StrongholdManager.WindowTitles.Stronghold)
+    }
+
+    ; Returns true if Crusader or Extreme is the game
+    _isCrusaderActive()
+    {
+        Return WinActive(StrongholdManager.WindowTitles.Crusader)
+    }
+
+    ; Returns true if Stronghold, Crusader or Extreme is the game
+    _isAnyActive()
+    {
+        Return WinActive(StrongholdManager.WindowTitles.Both)
+    }
+
+    ; Performs a click. Posts a window message with the given number to the target window
+    _performClick(msgDown, msgUp, keysUp, keysDown, sleep := 0)
+    {
+        MouseGetPos, x, y, hwnd
+        ; lo-order word: x coordinate of the cursor
+        ; hi-order word: y coordinate of the cursor
+        lParam := (y << 16) | x
+
+        PostMessage, msgDown, keysUp, lParam,, % "ahk_id" hwnd
+        Sleep, % sleep
+        PostMessage, msgUp, keysDown, lParam,, % "ahk_id" hwnd
+        Sleep, % sleep
+    }
+
+    _sendKeyWithCtrlModifier(keys)
+    {
+        this._send("{ctrl down}{" key "}{ctrl up}")
+    }
+
+    _send(keys)
+    {
+        SendEvent, % keys
+    }
+}

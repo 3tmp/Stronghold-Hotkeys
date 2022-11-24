@@ -1,7 +1,13 @@
 ﻿GetLanguage()
 {
-    ; All german language codes end with "07"
-    Return InStr(A_Language, "07", true, 3) ? _language_de() : _language_en()
+    static l := GetLanguage()
+
+    If (!IsSet(l))
+    {
+        ; All german language codes end with "07"
+        l := InStr(A_Language, "07", true, 3) ? _language_de() : _language_en()
+    }
+    Return l
 }
 
 _language_en()
