@@ -187,6 +187,7 @@
     ; Handles the adding of new control
     _addControl(__controlClass, options, text)
     {
+        local
         ctrl := new __controlClass(this, options, text)
         Return this._controls[ctrl.Hwnd + 0] := ctrl
     }
@@ -233,6 +234,7 @@
     ; Searches all guis for the hwnd and returns the control object if found
     Static_GetControl(hwnd)
     {
+        local
         For each, gui in GuiBase._instances
         {
             If (ctrl := gui.GetControl(hwnd))
