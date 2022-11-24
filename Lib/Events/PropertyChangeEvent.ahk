@@ -1,6 +1,6 @@
 ﻿; The event that gets fired. This gets automatically created when an event gets fired
 ; Must not be instanciated manually
-class _propertyChangeEvent extends _Object
+class _propertyChangeEvent
 {
     ; name: The name of the event as string
     ; oldValue: The old value or object

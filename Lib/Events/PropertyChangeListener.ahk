@@ -1,5 +1,5 @@
 ﻿; A class that the user must instanciate when one wants to listen out for events
-class PropertyChangeListener extends _Object
+class PropertyChangeListener
 {
     ; fn: The callback to call when the event gets fired. Receives one param (A _propertyChangeEvent)
     ; eventName: Optional. The name of the event which must occur to call the callback. If this is blank, the callback will always be called
