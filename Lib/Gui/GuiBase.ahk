@@ -67,6 +67,16 @@
         Gui, % this._hwnd ":Hide"
     }
 
+    Enable()
+    {
+        Gui, % this._hwnd ":-Disabled"
+    }
+
+    Disable()
+    {
+        Gui, % this._hwnd ":+Disabled"
+    }
+
     ; Closes the window (hides the window, but does not destroy it)
     Close()
     {
@@ -200,6 +210,25 @@
         Get
         {
             Return this._hwnd
+        }
+    }
+
+    ; The position of the window
+    Pos[]
+    {
+        Get
+        {
+            dhw := DetectHiddenWindows("On")
+            pos := WinGetPos("ahk_id" this._hwnd)
+            DetectHiddenWindows(dhw)
+            Return pos
+        }
+
+        Set
+        {
+            dhw := DetectHiddenWindows("On")
+            WinMove("ahk_id" this._hwnd, "", value.x, value.y, value.w, value.h)
+            DetectHiddenWindows(dhw)
         }
     }
 

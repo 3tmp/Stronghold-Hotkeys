@@ -285,7 +285,17 @@ WinGetPos(ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "", B
     WinGetPos, X, Y, Width, Height, %WinTitle%, %WinText%, %ExcludeTitle%, %ExcludeText%
     Return {X: X, Y: Y, W: Width, H: Height}
 }
-
+WinMove(ByRef WinTitleOrX, ByRef WinTextOrY, ByRef X := "", ByRef Y := "", ByRef Width := "", ByRef Height := "", ByRef ExcludeTitle := "", ByRef ExcludeText := "")
+{
+    If (X == "" && Y == "")
+    {
+        WinMove, %WinTitleOrX%, %WinTextOrY%
+    }
+    Else
+    {
+        WinMove, %WinTitleOrX%, %WinTextOrY%, %X%, %Y%, %Width%, %Height%, %ExcludeTitle%, %ExcludeText%
+    }
+}
 WinSet(ByRef Cmd, ByRef Value, ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "", ByRef ExcludeText := "")
 {
     WinSet, %Cmd%, %Value%, %WinTitle%, %WinText%, %ExcludeTitle%, %ExcludeText%

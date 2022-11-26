@@ -57,6 +57,23 @@
         }
     }
 
+    ; The position of the control relative to the upper left corner of the window
+    Pos[]
+    {
+        Get
+        {
+            GuiControlGet, pos, Pos, % this._hwnd
+            Return {"x": posX, "y": posY, "w": posW, "h": posH}
+        }
+
+        Set
+        {
+            pos := (value.x != "" ? "x" value.x : "") (value.y != "" ? " y" value.y : "")
+                 . (value.h != "" ? " h" value.h : "") (value.w != "" ? " w" value.w : "")
+            GuiControl, MoveDraw, % this._hwnd, % pos
+        }
+    }
+
     ; Edit the controls options
     Options(options)
     {
@@ -74,6 +91,26 @@
     {
         GuiControlGet, value, % command, this._hwnd, % options
         Return value
+    }
+
+    Enable()
+    {
+        GuiControl, Enable, % this._hwnd
+    }
+
+    Disable()
+    {
+        GuiControl, Disable, % this._hwnd
+    }
+
+    Show()
+    {
+        GuiControl, Show, % this._hwnd
+    }
+
+    Hide()
+    {
+        GuiControl, Hide, % this._hwnd
     }
 
     ToString()
