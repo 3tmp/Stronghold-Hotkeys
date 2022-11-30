@@ -11,11 +11,11 @@ class StrongholdManager
 
     class InstallPaths
     {
-        static __Progx86 := EnvGet("ProgramFiles(x86)")
-             , __Progx64 := EnvGet("ProgramFiles")
-             , StrongholdSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold\Stronghold.exe"
-             , CrusaderSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold Crusader.exe"
-             , ExtremeSteam := StrongholdManager.InstallPaths.__Progx86 "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold_Crusader_Extreme.exe"
+        ; Program Files Env Var = "ProgramFiles"
+        static StrongholdSteam := EnvGet("ProgramFiles(x86)") "\Steam\steamapps\common\Stronghold\Stronghold.exe"
+             , CrusaderSteam := EnvGet("ProgramFiles(x86)") "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold Crusader.exe"
+             , ExtremeSteam := EnvGet("ProgramFiles(x86)") "\Steam\steamapps\common\Stronghold Crusader Extreme\Stronghold_Crusader_Extreme.exe"
+        ; TODO Add install paths for installation without steam
     }
 
     ; Perform a mouse click with the left mouse button at the current cursor position
