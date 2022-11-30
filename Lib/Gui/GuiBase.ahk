@@ -237,7 +237,7 @@
 
     OnClose()
     {
-        this.Close()
+        this.Destroy()
     }
 
     OnEscape()
@@ -279,6 +279,7 @@
     ; Takes in the Text parameter from the Gui Add command and transforms a list into a pipe delimitered string
     _uniformGuiAddParam(ByRef strOrObj)
     {
+        valueText := ""
         If (IsObject(strOrObj))
         {
             For each, value in strOrObj
