@@ -144,6 +144,12 @@
         DetectHiddenWindows(dhw)
     }
 
+    ; Set the gui margin option
+    Margin(x := "", y := "")
+    {
+        Gui, % this._hwnd ":Margin", % x, % y
+    }
+
     ; Add Controls
 
     ; Adds a Button control
