@@ -107,6 +107,11 @@ class StrongholdManager
         this._send("NumpadSub")
     }
 
+    TogglePause()
+    {
+        this._send("p")
+    }
+
     ; Private helper
 
     ; Returns true if Stronghold is the active game
