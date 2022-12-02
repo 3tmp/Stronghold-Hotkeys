@@ -210,6 +210,29 @@ class GuiBase_ListViewEventArgs extends GuiBase_EventArgs
     }
 }
 
+class GuiBase_ListViewColumnEventArgs extends GuiBase_EventArgs
+{
+    __New(sender, event, eventInfo, errLevel)
+    {
+        base.__New(sender, event, eventInfo, errLevel)
+        this._column := eventInfo
+    }
+
+    ; Get the index of the column
+    Column[]
+    {
+        Get
+        {
+            Return this._column
+        }
+    }
+
+    ToString()
+    {
+        Return base.ToString() ", Column: " this.Column
+    }
+}
+
 class GuiBase_LinkEventArgs extends GuiBase_EventArgs
 {
     ; Get the index of the link that was clicked
@@ -233,5 +256,31 @@ class GuiBase_LinkEventArgs extends GuiBase_EventArgs
     ToString()
     {
         Return base.ToString() ", LinkIndex: " this.LinkIndex ", HrefOrId: """ this.HrefOrId """"
+    }
+}
+
+; Used when a key gets pressed while the control has the keyboard focus
+class GuiBase_KeyReceivedEventArgs extends GuiBase_EventArgs
+{
+    ; The key as string that was pressed
+    Key[]
+    {
+        Get
+        {
+            Return GetKeyName("vk" this.EventInfo.Format("{:x}"))
+        }
+    }
+
+    ScanCode[]
+    {
+        Get
+        {
+            Return this.EventInfo
+        }
+    }
+
+    ToString()
+    {
+        Return base.ToString() ", Key: " this.Key ", ScanCode: " this.ScanCode
     }
 }
