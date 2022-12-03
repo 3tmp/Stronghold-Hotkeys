@@ -34,8 +34,16 @@
 #Include Lib\Gui\Controls\Tab.ahk
 #Include Lib\Gui\Controls\Text.ahk
 
-;#Include Settings.ahk
-;#Include Helper.ahk
+#Include Controller\SettingsController.ahk
+#Include Gui\SettingsGui.ahk
+#Include Model\AutoClickerModel.ahk
+#Include Model\GeneralModel.ahk
+#Include Model\IniSection.ahk
+#Include Model\ISetting.ahk
+#Include Model\MapNavigation.ahk
+#Include Model\ReplaceKeysModel.ahk
+#Include Model\SettingsModel.ahk
+
 #Include Localization.ahk
 #Include TrayMenu.ahk
 #Include StrongholdManager.ahk
@@ -60,6 +68,22 @@ global IniPath := "Config.ini"
 
 TrayMenu.Instance.Init()
 
+model := new SettingsModel()
+model.ReplaceKeys := ReplaceKeysModel.Default()
+model.AutoClicker := AutoClickerModel.Default()
+model.MapNavigation := MapNavigationModel.Default()
+model.General := GeneralModel.Default()
+
+controller := new SettingsController()
+
+gui := new SettingsGui(controller, model)
+gui.Show()
+
+; For testing
+F3::
+model.AutoClicker := new AutoClickerModel(!model.AutoClicker.Enable, model.AutoClicker.Key == "MButton" ? "XButton1" : "MButton")
+model.MapNavigation := new MapNavigationModel(!model.MapNavigation.Enable, model.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold")
+
 Return
 
 
@@ -79,8 +103,8 @@ w::Up
 ; Determines if the Map should be navigated with the wasd keys
 ShouldNavMap()
 {
-    nav := Settings.MapNavigation
-    Return MapNavIsToggleEnabled && nav.Enable && WinActive("ahk_group" nav.WhereToEnable)
+    ;nav := SettingsModel.MapNavigation
+    ;Return MapNavIsToggleEnabled && nav.Enable && WinActive("ahk_group" nav.WhereToEnable)
 }
 
 ; Toggles the Map navigation on and off (This is not a persistent setting, only for the lifetime of the application)
