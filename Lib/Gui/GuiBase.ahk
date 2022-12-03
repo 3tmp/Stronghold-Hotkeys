@@ -38,6 +38,9 @@
     ; Destroy the window and all controls
     Destroy()
     {
+        ; Fire the event
+        this.OnDestroy()
+
         ; Ignore errors if the gui is already destroyed
         try Gui, % this._hwnd ":Destroy"
 
@@ -240,6 +243,11 @@
 
     ; ========== Gui Events ==========
     ; Override in deriving classes to get access to the gui events
+
+    ; Gets called before the gui gets destroyed
+    OnDestroy()
+    {
+    }
 
     OnClose()
     {

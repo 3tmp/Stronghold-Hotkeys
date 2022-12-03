@@ -74,6 +74,27 @@
         }
     }
 
+    ; Get/Set the enabled state of the control
+    IsEnabled[]
+    {
+        Get
+        {
+            Return WinApi_IsWindowEnabled(this._hwnd)
+        }
+
+        Set
+        {
+            If (value)
+            {
+                this.Enable()
+            }
+            Else
+            {
+                this.Disable()
+            }
+        }
+    }
+
     ; Edit the controls options
     Options(options)
     {
