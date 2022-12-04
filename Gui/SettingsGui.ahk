@@ -21,8 +21,8 @@
 
     BuildGui()
     {
-        this._width := 500
-        this._height := 400
+        this._width := 400
+        this._height := 365
         this._margin := 10
 
         this.Margin(this._margin, this._margin)
@@ -53,7 +53,7 @@
         this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose1", SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
         this._ctrlG_updatesDropDown := this.AddDropDownList("Choose1", SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
-        this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates").OnClick(OBM(this, "_onG_updateNowBtn"))
+        this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates").OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
     ; AutoClicker
@@ -84,20 +84,27 @@
         this.AddText()
 
         noHdrReorder := "-LV0x10"
-        lvOptions := "w" (this._width - this._margin * 2) " R12 -Multi NoSort NoSortHdr Grid " noHdrReorder
+        lvOptions := "w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder
         this._ctrlRK_Lv := this.AddListView(lvOptions, ["Command", "Key"])
-
         For key, value in this._settingsModel.ReplaceKeys.GetAllReplaceKeyOptions()
         {
             this._ctrlRK_Lv.Add(, key, value)
         }
-        this._ctrlRK_Lv.OnRowSelected(OBM(this, "_onRK_LvRowSelected"))
-
         Loop, % this._ctrlRK_Lv.ColumnCount
         {
             this._ctrlRK_Lv.ModifyCol(A_Index, "AutoHdr")
         }
+        this._ctrlRK_Lv.OnRowFocused(OBM(this, "_onRK_LvRowFocused"))
 
+        this._ctrlRK_Hotkey := this.AddHotkey("Section Disabled").OnHotkeyChange(OBM(this, "_onRK_HotkeyChange"))
+
+        this._ctrlRK_ApplyHotkeyBtn := this.AddButton("x+m Disabled", "Apply Hotkey").OnClick(OBM(this, "_onRK_ApplyHotkeyBtnClick"))
+
+        this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", "Remove current Hotkey").OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
+
+        this._ctrlRK_HotkeyInUseText := this.AddText("xs Hidden", "Hotkey is already in use")
+
+        this._ctrlRK_ResetToDefaultsBtn := this.AddButton(, "Reset to default").OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
     }
 
     ; Gets called before the gui gets destroyed
@@ -147,7 +154,7 @@
         this._tempOnEvent(eventArgs)
     }
 
-    _onG_updateNowBtn(eventArgs)
+    _onG_UpdateNowBtnClick(eventArgs)
     {
         this._tempOnEvent(eventArgs)
     }
@@ -172,7 +179,34 @@
         this._tempOnEvent(eventArgs)
     }
 
-    _onRK_LvRowSelected(eventArgs)
+    _onRK_LvRowFocused(eventArgs)
+    {
+        this._enableHotkeyAndSetValue()
+    }
+
+    _onRK_ResetToDefaultBtnClick(eventArgs)
+    {
+        this._disableHotkeyAndClear()
+    }
+
+    _onRK_HotkeyChange(eventArgs)
+    {
+        If (eventArgs.KeyComboString !== "" && this._settingsModel.ReplaceKeys.ContainsAny(eventArgs.KeyComboString))
+        {
+            this._showHotkeyInUseWarning()
+        }
+        Else
+        {
+            this._hideHotkeyInUseWarning()
+        }
+    }
+
+    _onRK_ApplyHotkeyBtnClick(eventArgs)
+    {
+        this._tempOnEvent(eventArgs)
+    }
+
+    _onRK_RemoveHotkeyBtnClick(eventArgs)
     {
         this._tempOnEvent(eventArgs)
     }
@@ -182,6 +216,34 @@
         ToolTip, % eventArgs.ToString()
         Sleep, 1000
         ToolTip
+    }
+
+    _enableHotkeyAndSetValue()
+    {
+        ; TODO better method to get the focused row
+        this._ctrlRK_Hotkey.KeyComboString := this._ctrlRK_Lv.GetFocused()[1].At(2).Text
+        this._ctrlRK_Hotkey.Enable()
+        this._ctrlRK_ApplyHotkeyBtn.Enable()
+        this._ctrlRK_RemoveHotkeyBtn.Enable()
+    }
+
+    _disableHotkeyAndClear()
+    {
+        this._ctrlRK_Hotkey.KeyComboString := ""
+        this._ctrlRK_Hotkey.Disable()
+        this._ctrlRK_ApplyHotkeyBtn.Disable()
+        this._ctrlRK_RemoveHotkeyBtn.Disable()
+        this._hideHotkeyInUseWarning()
+    }
+
+    _showHotkeyInUseWarning()
+    {
+        this._ctrlRK_HotkeyInUseText.Show()
+    }
+
+    _hideHotkeyInUseWarning()
+    {
+        this._ctrlRK_HotkeyInUseText.Hide()
     }
 
     ; SettingsModel events
