@@ -43,10 +43,11 @@
 #Include Model\MapNavigation.ahk
 #Include Model\ReplaceKeysModel.ahk
 #Include Model\SettingsModel.ahk
+#Include Stronghold\StrongholdManager.ahk
+#Include Stronghold\StrongholdHotkeyHandler.ahk
 
 #Include Localization.ahk
 #Include TrayMenu.ahk
-#Include StrongholdManager.ahk
 
 
 SetWorkingDir, % A_ScriptDir
