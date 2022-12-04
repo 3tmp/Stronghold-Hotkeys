@@ -27,7 +27,8 @@ class StrongholdManager
              , MK_NONE := 0x0000
              , sleepTime := 10
 
-        this._performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, MK_NONE, sleepTime)
+        MouseGetPos, x, y, hwnd
+        this._performClick(WM_LBUTTONDOWN, WM_LBUTTONUP, MK_LBUTTON, MK_NONE, hwnd, x, y, sleepTime)
     }
 
     OpenGranary()
@@ -133,9 +134,8 @@ class StrongholdManager
     }
 
     ; Performs a click. Posts a window message with the given number to the target window
-    _performClick(msgDown, msgUp, keysUp, keysDown, sleep := 0)
+    _performClick(msgDown, msgUp, keysUp, keysDown, hwnd, x, y, sleep := 0)
     {
-        MouseGetPos, x, y, hwnd
         ; lo-order word: x coordinate of the cursor
         ; hi-order word: y coordinate of the cursor
         lParam := (y << 16) | x
