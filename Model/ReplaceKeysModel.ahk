@@ -190,6 +190,19 @@
         }
     }
 
+    ; Returns true if the given key is already set in some property
+    ContainsAny(key)
+    {
+        For each, value in this._toObject()
+        {
+            If (key = value)
+            {
+                Return true
+            }
+        }
+        Return false
+    }
+
     GetAllReplaceKeyOptions()
     {
         result := this._toObject()
@@ -263,7 +276,7 @@
         For key, value in this
         {
             ; Check all private fields that are not a method
-            If (key.StartsWith("_") && !IsObject(value))
+            If (!IsObject(value) && key.StartsWith("_"))
             {
                 ; Replace the "_" at the beginning and make the first char upper case
                 result[key.SubStr(2, 1).ToUpper() key.SubStr(3)] := value
