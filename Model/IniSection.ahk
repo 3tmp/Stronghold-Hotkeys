@@ -56,7 +56,8 @@
 
         For each, line in lines
         {
-            If (A_Index == 1)
+            line := line.Trim()
+            If (A_Index == 1 || line == "")
             {
                 Continue
             }
