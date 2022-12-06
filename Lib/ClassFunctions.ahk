@@ -3,6 +3,7 @@
 ; Returns The name of the given class
 ClassName(cls)
 {
+    local
     Return cls.__Class
 }
 
@@ -15,6 +16,7 @@ ClassName(cls)
 ;                         "FileObject", "EnumeratorObject", "Property", "String", "Float", "Integer"
 TypeOf(var, assert := "")
 {
+    local
     static matchObj  := NumGet(&(m, RegExMatch("", "O)", m)))
          , boundFunc := NumGet(&(f := Func("Func").Bind()))
          , fileObj   := NumGet(&(f := FileOpen("*", "w")))
@@ -45,6 +47,7 @@ TypeOf(var, assert := "")
 ; Returns true if the object is an instance of the given class
 InstanceOf(obj, cls)
 {
+    local
     base := obj
     Loop
     {
