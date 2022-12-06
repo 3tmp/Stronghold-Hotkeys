@@ -39,7 +39,7 @@
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk
 #Include Model\IniSection.ahk
-#Include Model\ISetting.ahk
+#Include Model\ISettingsModel.ahk
 #Include Model\MapNavigation.ahk
 #Include Model\ReplaceKeysModel.ahk
 #Include Model\SettingsModel.ahk
@@ -47,6 +47,7 @@
 #Include Stronghold\StrongholdHotkeyHandler.ahk
 
 #Include Localization.ahk
+#Include Ressources.ahk
 #Include TrayMenu.ahk
 
 
@@ -86,38 +87,3 @@ model.AutoClicker := new AutoClickerModel(!model.AutoClicker.Enable, model.AutoC
 model.MapNavigation := new MapNavigationModel(!model.MapNavigation.Enable, model.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold")
 
 Return
-
-
-; Map navigation
-; The map navigation hotkeys have to be defined like this, because otherwise the
-; auto fire does not work correct
-#If ShouldNavMap()
-
-a::Left
-s::Down
-d::Right
-w::Up
-
-#If
-
-
-; Determines if the Map should be navigated with the wasd keys
-ShouldNavMap()
-{
-    ;nav := SettingsModel.MapNavigation
-    ;Return MapNavIsToggleEnabled && nav.Enable && WinActive("ahk_group" nav.WhereToEnable)
-}
-
-; Toggles the Map navigation on and off (This is not a persistent setting, only for the lifetime of the application)
-ToggleMapNavigation()
-{
-    MapNavIsToggleEnabled := !MapNavIsToggleEnabled
-}
-
-
-
-; Returns the website of the Unofficial Crusader Patch
-UCPWebsite()
-{
-    Return "https://unofficialcrusaderpatch.github.io"
-}
