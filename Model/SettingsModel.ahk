@@ -1,4 +1,4 @@
-﻿class SettingsModel
+﻿class SettingsModel extends ISettingsModel
 {
     class Events
     {
@@ -197,5 +197,97 @@
         after := this[propertyName]
 
         this._changes.FirePropertyChange(eventName, before, after)
+    }
+
+    Equals(other)
+    {
+        If (this == other)
+        {
+            Return true
+        }
+
+        If (ClassName(other) !== "SettingsModel")
+        {
+            Return false
+        }
+
+        Return this._autoClicker.Equals(other._autoClicker)
+            && this._mapNavigation.Equals(other._mapNavigation)
+            && this._replaceKeys.Equals(other._replaceKeys)
+            && this._general.Equals(other._general)
+    }
+
+    Default()
+    {
+        result := new SettingsModel()
+        result._autoClicker := AutoCLickerModel.Default()
+        result._mapNavigation := MapNavigationModel.Default()
+        result._replaceKeys := ReplaceKeysModel.Default()
+        result._general := GeneralModel.Default()
+        Return result
+    }
+
+    FromIniString(str)
+    {
+        sections := []
+        section := {title: "", body: ""}
+        For each, line in str.Split("`n", "`r")
+        {
+            l := line.Trim()
+            If (l.StartsWith("[") && l.EndsWith("]"))
+            {
+                sections.Add(section)
+                section := {title: l, body: ""}
+            }
+            Else
+            {
+                section.body .= l "`n"
+            }
+        }
+        sections.Add(section)
+
+        result := new SettingsModel()
+        For each, section in sections
+        {
+            try
+            {
+                Switch section.title
+                {
+                    Case "[AutoClicker]":
+                        parsed := AutoClickerModel.FromIniString(section.title "`n" section.body)
+                        result._autoClicker := parsed
+                    Case "[MapNavigation]":
+                        parsed := MapNavigationModel.FromIniString(section.title "`n" section.body)
+                        result._mapNavigation := parsed
+                    Case "[ReplaceKeys]":
+                        parsed := ReplaceKeysModel.FromIniString(section.title "`n" section.body)
+                        result._replaceKeys := parsed
+                    Case "[General]":
+                        parsed := GeneralModel.FromIniString(section.title "`n" section.body)
+                        result._general := parsed
+                }
+            }
+        }
+
+        result._autoClicker := IsObject(result._autoClicker) ? result._autoClicker : AutoClickerModel.Default()
+        result._mapNavigation := IsObject(result._mapNavigation) ? result._mapNavigation : MapNavigationModel.Default()
+        result._replaceKeys := IsObject(result._replaceKeys) ? result._replaceKeys : ReplaceKeysModel.Default()
+        result._general := IsObject(result._general) ? result._general : GeneralModel.Default()
+
+        Return result
+    }
+
+    ToIniString()
+    {
+        result := ""
+        result .= this._autoClicker.ToIniString()
+        result .= "`n"
+        result .= this._mapNavigation.ToIniString()
+        result .= "`n"
+        result .= this._replaceKeys.ToIniString()
+        result .= "`n"
+        result .= this._general.ToIniString()
+        result .= "`n"
+        Return result
     }
 }
