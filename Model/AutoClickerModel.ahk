@@ -1,4 +1,4 @@
-﻿class AutoClickerModel extends ISetting
+﻿class AutoClickerModel extends ISettingsModel
 {
     __New(enable, key)
     {

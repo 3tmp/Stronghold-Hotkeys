@@ -1,4 +1,4 @@
-﻿class MapNavigationModel extends ISetting
+﻿class MapNavigationModel extends ISettingsModel
 {
     __New(enable, whereToEnable)
     {

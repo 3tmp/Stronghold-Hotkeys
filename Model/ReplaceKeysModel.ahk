@@ -1,4 +1,4 @@
-﻿class ReplaceKeysModel extends ISetting
+﻿class ReplaceKeysModel extends ISettingsModel
 {
     __New(param)
     {

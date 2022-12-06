@@ -1,4 +1,4 @@
-﻿class GeneralModel extends ISetting
+﻿class GeneralModel extends ISettingsModel
 {
     __New(toggleKey, checkForUpdateFrequency, lastCheckedForUpdate)
     {

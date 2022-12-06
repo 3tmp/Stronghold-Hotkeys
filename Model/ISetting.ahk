@@ -1,5 +1,5 @@
 ﻿; All classes that implement this interface are immutable
-class ISetting
+class ISettingsModel
 {
     Equals(other)
     {
