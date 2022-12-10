@@ -239,9 +239,9 @@
     {
         ; TODO ValidWindowGroupes make something better
         obj := {"WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g", "OpenArmoury": "a"
-              , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t", "OpenMercenaries": "n"
-              , "OpenMarket": "m", "OpenAdministration": "Tab", "SendRandomTauntMessage": ""
-              , "IncreaseGameSpeed": "", "DecreaseGameSpeed": ""}
+              , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t", "OpenBarracks": "b"
+              , "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": "Tab"
+              , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)
     }
 
