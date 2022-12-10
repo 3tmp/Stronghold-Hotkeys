@@ -5,7 +5,7 @@
         base.__New()
         this._whereToEnable := param.WhereToEnable
         this._openGranary := param.OpenGranary
-        this._openArmory := param.OpenArmory
+        this._openArmoury := param.OpenArmoury
         this._openEngineersGuild := param.OpenEngineersGuild
         this._openKeep := param.OpenKeep
         this._openBarracks := param.OpenBarracks
@@ -53,12 +53,12 @@
     {
         Get
         {
-            Return this._openArmory
+            Return this._openArmoury
         }
 
         Set
         {
-            this._setValue("_openArmory", value)
+            this._setValue("_openArmoury", value)
         }
     }
 
@@ -238,7 +238,7 @@
     Default()
     {
         ; TODO ValidWindowGroupes make something better
-        obj := {"WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g", "OpenArmory": "a"
+        obj := {"WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g", "OpenArmoury": "a"
               , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t", "OpenMercenaries": "n"
               , "OpenMarket": "m", "OpenAdministration": "Tab", "SendRandomTauntMessage": ""
               , "IncreaseGameSpeed": "", "DecreaseGameSpeed": ""}
