@@ -8,3 +8,8 @@ StrongholdHotkeysWebsite()
 {
     Return "https://github.com/3tmp/Stronghold-Hotkeys"
 }
+
+StrongholdHotkeyLatestReleaseApiUrl()
+{
+    Return "https://api.github.com/repos/3tmp/Stronghold-Hotkeys/releases/latest"
+}
