@@ -268,7 +268,7 @@
         If ("Yes" == MsgBox(4, "Reset", "Reset hotkey mapping?"))
         {
             ; Set ReplaceKeys to the system defaults
-            this._settingsModel.ResetReplaceKeys()
+            this._settingsController.ResetReplaceKeys()
         }
     }
 
@@ -292,7 +292,7 @@
 
         If (!this._isKeyInUse(keyCombo) && replaceKeys[action] !== keyCombo)
         {
-            replaceKeys[action] := keyCombo
+            this._settingsController.SetReplaceKeysByProperty(action, keyCombo)
         }
         Else
         {
@@ -303,9 +303,9 @@
 
     _onRK_RemoveHotkeyBtnClick(eventArgs)
     {
-        clicker := this._settingsModel.AutoClicker
-        clicker.Enable ^= true
-        this._settingsModel.AutoClicker := clicker
+        row := this._getFocusedLvRow()
+        ; Pass an empty string to indicate the removal of the hotkey binding
+        this._settingsController.SetReplaceKeysByProperty(row.At(1).Text, "")
     }
 
     ; SettingsModel events
