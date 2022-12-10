@@ -74,7 +74,7 @@ TrayMenu.Instance.Init()
 
 model := SettingsModel.Default()
 
-controller := new SettingsController()
+controller := new SettingsController(model)
 
 gui := new SettingsGui(controller, model)
 gui.Show()
