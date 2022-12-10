@@ -177,6 +177,24 @@
         Return this._ctrlRK_Lv.GetFocused()[1]
     }
 
+    ; Loops through the list and checks if the index of the compareValue is the same as its value in the ddlControl. If not it gets set
+    _chooseCorrectIndexIfChanged(ddlControl, list, compareValue)
+    {
+        selectedIndex := ddlControl.GetSelectedIndex()
+        For each, value in list
+        {
+            If (value == compareValue)
+            {
+                ; Check if the indices differ (that means it was set from outside) to prevent firing another event
+                If (selectedIndex !== A_Index)
+                {
+                    ddlControl.Select(A_Index)
+                }
+                Break
+            }
+        }
+    }
+
     ; Gui events
 
     OnClose()
@@ -358,7 +376,9 @@
             this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroupes, after.WhereToEnable)
         }
 
-        ; Any other property, reload the listview
+        ; For any other property:
+
+        ; Reload the listview
         this._refillRKListView()
         ; Reset other parts of the gui
         this._disableHotkeyAndClear()
@@ -376,23 +396,5 @@
             this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, SettingsModel.ValidToggleKeys, after.Togglekey)
         }
         ; Don't care for LastCheckedForUpdate
-    }
-
-    ; Loops through the list and checks if the index of the compareValue is the same as its value in the ddlControl. If not it gets set
-    _chooseCorrectIndexIfChanged(ddlControl, list, compareValue)
-    {
-        selectedIndex := ddlControl.GetSelectedIndex()
-        For each, value in list
-        {
-            If (value == compareValue)
-            {
-                ; Check if the indices differ (that means it was set from outside) to prevent firing another event
-                If (selectedIndex !== A_Index)
-                {
-                    ddlControl.Select(A_Index)
-                }
-                Break
-            }
-        }
     }
 }
