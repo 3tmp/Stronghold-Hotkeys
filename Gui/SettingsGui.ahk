@@ -86,10 +86,9 @@
         noHdrReorder := "-LV0x10"
         lvOptions := "w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder
         this._ctrlRK_Lv := this.AddListView(lvOptions, ["Command", "Key"])
-        For key, value in this._settingsModel.ReplaceKeys.GetAllReplaceKeyOptions()
-        {
-            this._ctrlRK_Lv.Add(, key, value)
-        }
+
+        this._refillRKListView()
+
         Loop, % this._ctrlRK_Lv.ColumnCount
         {
             this._ctrlRK_Lv.ModifyCol(A_Index, "AutoHdr")
@@ -100,7 +99,7 @@
 
         this._ctrlRK_ApplyHotkeyBtn := this.AddButton("x+m Disabled", "Apply Hotkey").OnClick(OBM(this, "_onRK_ApplyHotkeyBtnClick"))
 
-        this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", "Remove current Hotkey").OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
+        this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", "Remove binding").OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
 
         this._ctrlRK_HotkeyInUseText := this.AddText("xs Hidden", "Hotkey is already in use")
 
@@ -120,7 +119,58 @@
 
     _refillRKListView()
     {
+        ; Clear the listview
+        this._ctrlRK_Lv.Delete()
+        ; Reload all values
+        For key, value in this._settingsModel.ReplaceKeys.GetAllReplaceKeyOptions()
+        {
+            this._ctrlRK_Lv.Add(, key, value)
+        }
+    }
 
+    _tempOnEvent(eventArgs)
+    {
+        ToolTip, % eventArgs.ToString()
+        Sleep, 1000
+        ToolTip
+    }
+
+    _enableHotkeyAndSetValue()
+    {
+        this._ctrlRK_Hotkey.KeyComboString := this._getFocusedLvRow().At(2).Text
+        this._ctrlRK_Hotkey.Enable()
+        this._ctrlRK_ApplyHotkeyBtn.Enable()
+        this._ctrlRK_RemoveHotkeyBtn.Enable()
+    }
+
+    _disableHotkeyAndClear()
+    {
+        this._ctrlRK_Hotkey.KeyComboString := ""
+        this._ctrlRK_Hotkey.Disable()
+        this._ctrlRK_ApplyHotkeyBtn.Disable()
+        this._ctrlRK_RemoveHotkeyBtn.Disable()
+        this._hideHotkeyInUseWarning()
+    }
+
+    _showHotkeyInUseWarning()
+    {
+        this._ctrlRK_HotkeyInUseText.Show()
+    }
+
+    _hideHotkeyInUseWarning()
+    {
+        this._ctrlRK_HotkeyInUseText.Hide()
+    }
+
+    ; Determines if any ReplaceKey contains the given key combo string
+    _isKeyInUse(keyCombo)
+    {
+        Return keyCombo !== "" && this._settingsModel.ReplaceKeys.ContainsAny(keyCombo)
+    }
+
+    _getFocusedLvRow()
+    {
+        Return this._ctrlRK_Lv.GetFocused()[1]
     }
 
     ; Gui events
@@ -187,11 +237,18 @@
     _onRK_ResetToDefaultBtnClick(eventArgs)
     {
         this._disableHotkeyAndClear()
+        ; Ask for user confirm
+        ; TODO localization
+        If ("Yes" == MsgBox(4, "Reset", "Reset hotkey mapping?"))
+        {
+            ; Set ReplaceKeys to the system defaults
+            this._settingsModel.ResetReplaceKeys()
+        }
     }
 
     _onRK_HotkeyChange(eventArgs)
     {
-        If (eventArgs.KeyComboString !== "" && this._settingsModel.ReplaceKeys.ContainsAny(eventArgs.KeyComboString))
+        If (this._isKeyInUse(eventArgs.KeyComboString))
         {
             this._showHotkeyInUseWarning()
         }
@@ -203,47 +260,26 @@
 
     _onRK_ApplyHotkeyBtnClick(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        keyCombo := this._ctrlRK_Hotkey.KeyComboString
+        replaceKeys := this._settingsModel.ReplaceKeys
+        action := this._getFocusedLvRow().At(1).Text
+
+        If (!this._isKeyInUse(keyCombo) && replaceKeys[action] !== keyCombo)
+        {
+            replaceKeys[action] := keyCombo
+        }
+        Else
+        {
+            ; TODO localization
+            Msgbox("Hotkey is already in use, choose a differrent one")
+        }
     }
 
     _onRK_RemoveHotkeyBtnClick(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
-    }
-
-    _tempOnEvent(eventArgs)
-    {
-        ToolTip, % eventArgs.ToString()
-        Sleep, 1000
-        ToolTip
-    }
-
-    _enableHotkeyAndSetValue()
-    {
-        ; TODO better method to get the focused row
-        this._ctrlRK_Hotkey.KeyComboString := this._ctrlRK_Lv.GetFocused()[1].At(2).Text
-        this._ctrlRK_Hotkey.Enable()
-        this._ctrlRK_ApplyHotkeyBtn.Enable()
-        this._ctrlRK_RemoveHotkeyBtn.Enable()
-    }
-
-    _disableHotkeyAndClear()
-    {
-        this._ctrlRK_Hotkey.KeyComboString := ""
-        this._ctrlRK_Hotkey.Disable()
-        this._ctrlRK_ApplyHotkeyBtn.Disable()
-        this._ctrlRK_RemoveHotkeyBtn.Disable()
-        this._hideHotkeyInUseWarning()
-    }
-
-    _showHotkeyInUseWarning()
-    {
-        this._ctrlRK_HotkeyInUseText.Show()
-    }
-
-    _hideHotkeyInUseWarning()
-    {
-        this._ctrlRK_HotkeyInUseText.Hide()
+        clicker := this._settingsModel.AutoClicker
+        clicker.Enable ^= true
+        this._settingsModel.AutoClicker := clicker
     }
 
     ; SettingsModel events
@@ -309,7 +345,13 @@
     ; before, after instance of ReplaceKeyModel
     _handleReplaceKeys(before, after)
     {
+        If (before.WhereToEnable != after.WhereToEnable)
+        {
+            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroupes, after.WhereToEnable)
+        }
 
+        ; Any other property, reload the listview
+        this._refillRKListView()
     }
 
     ; before, after instance of GeneralModel
