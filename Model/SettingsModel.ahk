@@ -8,6 +8,7 @@
              , General := "General"
     }
 
+    ; Private ctor
     __New()
     {
         this._autoClicker := ""
@@ -36,16 +37,6 @@
         {
             Return this._autoClicker
         }
-
-        Set
-        {
-            If (!InstanceOf(value, AutoClickerModel))
-            {
-                throw Exception("Invalid AutoClicker setting given")
-            }
-
-            this._setValue(SettingsModel.Events.AutoClicker, "_autoClicker", value)
-        }
     }
 
     MapNavigation[]
@@ -53,16 +44,6 @@
         Get
         {
             Return this._mapNavigation
-        }
-
-        Set
-        {
-            If (!InstanceOf(value, MapNavigationModel))
-            {
-                throw Exception("Invalid MapNavigation setting given")
-            }
-
-            this._setValue(SettingsModel.Events.MapNavigation, "_mapNavigation", value)
         }
     }
 
@@ -72,16 +53,6 @@
         {
             Return this._replaceKeys
         }
-
-        Set
-        {
-            If (!InstanceOf(value, ReplaceKeysModel))
-            {
-                throw Exception("Invalid ReplaceKeys setting given")
-            }
-
-            this._setValue(SettingsModel.Events.ReplaceKeys, "_replaceKeys", value)
-        }
     }
 
     General[]
@@ -89,16 +60,6 @@
         Get
         {
             Return this._general
-        }
-
-        Set
-        {
-            If (!InstanceOf(value, GeneralModel))
-            {
-                throw Exception("Invalid General setting given")
-            }
-
-            this._setValue(SettingsModel.Events.General, "_general", value)
         }
     }
 
@@ -184,19 +145,10 @@
         }
     }
 
-    ; Sets the value in the property name. If the current value is different to the new, it fires a PropertyChangeEvent
-    _setValue(eventName, propertyName, newValue)
+    ; Gets called by the property change events from the AutoClicker, MapNavigation, ReplaceKeys, General models
+    _valueInSubModelChange(eventName, event)
     {
-        If (this[propertyName].Equals(newValue))
-        {
-            Return
-        }
-
-        before := this[propertyName]
-        this[propertyName] := newValue
-        after := this[propertyName]
-
-        this._changes.FirePropertyChange(eventName, before, after)
+        this._changes.FirePropertyChange(eventName, event.OldValue, event.NewValue)
     }
 
     Equals(other)
@@ -220,10 +172,12 @@
     Default()
     {
         result := new SettingsModel()
-        result._autoClicker := AutoCLickerModel.Default()
+        result._autoClicker := AutoClickerModel.Default()
         result._mapNavigation := MapNavigationModel.Default()
         result._replaceKeys := ReplaceKeysModel.Default()
         result._general := GeneralModel.Default()
+        SettingsModel._setUpListeners(result)
+
         Return result
     }
 
@@ -273,6 +227,7 @@
         result._mapNavigation := IsObject(result._mapNavigation) ? result._mapNavigation : MapNavigationModel.Default()
         result._replaceKeys := IsObject(result._replaceKeys) ? result._replaceKeys : ReplaceKeysModel.Default()
         result._general := IsObject(result._general) ? result._general : GeneralModel.Default()
+        SettingsModel._setUpListeners(result)
 
         Return result
     }
@@ -289,5 +244,21 @@
         result .= this._general.ToIniString()
         result .= "`n"
         Return result
+    }
+
+    ; Add listeners to all inner models for the given SettingsModel object
+    _setUpListeners(obj)
+    {
+        obj._autoClickerPropChange := new PropertyChangeListener(OBM(obj, "_valueInSubModelChange", SettingsModel.Events.AutoClicker))
+        obj._autoClicker._addEventListener(obj._autoClickerPropChange)
+
+        obj._mapNavigationPropChange := new PropertyChangeListener(OBM(obj, "_valueInSubModelChange", SettingsModel.Events.MapNavigation))
+        obj._mapNavigation._addEventListener(obj._mapNavigationPropChange)
+
+        obj._replaceKeysPropChange := new PropertyChangeListener(OBM(obj, "_valueInSubModelChange", SettingsModel.Events.ReplaceKeys))
+        obj._replaceKeys._addEventListener(obj._replaceKeysPropChange)
+
+        obj._generalPropChange := new PropertyChangeListener(OBM(obj, "_valueInSubModelChange", SettingsModel.Events.General))
+        obj._general._addEventListener(obj._generalPropChange)
     }
 }

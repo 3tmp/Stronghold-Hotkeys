@@ -1,7 +1,8 @@
-﻿class GeneralModel extends ISettingsModel
+﻿class GeneralModel extends ASettingsModel
 {
     __New(toggleKey, checkForUpdateFrequency, lastCheckedForUpdate)
     {
+        base.__New()
         this._toggleKey := toggleKey
         this._checkForUpdatesFrequency := checkForUpdateFrequency
         this._lastCheckedForUpdate := lastCheckedForUpdate
@@ -20,7 +21,7 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_toggleKey", value)
+            this._setValue("_toggleKey", value)
         }
     }
 
@@ -37,7 +38,7 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_checkForUpdatesFrequency", value)
+            this._setValue("_checkForUpdatesFrequency", value)
         }
     }
 
@@ -55,7 +56,7 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_lastCheckedForUpdate", value)
+            this._setValue("_lastCheckedForUpdate", value)
         }
     }
 
@@ -105,12 +106,5 @@
     ToIniString()
     {
         Return this.ToIniSection().ToString()
-    }
-
-    _cloneAndSetValue(property, value)
-    {
-        result := ObjClone(this)
-        result._enable := value
-        Return result
     }
 }

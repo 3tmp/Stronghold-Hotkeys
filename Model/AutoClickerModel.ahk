@@ -1,7 +1,8 @@
-﻿class AutoClickerModel extends ISettingsModel
+﻿class AutoClickerModel extends ASettingsModel
 {
     __New(enable, key)
     {
+        base.__New()
         this._enable := !!enable
         this._key := key
     }
@@ -19,7 +20,11 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_enable", value)
+            If (value == this._enable)
+            {
+                Return
+            }
+            this._setValue("_enable", value)
         }
     }
 
@@ -32,11 +37,11 @@
 
         Set
         {
-            If (!value.In("MButton", "XButton1", "XButton2"))
+            If (!SettingsModel.ValidAutoClickerKeys.Contains(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_key", value)
+            this._setValue("_key", value)
         }
     }
 
@@ -77,12 +82,5 @@
     ToIniString()
     {
         Return this.ToIniSection().ToString()
-    }
-
-    _cloneAndSetValue(property, value)
-    {
-        result := ObjClone(this)
-        result._enable := value
-        Return result
     }
 }

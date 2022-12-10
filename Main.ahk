@@ -36,6 +36,7 @@
 
 #Include Controller\SettingsController.ahk
 #Include Gui\SettingsGui.ahk
+#Include Model\ASettingsModel.ahk
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk
 #Include Model\IniSection.ahk
@@ -60,6 +61,7 @@ Stronghold_Version()
     Return "2.0.0_alpha"
 }
 
+; TODO use the value from SettingsModel or from StrongholdManager and remove from the other
 ; The window title groups
 GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
 GroupAdd, Crusader, Crusader ahk_class FFwinClass
@@ -70,11 +72,7 @@ global IniPath := "Config.ini"
 
 TrayMenu.Instance.Init()
 
-model := new SettingsModel()
-model.ReplaceKeys := ReplaceKeysModel.Default()
-model.AutoClicker := AutoClickerModel.Default()
-model.MapNavigation := MapNavigationModel.Default()
-model.General := GeneralModel.Default()
+model := SettingsModel.Default()
 
 controller := new SettingsController()
 
@@ -83,7 +81,12 @@ gui.Show()
 
 ; For testing
 F3::
-model.AutoClicker := new AutoClickerModel(!model.AutoClicker.Enable, model.AutoClicker.Key == "MButton" ? "XButton1" : "MButton")
-model.MapNavigation := new MapNavigationModel(!model.MapNavigation.Enable, model.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold")
+model.AutoClicker.Enable := !model.AutoClicker.Enable
+model.AutoClicker.Key := model.AutoClicker.Key == "MButton" ? "XButton1" : "MButton"
+model.MapNavigation.WhereToEnable := model.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold"
+Return
 
+F4::
+model.AutoClicker.Enable ^= true
+model.AutoClicker.Key := "XButton2"
 Return

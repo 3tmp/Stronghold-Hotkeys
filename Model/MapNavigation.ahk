@@ -1,7 +1,8 @@
-﻿class MapNavigationModel extends ISettingsModel
+﻿class MapNavigationModel extends ASettingsModel
 {
     __New(enable, whereToEnable)
     {
+        base.__New()
         this._enable := !!enable
         this._whereToEnable := whereToEnable
     }
@@ -19,7 +20,7 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_enable", value)
+            this._setValue("_enable", value)
         }
     }
 
@@ -32,12 +33,11 @@
 
         Set
         {
-            ; TODO add values
-            If (SettingsModel.ValidWindowGroupes.Contains(value))
+            If (!SettingsModel.ValidWindowGroupes.Contains(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_whereToEnable", value)
+            this._setValue("_whereToEnable", value)
         }
     }
 
@@ -79,12 +79,5 @@
     ToIniString()
     {
         Return this.ToIniSection().ToString()
-    }
-
-    _cloneAndSetValue(property, value)
-    {
-        result := ObjClone(this)
-        result._enable := value
-        Return result
     }
 }

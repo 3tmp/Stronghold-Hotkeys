@@ -1,7 +1,8 @@
-﻿class ReplaceKeysModel extends ISettingsModel
+﻿class ReplaceKeysModel extends ASettingsModel
 {
     __New(param)
     {
+        base.__New()
         this._whereToEnable := param.WhereToEnable
         this._openGranary := param.OpenGranary
         this._openArmory := param.OpenArmory
@@ -30,7 +31,7 @@
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
-            Return this._cloneAndSetValue("_whereToEnable", value)
+            this._setValue("_whereToEnable", value)
         }
     }
 
@@ -43,7 +44,8 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openGranary", value)
+            ; TODO implement value checking
+            this._setValue("_openGranary", value)
         }
     }
 
@@ -56,7 +58,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openArmory", value)
+            this._setValue("_openArmory", value)
         }
     }
 
@@ -69,7 +71,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openEngineersGuild", value)
+            this._setValue("_openEngineersGuild", value)
         }
     }
 
@@ -82,7 +84,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openKeep", value)
+            this._setValue("_openKeep", value)
         }
     }
 
@@ -95,7 +97,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openTunnlerGuild", value)
+            this._setValue("_openTunnlerGuild", value)
         }
     }
 
@@ -108,7 +110,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openBarracks", value)
+            this._setValue("_openBarracks", value)
         }
     }
 
@@ -121,7 +123,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openMercenaries", value)
+            this._setValue("_openMercenaries", value)
         }
     }
 
@@ -134,7 +136,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openMarket", value)
+            this._setValue("_openMarket", value)
         }
     }
 
@@ -147,7 +149,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_openAdministration", value)
+            this._setValue("_openAdministration", value)
         }
     }
 
@@ -160,7 +162,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_sendRandomTauntMessage", value)
+            this._setValue("_sendRandomTauntMessage", value)
         }
     }
 
@@ -173,7 +175,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_increaseGameSpeed", value)
+            this._setValue("_increaseGameSpeed", value)
         }
     }
 
@@ -186,7 +188,7 @@
 
         Set
         {
-            Return this._cloneAndSetValue("_decreaseGameSpeed", value)
+            this._setValue("_decreaseGameSpeed", value)
         }
     }
 
@@ -282,18 +284,6 @@
                 result[key.SubStr(2, 1).ToUpper() key.SubStr(3)] := value
             }
         }
-        Return result
-    }
-
-    _cloneAndSetValue(property, value)
-    {
-        If (!SettingsModel.ValidReplaceKeys.Contains(value))
-        {
-            throw Exception(A_ThisFunc " wrong value passed")
-        }
-
-        result := ObjClone(this)
-        result._enable := value
         Return result
     }
 }
