@@ -16,6 +16,11 @@
         this._replaceKeys := ""
         this._general := ""
 
+        this._autoClickerPropChange := ""
+        this._mapNavigationPropChange := ""
+        this._replaceKeysPropChange := ""
+        this._generalPropChange := ""
+
         this._changes := new PropertyChangeSupport()
     }
 
@@ -31,6 +36,7 @@
         this._changes.RemovePropertyChangeListener(listener)
     }
 
+    ; Get the AutoClicker model
     AutoClicker[]
     {
         Get
@@ -39,6 +45,7 @@
         }
     }
 
+    ; Get the MapNavigation model
     MapNavigation[]
     {
         Get
@@ -47,6 +54,7 @@
         }
     }
 
+    ; Get the ReplaceKeys model
     ReplaceKeys[]
     {
         Get
@@ -55,12 +63,37 @@
         }
     }
 
+    ; Get the Generl model
     General[]
     {
         Get
         {
             Return this._general
         }
+    }
+
+    ; Resets the AutoClicker model to the default values
+    ResetAutoClicker()
+    {
+        this._resetModel("_autoClicker", AutoClickerModel.Default(), this._autoClickerPropChange, SettingsModel.Events.AutoClicker)
+    }
+    
+    ; Resets the MapNavigation model to the default values
+    ResetMapNavigation()
+    {
+        this._resetModel("_mapNavigation", MapNavigationModel.Default(), this._mapNavigationPropChange, SettingsModel.Events.MapNavigation)
+    }
+
+    ; Resets the ReplaceKeys model to the default values
+    ResetReplaceKeys()
+    {
+        this._resetModel("_replaceKeys", ReplaceKeysModel.Default(), this._replaceKeysPropChange, SettingsModel.Events.ReplaceKeys)
+    }
+
+    ; Resets the General model to the default values
+    ResetGeneral()
+    {
+        this._resetModel("_general", GeneralModel.Default(), this._generalPropChange, SettingsModel.Events.General)
     }
 
     ; Valid options. Static properties
@@ -145,10 +178,27 @@
         }
     }
 
+    ; Resets all inner models and replaces them with their defaults
+    _resetModel(propertyName, default, fn, eventName)
+    {
+        before := this[propertyName]
+        this[propertyName] := default
+        this[propertyName]._addEventListener(fn)
+        after := this[propertyName]
+        this._firePropertyChange(eventName, before, after)
+    }
+
     ; Gets called by the property change events from the AutoClicker, MapNavigation, ReplaceKeys, General models
+    ; and redirects the received values to the property change event of this class
     _valueInSubModelChange(eventName, event)
     {
-        this._changes.FirePropertyChange(eventName, event.OldValue, event.NewValue)
+        this._firePropertyChange(eventName, event.OldValue, event.NewValue)
+    }
+
+    ; fires the property change event
+    _firePropertyChange(eventName, before, after)
+    {
+        this._changes.FirePropertyChange(eventName, before, after)
     }
 
     Equals(other)
