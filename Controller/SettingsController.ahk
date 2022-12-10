@@ -15,6 +15,26 @@
 
     }
 
+    ResetAutoClicker()
+    {
+        this._settingsModel.ResetAutoClicker()
+    }
+
+    ResetMapNavigation()
+    {
+        this._settingsModel.ResetMapNavigation()
+    }
+
+    ResetReplaceKeys()
+    {
+        this._settingsModel.ResetReplaceKeys()
+    }
+
+    ResetGeneral()
+    {
+        this._settingsModel.ResetGeneral()
+    }
+
     SetAutoClickerEnable(enable)
     {
         try this._settingsModel.AutoClicker.Enable := enable
@@ -75,6 +95,42 @@
         catch, e
         {
             ; TODO log error
+        }
+    }
+
+    SetReplaceKeysByProperty(propertyName, key)
+    {
+        Switch propertyName
+        {
+            Case "WhereToEnable":
+                this.SetReplaceKeysWhereToEnable(key)
+            Case "OpenGranary":
+                this.SetReplaceKeysOpenGranary(key)
+            Case "OpenArmoury":
+                this.SetReplaceKeysOpenArmoury(key)
+            Case "OpenEngineersGuild":
+                this.SetReplaceKeysOpenEngineersGuild(key)
+            Case "OpenKeep":
+                this.SetReplaceKeysOpenKeep(key)
+            Case "OpenTunnlerGuild":
+                this.SetReplaceKeysOpenTunnlerGuild(key)
+            Case "OpenBarracks":
+                this.SetReplaceKeysOpenBarracks(key)
+            Case "OpenMercenaries":
+                this.SetReplaceKeysOpenMercenaries(key)
+            Case "OpenMarket":
+                this.SetReplaceKeysOpenMarket(key)
+            Case "OpenAdministration":
+                this.SetReplaceKeysOpenAdministration(key)
+            Case "SendRandomTauntMessage":
+                this.SetReplaceKeysSendRandomTauntMessage(key)
+            Case "IncreaseGameSpeed":
+                this.SetReplaceKeysIncreaseGameSpeed(key)
+            Case "DecreaseGameSpeed":
+                this.SetReplaceKeysDecreaseGameSpeed(key)
+            Default:
+                ; TODO log
+                throw Exception("The property '" propertyName "' is not supported")
         }
     }
 
