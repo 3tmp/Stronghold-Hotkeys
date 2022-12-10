@@ -22,7 +22,7 @@
     BuildGui()
     {
         this._width := 400
-        this._height := 365
+        this._height := 400
         this._margin := 10
 
         this.Margin(this._margin, this._margin)
@@ -73,8 +73,8 @@
         this.AddText()
         this._ctrlMN_EnableCheck := this.AddCheckbox("Checked", "Enable Map Navigation").OnClick(OBM(this, "_onMN_EnableCheck"))
         this._ctrlMN_Text1 := this.AddText(, "Enable only when ")
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
-        this._ctrlMN_Text2 := this.AddText(, "is the active game")
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        this._ctrlMN_Text2 := this.AddText("x+0", " is the active game")
     }
 
     ; Raplacing keys
@@ -83,8 +83,12 @@
         this.AddText(, "Description of replace keys")
         this.AddText()
 
+        this._ctrlRK_Text1 := this.AddText("Section", "Enable only when ")
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        this._ctrlRK_Text2 := this.AddText("x+0", " is the active game")
+
         noHdrReorder := "-LV0x10"
-        lvOptions := "w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder
+        lvOptions := "xs w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder
         this._ctrlRK_Lv := this.AddListView(lvOptions, ["Command", "Key"])
 
         this._refillRKListView()
@@ -229,6 +233,11 @@
         this._tempOnEvent(eventArgs)
     }
 
+    _onRK_WhereDropDown(eventArgs)
+    {
+        this._tempOnEvent(eventArgs)
+    }
+
     _onRK_LvRowFocused(eventArgs)
     {
         this._enableHotkeyAndSetValue()
@@ -236,7 +245,6 @@
 
     _onRK_ResetToDefaultBtnClick(eventArgs)
     {
-        this._disableHotkeyAndClear()
         ; Ask for user confirm
         ; TODO localization
         If ("Yes" == MsgBox(4, "Reset", "Reset hotkey mapping?"))
@@ -352,6 +360,8 @@
 
         ; Any other property, reload the listview
         this._refillRKListView()
+        ; Reset other parts of the gui
+        this._disableHotkeyAndClear()
     }
 
     ; before, after instance of GeneralModel
