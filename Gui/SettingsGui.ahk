@@ -281,10 +281,11 @@
         value := this._ctrlRK_WhereDropDown.GetSelectedText()
         this._settingsController.SetReplaceKeysWhereToEnable(value)
 
+        replaceKeys := this._settingsModel.ReplaceKeys
         For each, row in this._ctrlRK_Lv
         {
             propertyName := row.At(1).Text
-            value := this._settingsModel.ReplaceKeys[row.At(1).Text]
+            value := replaceKeys[row.At(1).Text]
             this._settingsController.SetReplaceKeysByProperty(propertyName, value)
         }
 
