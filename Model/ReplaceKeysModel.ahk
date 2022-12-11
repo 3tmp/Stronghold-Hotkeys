@@ -3,6 +3,7 @@
     __New(param)
     {
         base.__New()
+        this._enable := param.Enable
         this._whereToEnable := param.WhereToEnable
         this._openGranary := param.OpenGranary
         this._openArmoury := param.OpenArmoury
@@ -16,6 +17,23 @@
         this._sendRandomTauntMessage := param.SendRandomTauntMessage
         this._increaseGameSpeed := param.IncreaseGameSpeed
         this._decreaseGameSpeed := param.DecreaseGameSpeed
+    }
+
+    Enable[]
+    {
+        Get
+        {
+            Return this._enable
+        }
+
+        Set
+        {
+            If (!value.In(true, false))
+            {
+                throw Exception(A_ThisFunc " wrong value passed")
+            }
+            this._setValue("_enable", value)
+        }
     }
 
     WhereToEnable[]
@@ -195,7 +213,7 @@
     ; Returns true if the given key is already set in some property
     ContainsAny(key)
     {
-        For each, value in this._toObject()
+        For each, value in this.GetAllReplaceKeyOptions()
         {
             If (key = value)
             {
@@ -208,6 +226,7 @@
     GetAllReplaceKeyOptions()
     {
         result := this._toObject()
+        result.Delete("Enable")
         result.Delete("WhereToEnable")
         Return result
     }
@@ -238,9 +257,9 @@
     Default()
     {
         ; TODO ValidWindowGroupes make something better
-        obj := {"WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g", "OpenArmoury": "a"
-              , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t", "OpenBarracks": "b"
-              , "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": "Tab"
+        obj := {"Enable": true, "WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g"
+              , "OpenArmoury": "y", "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
+              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": "Tab"
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)
     }

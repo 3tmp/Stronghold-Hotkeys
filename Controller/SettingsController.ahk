@@ -102,6 +102,8 @@
     {
         Switch propertyName
         {
+            Case "Enable":
+                this.SetReplaceKeysEnable(key)
             Case "WhereToEnable":
                 this.SetReplaceKeysWhereToEnable(key)
             Case "OpenGranary":
@@ -131,6 +133,15 @@
             Default:
                 ; TODO log
                 throw Exception("The property '" propertyName "' is not supported")
+        }
+    }
+
+    SetReplaceKeysEnable(enable)
+    {
+        try this._settingsModel.ReplaceKeys.Enable := enable
+        catch, e
+        {
+            ; TODO log error
         }
     }
 
