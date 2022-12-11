@@ -1,11 +1,12 @@
 ﻿class GeneralModel extends ASettingsModel
 {
-    __New(toggleKey, checkForUpdateFrequency, lastCheckedForUpdate)
+    __New(toggleKey, checkForUpdateFrequency, lastCheckedForUpdate, latestVersion)
     {
         base.__New()
         this._toggleKey := toggleKey
         this._checkForUpdatesFrequency := checkForUpdateFrequency
         this._lastCheckedForUpdate := lastCheckedForUpdate
+        this._latestVersion := latestVersion
     }
 
     ToggleKey[]
@@ -42,7 +43,7 @@
         }
     }
 
-    ; The date and time as YYYYMMDDHHMISS string
+    ; The date and time as YYYYMMDDHHMISS string in UTC. Contains the begin of the unix epoch if no checks were performed until now
     LastCheckedForUpdate[]
     {
         Get
@@ -60,6 +61,24 @@
         }
     }
 
+    ; The result of the check that was performed on LastCheckedForUpdate. If no checks were performed, blank gets returned
+    LatestVersion[]
+    {
+        Get
+        {
+            Return this._latestVersion
+        }
+
+        Set
+        {
+            If (IsObject(value))
+            {
+                throw Exception(A_ThisFunc " wrong value passed")
+            }
+            this._setValue("_latestVersion", value)
+        }
+    }
+
     Equals(other)
     {
         Return this == other
@@ -71,7 +90,9 @@
 
     Default()
     {
-        Return new GeneralModel("CapsLock", "startup", "19700101000000")
+        ; Set the time to the begin of the unix epoch and the latest version to blank
+        ; to indicate that no checks were performed
+        Return new GeneralModel("CapsLock", "startup", "1970", "")
     }
 
     FromIniString(str)

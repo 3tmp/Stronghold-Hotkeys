@@ -12,7 +12,39 @@
 
     CheckForUpdates()
     {
+        currentVersion := Stronghold_Version()
+        url := StrongholdHotkeyLatestReleaseApiUrl()
 
+        requestFail := false
+
+        try
+        {
+            ; Check for the last Version (synchronous call)
+            whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+            whr.Open("GET", url, true)
+            whr.Send()
+            whr.WaitForResponse()
+        }
+        catch, e
+        {
+            requestFail := true
+        }
+
+        If (!requestFail)
+        {
+            webResult := Jxon_Load(whr.ResponseText)
+
+            latestVersion := webResult.tag_name.StartsWith("v") ? webResult.tag_name.SubStr(2) : webResult.tag_name
+
+            this._settingsModel.General.LastCheckedForUpdate := A_NowUTC
+            this._settingsModel.General.LatestVersion := latestVersion
+        }
+        Else
+        {
+            ; TODO better error state
+            this._settingsModel.General.LastCheckedForUpdate := "1970"
+            this._settingsModel.General.LatestVersion := ""
+        }
     }
 
     ResetAutoClicker()
