@@ -23,6 +23,12 @@ class ASettingsModel extends ISettingsModel
     ; Sets the value in the property name. If the current value is different to the new, it fires a PropertyChangeEvent
     _setValue(propertyName, newValue)
     {
+        ; If the values are the same, do nothing
+        If (this[propertyName] == newValue)
+        {
+            Return
+        }
+
         before := ObjClone(this)
         this[propertyName] := newValue
         after := this
