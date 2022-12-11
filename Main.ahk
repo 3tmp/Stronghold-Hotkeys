@@ -10,6 +10,7 @@
 #Include Lib\CommandsAsFunction.ahk
 #Include Lib\Debugger.ahk
 #Include Lib\DefaultIterator.ahk
+#Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
 #Include Lib\OBM.ahk
 #Include Lib\WinApi.ahk
