@@ -22,7 +22,7 @@
     BuildGui()
     {
         this._width := 400
-        this._height := 400
+        this._height := 415
         this._margin := 10
 
         this.Margin(this._margin, this._margin)
@@ -83,6 +83,7 @@
         this.AddText(, "Description of replace keys")
         this.AddText()
 
+        this._ctrlRK_EnableCheck := this.AddCheckbox("Checked", "Enable Replace Keys").OnClick(OBM(this, "_onRK_EnableCheck"))
         this._ctrlRK_Text1 := this.AddText("Section", "Enable only when ")
         this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
         this._ctrlRK_Text2 := this.AddText("x+0", " is the active game")
@@ -98,6 +99,7 @@
             this._ctrlRK_Lv.ModifyCol(A_Index, "AutoHdr")
         }
         this._ctrlRK_Lv.OnRowFocused(OBM(this, "_onRK_LvRowFocused"))
+        this._ctrlRK_Lv.OnRowDefocused(OBM(this, "_onRK_LvRowDefocused"))
 
         this._ctrlRK_Hotkey := this.AddHotkey("Section Disabled").OnHotkeyChange(OBM(this, "_onRK_HotkeyChange"))
 
@@ -141,7 +143,16 @@
 
     _enableHotkeyAndSetValue()
     {
-        this._ctrlRK_Hotkey.KeyComboString := this._getFocusedLvRow().At(2).Text
+        keyCombo := this._getFocusedLvRow().At(2).Text
+        ; As in AutoHotkey v1.1.36.02 there is a bug where it does not allow to set a "+" as hotkey, use this workaround
+        If (keyCombo == "+")
+        {
+            ControlSend,, {+}, % "ahk_id" this._ctrlRK_Hotkey.Hwnd
+        }
+        Else
+        {
+            this._ctrlRK_Hotkey.KeyComboString := keyCombo
+        }
         this._ctrlRK_Hotkey.Enable()
         this._ctrlRK_ApplyHotkeyBtn.Enable()
         this._ctrlRK_RemoveHotkeyBtn.Enable()
@@ -195,6 +206,39 @@
         }
     }
 
+    ; Enables/Disables all controls in the AutoClicker tab
+    _setACEnabledState(enable)
+    {
+        this._ctrlAC_Text.IsEnabled := enable
+        this._ctrlAC_DropDown.IsEnabled := enable
+    }
+
+    ; Enables/Disables all controls in the MapNavigation tab
+    _setMNEnabledState(enable)
+    {
+        this._ctrlMN_Text1.IsEnabled := enable
+        this._ctrlMN_WhereDropDown.IsEnabled := enable
+        this._ctrlMN_Text2.IsEnabled := enable
+    }
+
+    ; Enables/Disables all controls in the ReplaceKeys tab
+    _setRKEnabledState(enable)
+    {
+        row := this._getFocusedLvRow()
+        ; If no row is currently focused, row == ""
+        If (row !== "")
+        {
+            id := row.Focus(enable)
+            id := row.Select(enable)
+        }
+
+        this._ctrlRK_Text1.IsEnabled := enable
+        this._ctrlRK_WhereDropDown.IsEnabled := enable
+        this._ctrlRK_Text2.IsEnabled := enable
+        this._ctrlRK_Lv.IsEnabled := enable
+        this._ctrlRK_ResetToDefaultsBtn.IsEnabled := enable
+    }
+
     ; Gui events
 
     OnClose()
@@ -233,7 +277,7 @@
 
     _onAC_CheckClick(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._setACEnabledState(eventArgs.IsChecked)
     }
 
     _onAC_DropDownChange(eventArgs)
@@ -243,12 +287,17 @@
 
     _onMN_EnableCheck(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._setMNEnabledState(eventArgs.IsChecked)
     }
 
     _onMN_WhereDropDown(eventArgs)
     {
         this._tempOnEvent(eventArgs)
+    }
+
+    _onRK_EnableCheck(eventArgs)
+    {
+        this._setRKEnabledState(eventArgs.IsChecked)
     }
 
     _onRK_WhereDropDown(eventArgs)
@@ -259,6 +308,11 @@
     _onRK_LvRowFocused(eventArgs)
     {
         this._enableHotkeyAndSetValue()
+    }
+
+    _onRK_LvRowDefocused(eventArgs)
+    {
+        this._disableHotkeyAndClear()
     }
 
     _onRK_ResetToDefaultBtnClick(eventArgs)
@@ -274,6 +328,7 @@
 
     _onRK_HotkeyChange(eventArgs)
     {
+        ; TODO check for wasd to be invalid
         If (this._isKeyInUse(eventArgs.KeyComboString))
         {
             this._showHotkeyInUseWarning()
@@ -336,8 +391,7 @@
                 this._ctrlAC_Check.IsChecked := after.Enable
             }
             ; Enable/Disable the controls
-            this._ctrlAC_DropDown.IsEnabled := after.Enable
-            this._ctrlAC_Text.IsEnabled := after.Enable
+            this._setACEnabledState(after.Enable)
         }
 
         If (before.Key != after.Key)
@@ -357,9 +411,7 @@
                 this._ctrlMN_EnableCheck.IsChecked := after.Enable
             }
             ; Enable/Disable the controls
-            this._ctrlMN_WhereDropDown.IsEnabled := after.Enable
-            this._ctrlMN_Text1.IsEnabled := after.Enable
-            this._ctrlMN_Text2.IsEnabled := after.Enable
+            this._setMNEnabledState(after.Enable)
         }
 
         If (before.WhereToEnable != after.WhereToEnable)
@@ -371,6 +423,15 @@
     ; before, after instance of ReplaceKeyModel
     _handleReplaceKeys(before, after)
     {
+        If (before.Enable !== after.Enable)
+        {
+            If (after.Enable !== this._ctrlRK_EnableCheck.IsChecked)
+            {
+                this._ctrlRK_EnableCheck.IsChecked := after.Enable
+            }
+            this._setRKEnabledState(after.Enable)
+        }
+
         If (before.WhereToEnable != after.WhereToEnable)
         {
             this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroupes, after.WhereToEnable)

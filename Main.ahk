@@ -91,3 +91,7 @@ model.AutoClicker.Enable ^= true
 model.AutoClicker.Key := "XButton2"
 model.ReplaceKeys.OpenMarket := "x"
 Return
+
+F6::
+model.ReplaceKeys.Enable ^= true
+Return
