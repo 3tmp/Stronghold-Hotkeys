@@ -251,7 +251,44 @@
 
     _onOkBtnClick(eventArgs)
     {
-        ; TODO save to file
+        ; Save the gui state in the model
+
+        ; General
+        value := this._ctrlG_ToggleKeyDropDown.GetSelectedText()
+        this._settingsController.SetGeneralToggleKey(value)
+
+        value := this._ctrlG_updatesDropDown.GetSelectedText()
+        this._settingsController.SetGeneralCheckForUpdatesFrequency(value)
+
+        ; AutoClicker
+        value := this._ctrlAC_Check.IsChecked
+        this._settingsController.SetAutoClickerEnable(value)
+
+        value := this._ctrlAC_DropDown.GetSelectedText()
+        this._settingsController.SetAutoClickerToggleKey(value)
+
+        ; MapNavigation
+        value := this._ctrlMN_EnableCheck.IsChecked
+        this._settingsController.SetMapNavigationEnable(value)
+
+        value := this._ctrlMN_WhereDropDown.GetSelectedText()
+        this._settingsController.SetMapNavigationWhereToEnable(value)
+
+        ; ReplaceKeys
+        value := this._ctrlRK_EnableCheck.IsChecked
+        this._settingsController.SetReplaceKeysEnable(value)
+
+        value := this._ctrlRK_WhereDropDown.GetSelectedText()
+        this._settingsController.SetReplaceKeysWhereToEnable(value)
+
+        For each, row in this._ctrlRK_Lv
+        {
+            propertyName := row.At(1).Text
+            value := this._settingsModel.ReplaceKeys[row.At(1).Text]
+            this._settingsController.SetReplaceKeysByProperty(propertyName, value)
+        }
+
+        this._settingsController.SaveToFile()
         this.Close()
     }
 

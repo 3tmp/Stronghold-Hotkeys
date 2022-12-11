@@ -47,6 +47,12 @@
         }
     }
 
+    SaveToFile()
+    {
+        ; TODO implement
+        msgbox WIP saving...
+    }
+
     ResetAutoClicker()
     {
         this._settingsModel.ResetAutoClicker()
