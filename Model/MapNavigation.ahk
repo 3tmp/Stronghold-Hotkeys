@@ -33,7 +33,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidWindowGroupes.Contains(value))
+            If (!SettingsModel.ValidWindowGroups.Contains(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
@@ -63,7 +63,7 @@
         }
 
         ; TODO load the where to enable
-        If (!ini.Pairs.Enable.In(true, false) || !SettingsModel.ValidWindowGroupes.Contains(ini.Pairs.WhereToEnable))
+        If (!ini.Pairs.Enable.In(true, false) || !SettingsModel.ValidWindowGroups.Contains(ini.Pairs.WhereToEnable))
         {
             throw Exception("Ini string is not a MapNavigation")
         }

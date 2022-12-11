@@ -73,7 +73,7 @@
         this.AddText()
         this._ctrlMN_EnableCheck := this.AddCheckbox("Checked", "Enable Map Navigation").OnClick(OBM(this, "_onMN_EnableCheck"))
         this._ctrlMN_Text1 := this.AddText(, "Enable only when ")
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
         this._ctrlMN_Text2 := this.AddText("x+0", " is the active game")
     }
 
@@ -85,7 +85,7 @@
 
         this._ctrlRK_EnableCheck := this.AddCheckbox("Checked", "Enable Replace Keys").OnClick(OBM(this, "_onRK_EnableCheck"))
         this._ctrlRK_Text1 := this.AddText("Section", "Enable only when ")
-        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroupes).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
         this._ctrlRK_Text2 := this.AddText("x+0", " is the active game")
 
         noHdrReorder := "-LV0x10"
@@ -453,7 +453,7 @@
 
         If (before.WhereToEnable != after.WhereToEnable)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroupes, after.WhereToEnable)
+            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroups, after.WhereToEnable)
         }
     }
 
@@ -471,7 +471,7 @@
 
         If (before.WhereToEnable != after.WhereToEnable)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroupes, after.WhereToEnable)
+            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroups, after.WhereToEnable)
         }
 
         ; For any other property:

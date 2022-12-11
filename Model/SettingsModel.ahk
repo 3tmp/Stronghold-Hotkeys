@@ -99,7 +99,7 @@
     ; Valid options. Static properties
 
     ; Returns a list of all WindowGroups that are supported
-    ValidWindowGroupes[]
+    ValidWindowGroups[]
     {
         Get
         {
