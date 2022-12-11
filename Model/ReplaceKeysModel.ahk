@@ -257,7 +257,10 @@
     Default()
     {
         ; TODO ValidWindowGroupes make something better
-        obj := {"Enable": true, "WhereToEnable": SettingsModel.ValidWindowGroupes[3], "OpenGranary": "g"
+        ; It seems as if AutoHotkey cannot do SettingsModel.ValidWindowGroupes[3],
+        ; so get the list and later get the desired element
+        validGroups := SettingsModel.ValidWindowGroupes
+        obj := {"Enable": true, "WhereToEnable": validGroups[3], "OpenGranary": "g"
               , "OpenArmoury": "y", "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
               , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": "Tab"
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
