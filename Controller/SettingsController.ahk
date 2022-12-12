@@ -1,6 +1,6 @@
 ﻿class SettingsController
 {
-    __New(model)
+    __New(model, iniPath)
     {
         If (!InstanceOf(model, SettingsModel))
         {
@@ -8,6 +8,7 @@
         }
 
         this._settingsModel := model
+        this._iniPath := iniPath
     }
 
     CheckForUpdates()
@@ -49,8 +50,12 @@
 
     SaveToFile()
     {
-        ; TODO implement
-        msgbox WIP saving...
+        iniStr := this._settingsModel.ToIniString()
+        If (FileExist(this._iniPath))
+        {
+            FileDelete(this._iniPath)
+        }
+        FileAppend(iniStr, this._iniPath)
     }
 
     ResetAutoClicker()

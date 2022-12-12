@@ -51,6 +51,13 @@ FileEncoding(ByRef Encoding)
     FileEncoding, %Encoding%
     Return prev
 }
+FileRead(ByRef Filename, ByRef Encoding := "UTF-8")
+{
+    prev := FileEncoding(Encoding)
+    FileRead, OutputVar, %Filename%
+    FileEncoding(prev)
+    Return OutputVar
+}
 
 FormatTime(ByRef YYYYMMDDHH24MISS := "", ByRef Format := "")
 {

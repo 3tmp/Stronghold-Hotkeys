@@ -68,17 +68,35 @@ GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
 GroupAdd, Crusader, Crusader ahk_class FFwinClass
 GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
 
-; The path where the settings get stored
-global IniPath := "Config.ini"
-
+; Set up the tray menu
 TrayMenu.Instance.Init()
 
-model := SettingsModel.Default()
+; The path where the settings get stored
+iniPath := "Config.ini"
 
-controller := new SettingsController(model)
+If (FileExist(iniPath))
+{
+    readConfig := FileRead(iniPath)
+    model := SettingsModel.FromIniString(readConfig)
+}
+Else
+{
+    model := SettingsModel.Default()
+}
+
+controller := new SettingsController(model, iniPath)
 
 gui := new SettingsGui(controller, model)
-gui.Show()
+
+; Only show the gui when no config file exists (usually the first load), or if the app is in dev mode
+If (!FileExist(iniPath) || IsDebuggerAttatched())
+{
+    controller.SaveToFile()
+    gui.Show()
+}
+
+Return
+
 
 ; For testing
 F3::
