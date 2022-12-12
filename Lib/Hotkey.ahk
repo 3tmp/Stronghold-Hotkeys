@@ -15,14 +15,12 @@ class Hotkey
         this._key := "$" key
         this._fn := fn
         this._winGroup := winGroup
+        this._isActive := false
     }
 
     __Delete()
     {
-        If (this._isActive)
-        {
-            this.Disable()
-        }
+        this.Disable()
     }
 
     ; The hotkeys (as string) without the Hook ("$") option
@@ -34,26 +32,54 @@ class Hotkey
         }
     }
 
+    ; Returns the window title
+    WinTitle[]
+    {
+        Get
+        {
+            Return this._winGroup
+        }
+    }
+
+    ; Get/Set the active state of the hotkey
     IsActive[]
     {
         Get
         {
             Return this._isActive
         }
+
+        Set
+        {
+            If (value)
+            {
+                this.Enable()
+            }
+            Else
+            {
+                this.Disable()
+            }
+        }
     }
 
     ; Turn the Hotkey on.
     Enable()
     {
-        this._apply(this._key, "On", this._fn, this._winGroup)
-        this._isActive := true
+        If (!this._isActive)
+        {
+            this._apply(this._key, "On", this._fn, this._winGroup)
+            this._isActive := true
+        }
     }
 
     ; Turn the Hotkey off.
     Disable()
     {
-        this._apply(this._key, "Off", this._fn, this._winGroup)
-        this._isActive := false
+        If (this._isActive)
+        {
+            this._apply(this._key, "Off", this._fn, this._winGroup)
+            this._isActive := false
+        }
     }
 
     ; Static internal methods

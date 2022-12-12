@@ -18,6 +18,16 @@ class StrongholdManager
         ; TODO Add install paths for installation without steam
     }
 
+    ; TODO remove?
+    AutoClickAtCurrentMousePos()
+    {
+        While (GetKeyState(A_ThisHotkey.SubStr(2), "P"))
+        {
+            this.ClickAtCurrentMousePos()
+            Sleep, 15
+        }
+    }
+
     ; Perform a mouse click with the left mouse button at the current cursor position
     ClickAtCurrentMousePos()
     {
