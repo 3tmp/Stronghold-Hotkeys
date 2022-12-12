@@ -78,6 +78,8 @@ If (FileExist(iniPath))
 {
     readConfig := FileRead(iniPath)
     model := SettingsModel.FromIniString(readConfig)
+    ; Free memory
+    VarSetCapacity(readConfig, 0)
 }
 Else
 {
