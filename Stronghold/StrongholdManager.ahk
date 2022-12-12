@@ -6,7 +6,7 @@ class StrongholdManager
     {
         static Stronghold := "Stronghold ahk_class FFwinClass"
              , Crusader := "Crusader ahk_class FFwinClass"
-             , Both := "ahk_class FFwinClass"
+             , StrongholdAndCrusader := "ahk_class FFwinClass"
     }
 
     class InstallPaths
@@ -130,7 +130,7 @@ class StrongholdManager
     ; Returns true if Stronghold, Crusader or Extreme is the game
     _isAnyActive()
     {
-        Return WinActive(StrongholdManager.WindowTitles.Both)
+        Return WinActive(StrongholdManager.WindowTitles.StrongholdAndCrusader)
     }
 
     ; Performs a click. Posts a window message with the given number to the target window
