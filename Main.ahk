@@ -37,7 +37,8 @@
 #Include Lib\Gui\Controls\Text.ahk
 
 #Include Controller\SettingsController.ahk
-#Include Gui\SettingsGui.ahk
+#Include View\Gui\SettingsGui.ahk
+#Include View\Stronghold\StrongholdHotkeyHandler.ahk
 #Include Model\ASettingsModel.ahk
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk
@@ -47,7 +48,6 @@
 #Include Model\ReplaceKeysModel.ahk
 #Include Model\SettingsModel.ahk
 #Include Stronghold\StrongholdManager.ahk
-#Include Stronghold\StrongholdHotkeyHandler.ahk
 
 #Include Localization.ahk
 #Include Ressources.ahk
@@ -90,6 +90,7 @@ Else
 controller := new SettingsController(model, iniPath)
 
 gui := new SettingsGui(controller, model)
+hotkeyHandler := new StrongholdHotkeyHandler(controller, model)
 
 ; Only show the gui when no config file exists (usually the first load), or if the app is in dev mode
 If (!FileExist(iniPath) || IsDebuggerAttatched())
