@@ -146,11 +146,9 @@
         }
     }
 
-    _tempOnEvent(eventArgs)
+    _printToConsole(eventArgs)
     {
-        ToolTip, % eventArgs.ToString()
-        Sleep, 1000
-        ToolTip
+        OutputDebug(eventArgs.ToString())
     }
 
     _enableHotkeyAndSetValue()
@@ -306,12 +304,12 @@
 
     _onG_ToggleKeyDropDownChange(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._printToConsole(eventArgs)
     }
 
     _onG_updatesDropDown(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._printToConsole(eventArgs)
     }
 
     _onG_UpdateNowBtnClick(eventArgs)
@@ -326,7 +324,7 @@
 
     _onAC_DropDownChange(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._printToConsole(eventArgs)
     }
 
     _onMN_EnableCheck(eventArgs)
@@ -336,7 +334,7 @@
 
     _onMN_WhereDropDown(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._printToConsole(eventArgs)
     }
 
     _onRK_EnableCheck(eventArgs)
@@ -346,7 +344,7 @@
 
     _onRK_WhereDropDown(eventArgs)
     {
-        this._tempOnEvent(eventArgs)
+        this._printToConsole(eventArgs)
     }
 
     _onRK_LvRowFocused(eventArgs)
