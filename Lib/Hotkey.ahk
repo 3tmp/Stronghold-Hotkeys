@@ -1,15 +1,18 @@
-﻿class Hotkey
+﻿; A wrapper around the Hotkey command. Always uses the Hook option to prevent self triggering.
+; Only supports single character hotkeys
+class Hotkey
 {
     ; key: The full name of the key combo
     ; fn: The function that should get executed
-    ; winGroup: The #IfWinActive context
+    ; winGroup: The "#IfWinActive ahk_group" context
     __New(key, fn, winGroup)
     {
         If (key == "" || !TypeOf(fn, "Func"))
         {
             throw new Exception(A_ThisFunc " Invalid parameter.")
         }
-        this._key := key
+        ; Always use the "Hook" option to prevent the script from self triggering of Hotkeys
+        this._key := "$" key
         this._fn := fn
         this._winGroup := winGroup
     }
@@ -22,11 +25,12 @@
         }
     }
 
+    ; The hotkeys (as string) without the Hook ("$") option
     Key[]
     {
         Get
         {
-            Return this._key
+            Return this._key.SubStr(2)
         }
     }
 
