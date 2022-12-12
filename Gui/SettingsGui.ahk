@@ -22,7 +22,7 @@
     BuildGui()
     {
         this._width := 400
-        this._height := 415
+        this._height := 440
         this._margin := 10
 
         this.Margin(this._margin, this._margin)
@@ -50,9 +50,11 @@
         this.AddText("w" this._width, "This is the General description")
         this.AddText()
         this.AddText(, "This is the Toggle key description")
-        this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose1", SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
+        index := SettingsModel.ValidToggleKeys.IndexOf(this._settingsModel.General.ToggleKey)
+        this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
-        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose1", SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
+        index := SettingsModel.ValidCheckForUpdatesFrequency.IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
+        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
         this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates").OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
@@ -61,9 +63,12 @@
     {
         this.AddText("w" this._width, "This is the autoclicker description")
         this.AddText()
-        this._ctrlAC_Check := this.AddCheckBox("Checked", "Enable AutoClicker").OnClick(OBM(this, "_onAC_CheckClick"))
-        this._ctrlAC_Text := this.AddText(, "Send clicks as long as the following key gets pressed down")
-        this._ctrlAC_DropDown := this.AddDropDownList("Choose1", SettingsModel.ValidAutoClickerKeys).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
+        check := this._settingsModel.AutoClicker.Enable
+        disable := !check
+        index := SettingsModel.ValidAutoClickerKeys.IndexOf(this._settingsModel.AutoClicker.Key)
+        this._ctrlAC_Check := this.AddCheckBox("Checked" check, "Enable AutoClicker").OnClick(OBM(this, "_onAC_CheckClick"))
+        this._ctrlAC_Text := this.AddText("Disabled" disable, "Send clicks as long as the following key gets pressed down")
+        this._ctrlAC_DropDown := this.AddDropDownList("Choose" index " Disabled" disable, SettingsModel.ValidAutoClickerKeys).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
     }
 
     ; Map navigation
@@ -71,10 +76,13 @@
     {
         this.AddLink(, "Description and the UCP Website")
         this.AddText()
-        this._ctrlMN_EnableCheck := this.AddCheckbox("Checked", "Enable Map Navigation").OnClick(OBM(this, "_onMN_EnableCheck"))
-        this._ctrlMN_Text1 := this.AddText(, "Enable only when ")
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
-        this._ctrlMN_Text2 := this.AddText("x+0", " is the active game")
+        check := this._settingsModel.MapNavigation.Enable
+        disable := !check
+        index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
+        this._ctrlMN_EnableCheck := this.AddCheckbox("Checked" check, "Enable Map Navigation").OnClick(OBM(this, "_onMN_EnableCheck"))
+        this._ctrlMN_Text1 := this.AddText("Disabled" disable, "Enable only when ")
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " is the active game")
     }
 
     ; Raplacing keys
@@ -83,13 +91,17 @@
         this.AddText(, "Description of replace keys")
         this.AddText()
 
-        this._ctrlRK_EnableCheck := this.AddCheckbox("Checked", "Enable Replace Keys").OnClick(OBM(this, "_onRK_EnableCheck"))
-        this._ctrlRK_Text1 := this.AddText("Section", "Enable only when ")
-        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose1", SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
-        this._ctrlRK_Text2 := this.AddText("x+0", " is the active game")
+        check := this._settingsModel.ReplaceKeys.Enable
+        disable := !check
+        index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
+
+        this._ctrlRK_EnableCheck := this.AddCheckbox("Checked" check, "Enable Replace Keys").OnClick(OBM(this, "_onRK_EnableCheck"))
+        this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, "Enable only when ")
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " is the active game")
 
         noHdrReorder := "-LV0x10"
-        lvOptions := "xs w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder
+        lvOptions := "xs w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder " Disabled" disable
         this._ctrlRK_Lv := this.AddListView(lvOptions, ["Command", "Key"])
 
         this._refillRKListView()
@@ -109,7 +121,7 @@
 
         this._ctrlRK_HotkeyInUseText := this.AddText("xs Hidden", "Hotkey is already in use")
 
-        this._ctrlRK_ResetToDefaultsBtn := this.AddButton(, "Reset to default").OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
+        this._ctrlRK_ResetToDefaultsBtn := this.AddButton("Disabled" disable, "Reset to default").OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
     }
 
     ; Gets called before the gui gets destroyed
@@ -281,13 +293,7 @@
         value := this._ctrlRK_WhereDropDown.GetSelectedText()
         this._settingsController.SetReplaceKeysWhereToEnable(value)
 
-        replaceKeys := this._settingsModel.ReplaceKeys
-        For each, row in this._ctrlRK_Lv
-        {
-            propertyName := row.At(1).Text
-            value := replaceKeys[row.At(1).Text]
-            this._settingsController.SetReplaceKeysByProperty(propertyName, value)
-        }
+        ; Don't apply the Replacekeys here as they get set via the "Apply Hotkey" button
 
         this._settingsController.SaveToFile()
         this.Close()
