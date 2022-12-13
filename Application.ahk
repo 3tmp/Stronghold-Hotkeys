@@ -1,6 +1,7 @@
 ﻿class Application
 {
-    static _iniPath := "Config.ini"
+    static _applicationName := "Stronghold Hotkeys"
+         , _iniPath := "Config.ini"
 
     __New()
     {
@@ -48,6 +49,7 @@
         }
     }
 
+    ; The central application exit point
     ExitApp()
     {
         ExitApp
@@ -73,7 +75,8 @@
     {
         If (this._settingsGui == "" || this._settingsGui.IsDestroyed)
         {
-            this._settingsGui := new SettingsGui(this._settingsController, this._settingsModel)
+            ; TODO show a localized gui title
+            this._settingsGui := new SettingsGui(this._settingsController, this._settingsModel, Application._applicationName)
         }
         Return this._settingsGui
     }
