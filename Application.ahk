@@ -78,10 +78,9 @@
     {
         If (this._settingsGui == "" || this._settingsGui.IsDestroyed)
         {
-            ; TODO show a localized gui title
-            this._settingsGui := new SettingsGui(this._settingsController, this._settingsModel, Application._applicationName)
+            title := Stronghold_Version().Format(GetLanguage().Title)
+            this._settingsGui := new SettingsGui(this._settingsController, this._settingsModel, title)
         }
         Return this._settingsGui
     }
-
 }

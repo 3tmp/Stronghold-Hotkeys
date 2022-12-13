@@ -26,10 +26,13 @@
         this._width := 400
         this._height := 440
         this._margin := 10
+        this._maxTextWidth := this._width - 3 * this._margin
 
         this.Margin(this._margin, this._margin)
 
-        this._ctrlTab := this.AddTab("w" this._width " h" this._height, ["General", "AutoClicker", "MapNavigation", "ReplaceKeys"])
+        l := GetLanguage()
+
+        this._ctrlTab := this.AddTab("w" this._width " h" this._height, l.TabTitle)
         this._buildTab1()
         this._ctrlTab.SetTab(2)
         this._buildTab2()
@@ -40,8 +43,8 @@
 
         this.SetTab()
 
-        this._ctrlCancelBtn := this.AddButton("xm" (this._width - 170) " w80", "Cancel").OnClick(OBM(this, "_onCancelBtnClick"))
-        this._ctrlOkBtn := this.AddButton("xp+90 w80", "Ok").OnClick(OBM(this, "_onOkBtnClick"))
+        this._ctrlCancelBtn := this.AddButton("xm" (this._width - 170) " w80", l.Cancel).OnClick(OBM(this, "_onCancelBtnClick"))
+        this._ctrlOkBtn := this.AddButton("xp+90 w80 Default", l.Apply).OnClick(OBM(this, "_onOkBtnClick"))
     }
 
     IsDestroyed[]
@@ -57,64 +60,72 @@
     ; General
     _buildTab1()
     {
-        this.AddText("w" this._width, "This is the General description")
+        l := GetLanguage()
+
+        this.AddText("w" this._maxTextWidth, l.G_Desc)
         this.AddText()
-        this.AddText(, "This is the Toggle key description")
+        this.AddText(, l.G_ToggleDesc)
         index := SettingsModel.ValidToggleKeys.IndexOf(this._settingsModel.General.ToggleKey)
         this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
         this.AddText()
-        this.AddText(, "When should the app search for updates?")
+        this.AddText(, l.G_UpdatesDesc)
         index := SettingsModel.ValidCheckForUpdatesFrequency.IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
         this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
-        this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates now").OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
+        this._ctrlG_updateNowBtn := this.AddButton(, l.G_UpdateNow).OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
     ; AutoClicker
     _buildTab2()
     {
-        this.AddText("w" this._width, "This is the autoclicker description")
+        l := GetLanguage()
+
+        this.AddText("w" this._maxTextWidth, l.AC_Desc)
         this.AddText()
         check := this._settingsModel.AutoClicker.Enable
         disable := !check
         index := SettingsModel.ValidAutoClickerKeys.IndexOf(this._settingsModel.AutoClicker.Key)
-        this._ctrlAC_Check := this.AddCheckBox("Checked" check, "Enable AutoClicker").OnClick(OBM(this, "_onAC_CheckClick"))
-        this._ctrlAC_Text := this.AddText("Disabled" disable, "Send clicks as long as the following key gets pressed down")
+        this._ctrlAC_Check := this.AddCheckBox("Checked" check, l.AC_Enable).OnClick(OBM(this, "_onAC_CheckClick"))
+        this._ctrlAC_Text := this.AddText("Disabled" disable, l.AC_Text)
         this._ctrlAC_DropDown := this.AddDropDownList("Choose" index " Disabled" disable, SettingsModel.ValidAutoClickerKeys).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
     }
 
     ; Map navigation
     _buildTab3()
     {
-        this.AddLink(, "Description and the UCP Website")
+        l := GetLanguage()
+
+        this.AddLink("w" this._maxTextWidth, Stronghold_Version().Format(l.MN_Desc))
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable
         disable := !check
         index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
-        this._ctrlMN_EnableCheck := this.AddCheckbox("Checked" check, "Enable Map Navigation").OnClick(OBM(this, "_onMN_EnableCheck"))
-        this._ctrlMN_Text1 := this.AddText("Disabled" disable, "Enable only when ")
+        this._ctrlMN_EnableCheck := this.AddCheckbox("Checked" check, l.MN_Enable).OnClick(OBM(this, "_onMN_EnableCheck"))
+        this._ctrlMN_Text1 := this.AddText("Disabled" disable, l.MN_Text1 " ")
         this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
-        this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " is the active game")
+        this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " " l.MN_Text2)
     }
 
     ; Raplacing keys
     _buildTab4()
     {
-        this.AddText(, "Description of replace keys")
+        l := GetLanguage()
+
+        this.AddText(, l.RK_Desc)
         this.AddText()
 
         check := this._settingsModel.ReplaceKeys.Enable
         disable := !check
         index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
 
-        this._ctrlRK_EnableCheck := this.AddCheckbox("Checked" check, "Enable Replace Keys").OnClick(OBM(this, "_onRK_EnableCheck"))
-        this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, "Enable only when ")
+        this._ctrlRK_EnableCheck := this.AddCheckbox("Checked" check, l.RK_Enable).OnClick(OBM(this, "_onRK_EnableCheck"))
+        this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, l.RK_Text1 " ")
         this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
-        this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " is the active game")
+        this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " " l.RK_Text2)
 
         noHdrReorder := "-LV0x10"
-        lvOptions := "xs w" (this._width - this._margin * 3) " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder " Disabled" disable
-        this._ctrlRK_Lv := this.AddListView(lvOptions, ["Command", "Key"])
+        lvOptions := "xs w" this._maxTextWidth " R10 -Multi NoSort NoSortHdr Grid " noHdrReorder " Disabled" disable
+        this._ctrlRK_Lv := this.AddListView(lvOptions, l.RK_LvHeader)
 
         this._refillRKListView()
 
@@ -127,13 +138,13 @@
 
         this._ctrlRK_Hotkey := this.AddHotkey("Section Disabled").OnHotkeyChange(OBM(this, "_onRK_HotkeyChange"))
 
-        this._ctrlRK_ApplyHotkeyBtn := this.AddButton("x+m Disabled", "Apply Hotkey").OnClick(OBM(this, "_onRK_ApplyHotkeyBtnClick"))
+        this._ctrlRK_ApplyHotkeyBtn := this.AddButton("x+m Disabled", l.RK_ApplyHk).OnClick(OBM(this, "_onRK_ApplyHotkeyBtnClick"))
 
-        this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", "Remove binding").OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
+        this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", l.RK_RemBinding).OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
 
-        this._ctrlRK_HotkeyWarningText := this.AddText("xs Hidden w" this._width - 3 * this._margin)
+        this._ctrlRK_HotkeyWarningText := this.AddText("xs Hidden w" this._maxTextWidth)
 
-        this._ctrlRK_ResetToDefaultsBtn := this.AddButton("Disabled" disable, "Reset to default").OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
+        this._ctrlRK_ResetToDefaultsBtn := this.AddButton("Disabled" disable, l.RK_ResetHk).OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
     }
 
     ; Gets called before the gui gets destroyed
@@ -192,29 +203,25 @@
 
     _showHotkeyInUseWarning()
     {
-        ; TODO localization
-        this._ctrlRK_HotkeyWarningText.Text := "Hotkey is already in use"
+        this._ctrlRK_HotkeyWarningText.Text := GetLanguage().RK_WarnInUse
         this._ctrlRK_HotkeyWarningText.Show()
     }
 
     _showHotkeyIsReserverdWarning()
     {
-        ; TODO localization
-        this._ctrlRK_HotkeyWarningText.Text := "'w', 'a', 's', 'd' are reserved for MapNavigation"
+        this._ctrlRK_HotkeyWarningText.Text := GetLanguage().RK_WarnReserved
         this._ctrlRK_HotkeyWarningText.Show()
     }
 
     _showHotkeyInvalidComboWarning()
     {
-        ; TODO localization
-        this._ctrlRK_HotkeyWarningText.Text := "The typed key combo is invalid"
+        this._ctrlRK_HotkeyWarningText.Text := GetLanguage().RK_WarnInvCombo
         this._ctrlRK_HotkeyWarningText.Show()
     }
 
     _showHotkeyIsEmptyWarning()
     {
-        ; TODO localization
-        this._ctrlRK_HotkeyWarningText.Text := "The key combo must not be empty"
+        this._ctrlRK_HotkeyWarningText.Text := GetLanguage().RK_WarnEmpty
         this._ctrlRK_HotkeyWarningText.Show()
     }
 
@@ -400,9 +407,9 @@
 
     _onRK_ResetToDefaultBtnClick(eventArgs)
     {
+        l := GetLanguage()
         ; Ask for user confirm
-        ; TODO localization
-        If ("Yes" == MsgBox(4, "Reset", "Reset hotkey mapping?"))
+        If ("Yes" == MsgBox(4, l.RK_MbResetTitle, l.RK_MbResetBody))
         {
             ; Set ReplaceKeys to the system defaults
             this._settingsController.ResetReplaceKeys()
@@ -437,29 +444,26 @@
 
     _onRK_ApplyHotkeyBtnClick(eventArgs)
     {
+        l := GetLanguage()
         keyCombo := this._ctrlRK_Hotkey.KeyComboString
         replaceKeys := this._settingsModel.ReplaceKeys
         action := this._getFocusedLvRow().At(1).Text
 
         If (keyCombo == "")
         {
-            ; TODO localization
-            Msgbox("You have to enter a key to set a new Hotkey")
+            Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrEmpty)
         }
         Else If (keyCombo.In("w", "a", "s", "d"))
         {
-            ; TODO localization
-            Msgbox("'w', 'a', 's', 'd' Hotkeys are reserved for MapNavigation, choose a different one")
+            Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrReserved)
         }
         Else If (this._isKeyInUse(keyCombo) || replaceKeys[action] == keyCombo)
         {
-            ; TODO localization
-            Msgbox("Hotkey is already in use, choose a different one")
+            Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrInUse)
         }
         Else If (this._isInvalidKeyCombo(keyCombo))
         {
-            ; TODO localization
-            Msgbox("This is an invalid Hotkey combo, choose a different one")
+            Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrInv)
         }
         Else
         {
