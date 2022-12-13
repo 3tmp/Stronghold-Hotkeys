@@ -9,6 +9,7 @@
         this._settingsController := ""
         this._settingsGui := ""
         this._hotkeyHandler := ""
+        this._updateChecker := ""
     }
 
     Initialize()
@@ -27,7 +28,9 @@
         }
 
         this._settingsController := new SettingsController(this._settingsModel, Application._iniPath)
+
         this._hotkeyHandler := new StrongholdHotkeyHandler(this._settingsController, this._settingsModel)
+        this._updateChecker := new UpdatesChecker(this._settingsController, this._settingsModel)
 
         ; Only show the gui when no config file exists (usually the first load), or if the app is in dev mode
         If (!FileExist(Application._iniPath) || IsDebuggerAttatched())
