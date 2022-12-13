@@ -69,21 +69,3 @@ Stronghold_Version()
 app := new Application()
 app.Initialize()
 Return
-
-
-; For testing
-F3::
-app._settingsmodel.AutoClicker.Enable := !app._settingsmodel.AutoClicker.Enable
-app._settingsmodel.AutoClicker.Key := app._settingsmodel.AutoClicker.Key == "MButton" ? "XButton1" : "MButton"
-app._settingsmodel.MapNavigation.WhereToEnable := app._settingsmodel.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold"
-Return
-
-F4::
-app._settingsmodel.AutoClicker.Enable ^= true
-app._settingsmodel.AutoClicker.Key := "XButton2"
-app._settingsmodel.ReplaceKeys.OpenMarket := "x"
-Return
-
-F6::
-app._settingsmodel.ReplaceKeys.Enable ^= true
-Return
