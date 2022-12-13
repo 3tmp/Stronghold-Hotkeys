@@ -47,19 +47,13 @@ VarFuncs__Get(ByRef var, params*)
 }
 
 ; Returns the character at the given position
-; @param var ByRef. The variable to operate on
-; @param at ByRef. The index of the char to get
-; @returns The char at the requested index
 VarFuncs_At(ByRef var, ByRef at)
 {
     Return SubStr(var, at, 1)
 }
 
 ; Returns true if the string ends with the given string
-; @param var ByRef. The variable to operate on
-; @param string ByRef. Checks if the var ends with this string
-; @param caseSensitive Optional. Set to true to compare case sensitive, false to not
-; @returns true if the var ends with the string, false otherwise
+; string: Checks if the var ends with this string
 VarFuncs_EndsWith(ByRef var, ByRef string, caseSensitive := true)
 {
     If (1 > start := StrLen(var) - StrLen(string) + 1)
@@ -71,19 +65,13 @@ VarFuncs_EndsWith(ByRef var, ByRef string, caseSensitive := true)
 }
 
 ; Returns true if the two given variables are the same
-; @param var ByRef. The variable to operate on
-; @param compareVar ByRef. The compare value
-; @returns true if the two are equal, false otherwise
 VarFuncs_Equals(ByRef var, ByRef compareVar)
 {
     Return var == compareVar
 }
 
 ; Retuns true if two given variables are the same when compared case insensitive
-; @param var ByRef. The variable to operate on
-; @param compareVar ByRef. The compare value
-; @param compareMode ByRef Optional. Can be "Off", "On" or "Locale"
-; @returns true if the two are equal, false otherwise
+; compareMode: Can be "Off", "On" or "Locale"
 VarFuncs_EqualsIgnoreCase(ByRef var, ByRef compareVar, ByRef compareMode := "Locale")
 {
     scs := StringCaseSense(compareMode)
@@ -93,20 +81,15 @@ VarFuncs_EqualsIgnoreCase(ByRef var, ByRef compareVar, ByRef compareMode := "Loc
 }
 
 ; Formats the value with the builtin Format function
-; @param var ByRef. The variable to operate on
-; @param format ByRef. The formatting option for this one string. Only one value supported.
-;                      See the ahk Format() function options
-; @returns The formatted string
+; format: The formatting option for this one string. Only one value supported. See the ahk Format() function options
+; Returns the formatted string
 VarFuncs_Format(ByRef var, ByRef format)
 {
     Return Format(format, var)
 }
 
-; Returns true if the value equals one of the given values
-; This func is case insensitive, it uses the "Locale" mode
-; @param var ByRef. The variable to operate on
-; @param values Variadic. Any number of variables to compare the var to
-; @returns true if any match gets found, false otherwise
+; Returns true if the value equals one of the given values. This func is case insensitive, it uses the "Locale" mode
+; values: Variadic. Any number of variables to compare the var to
 VarFuncs_In(ByRef var, values*)
 {
     scs := StringCaseSense("Locale")
@@ -124,11 +107,9 @@ VarFuncs_In(ByRef var, values*)
 }
 
 ; A wrapper for the if var is command
-; @param var ByRef. The variable to operate on
-; @param type ByRef. The type of data type to check. Allowed values:
-;                    "Integer", "Float", "Number", "Digit", "XDigit", "Alpha"
-;                    "Upper", "Lower", "Alnum", "Space", "Time", "Date"
-; @returns true if the var has the given data type, false otherwise
+; type: The type of data type to check. Allowed values:
+;       "Integer", "Float", "Number", "Digit", "XDigit", "Alpha", "Upper", "Lower", "Alnum", "Space", "Time", "Date"
+; Returns true if the var has the given data type, false otherwise
 VarFuncs_Is(ByRef var, ByRef type)
 {
     If var is %type%
@@ -139,43 +120,35 @@ VarFuncs_Is(ByRef var, ByRef type)
 }
 
 ; Returns true if the string starts with the given string
-; @param var ByRef. The variable to operate on
-; @param string ByRef. Checks if the var starts with this string
-; @param caseSensitive Optional. Set to true to compare case sensitive, false to not
-; @returns true if the var starts with the string, false otherwise
+; string: Checks if the var starts with this string
 VarFuncs_StartsWith(ByRef var, ByRef string, caseSensitive := true)
 {
     Return caseSensitive ? SubStr(var, 1, StrLen(string)) == string : SubStr(var, 1, StrLen(string)) = string
 }
 
 ; Splits the string and returns an array
-; @param var ByRef. The variable to operate on
-; @param Delimiter ByRef Optional. If this gets omitted, the string gets split into each character
-;                                  Can be a single string or an array of strings that are used to split the var
-; @param OmitChars ByRef Optional. If present, each char in the given string will be omitted in the result
-; @param MaxParts ByRef Optional. Specifies the maximum number of substrings, -1 means "no limit"
-; @returns A list of strings that got split according to the params
-VarFuncs_StrSplit(ByRef var, ByRef Delimiters := "", ByRef OmitChars := "", ByRef MaxParts := -1)
+; delimiter: Optional. If this gets omitted, the string gets split into each character
+;                      Can be a single string or an array of strings that are used to split the var
+; omitChars: Optional. If present, each char in the given string will be omitted in the result
+; maxParts: Optional. Specifies the maximum number of substrings, -1 means "no limit"
+VarFuncs_StrSplit(ByRef var, ByRef delimiters := "", ByRef omitChars := "", ByRef maxParts := -1)
 {
     ; StrSplit does not use the Array() method to generate a new one,
     ; therefore the base has to be set manually
-    result := StrSplit(var, Delimiters, OmitChars, MaxParts)
+    result := StrSplit(var, delimiters, omitChars, maxParts)
     , result.base := ArrayList
     Return result
 }
 
 ; Returns a string representation of the value
-; @param var ByRef. The variable to operate on
-; @returns The value as string
 VarFuncs_ToString(ByRef var)
 {
     Return "" var
 }
 
 ; Trims the given string
-; @param var ByRef. The variable to operate on
-; @param omitChars ByRef Optional. A case sensitive list of characters to trim. If omitted, it defaults to Spaces and Tabs
-; @returns The trimmed string
+; omitChars: Optional. A case sensitive list of characters to trim. If omitted, it defaults to Spaces and Tabs
+; Returns the trimmed string
 VarFuncs_Trim(ByRef var, ByRef omitChars := "")
 {
     Return Trim(var, omitChars == "" ? A_Space A_Tab : omitChars)
