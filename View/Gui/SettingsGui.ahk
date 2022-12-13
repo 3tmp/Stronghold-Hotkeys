@@ -527,19 +527,6 @@
             this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, SettingsModel.ValidToggleKeys, after.Togglekey)
         }
 
-        ; Don't care for LastCheckedForUpdate
-
-        ; TODO move this code into its own view component
-        If (before.LatestVersion !== after.LatestVersion)
-        {
-            If (Stronghold_Version() == after.LatestVersion)
-            {
-                MsgBox("No updates", "You are using the latest version: " Stronghold_Version())
-            }
-            Else
-            {
-                MsgBox("Update available", "There is an update available for version " after.LatestVersion "`nYou have " Stronghold_Version())
-            }
-        }
+        ; Don't care for LastCheckedForUpdate and LatestVersion
     }
 }
