@@ -124,13 +124,12 @@
             result := ["CapsLock", "Tab"]
             Loop, 12
             {
-                result.Push("F" A_Index)
+                result.Add("F" A_Index)
             }
-            Loop, 10
-            {
-                result.Push("Numpad" (A_Index - 1))
-            }
-            result.Push("NumpadEnter", "NumpadMult", "NumpadDiv", "NumpadDot")
+            result.Add("NumpadEnter")
+            result.Add("NumpadMult")
+            result.Add("NumpadDiv")
+            result.Add("NumpadDot")
             Return result
         }
     }
@@ -158,13 +157,13 @@
             ; Numpad numbers 0 to 9
             Loop, 10
             {
-                result.Add("Numpad" A_Index - 1)
+                result.Add("Numpad" (A_Index - 1))
             }
             ; Some other characters
-            For each, key in [".", ",", "+", "-"]
-            {
-                result.Add(key)
-            }
+            result.Add(".")
+            result.Add(",")
+            result.Add("+")
+            result.Add("-")
             Return result
         }
     }
@@ -238,6 +237,10 @@
         For each, line in str.Split("`n", "`r")
         {
             l := line.Trim()
+            If (l == "")
+            {
+                Continue
+            }
             If (l.StartsWith("[") && l.EndsWith("]"))
             {
                 sections.Add(section)
