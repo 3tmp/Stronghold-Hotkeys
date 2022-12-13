@@ -154,12 +154,28 @@ _cmdsAsFuncsToString(ByRef objOrVal)
 {
     If (IsObject(objOrVal))
     {
-        ; TODO implement
+        Return _objectToString(objOrVal)
     }
     Else
     {
         Return objOrVal
     }
+}
+
+_objectToString(obj)
+{
+    If (!IsObject(obj))
+    {
+        Return obj
+    }
+
+    result := ""
+    For key, value in obj
+    {
+        result .= (A_Index == 1 ? "" : ", ") "{" (IsObject(key) ? _objectToString(key) : """" key """") ": " (IsObject(value) ? _objectToString(value) : """" value """")  "}"
+    }
+
+    Return result
 }
 
 PostMessage(ByRef Msg, ByRef wParam := "", ByRef lParam := "", ByRef Control := "", ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "", ByRef ExcludeText := "")
