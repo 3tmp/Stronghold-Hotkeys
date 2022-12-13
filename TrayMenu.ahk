@@ -41,8 +41,11 @@ class TrayMenu
         If (IsDebuggerAttatched())
         {
             ; Just for debugging purposes
-            fn := OBM(this, "_eventListLines")
+            fn := OBM(this, "_eventShowDebugWindow", "ListLines")
             Menu, Tray, Add, ListLines, % fn
+            fn := OBM(this, "_eventShowDebugWindow", "ListHotkeys")
+            Menu, Tray, Add, ListHotkeys, % fn
+            Menu, Tray, Add
         }
         fn := OBM(this, "_eventVoid")
         Menu, Tray, Add, % Format(lang.Tray_Title, Stronghold_Version()), % fn
@@ -84,9 +87,16 @@ class TrayMenu
         }
     }
 
-    _eventListLines()
+    _eventShowDebugWindow(whichWindow)
     {
-        ListLines
+        If (whichWindow == "ListLines")
+        {
+            ListLines
+        }
+        Else If (whichWindow == "ListHotkeys")
+        {
+            ListHotkeys
+        }
     }
 
     _eventAbout()
