@@ -63,9 +63,11 @@
         index := SettingsModel.ValidToggleKeys.IndexOf(this._settingsModel.General.ToggleKey)
         this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
+        this.AddText()
+        this.AddText(, "When should the app search for updates?")
         index := SettingsModel.ValidCheckForUpdatesFrequency.IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
         this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
-        this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates").OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
+        this._ctrlG_updateNowBtn := this.AddButton(, "Check for updates now").OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
     ; AutoClicker
