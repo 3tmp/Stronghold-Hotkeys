@@ -16,6 +16,8 @@
         this._eventSettings := new PropertyChangeListener(OBM(this, "_onPropChangeEventSettings"))
         this._settingsModel.AddPropertyChangeListener(this._eventSettings)
 
+        this._isDestroyed := false
+
         base.__New(title, options)
     }
 
@@ -40,6 +42,14 @@
 
         this._ctrlCancelBtn := this.AddButton("xm" (this._width - 170) " w80", "Cancel").OnClick(OBM(this, "_onCancelBtnClick"))
         this._ctrlOkBtn := this.AddButton("xp+90 w80", "Ok").OnClick(OBM(this, "_onOkBtnClick"))
+    }
+
+    IsDestroyed[]
+    {
+        Get
+        {
+            Return this._isDestroyed
+        }
     }
 
     ; Gui building helper
@@ -131,6 +141,7 @@
         this._eventSettings := ""
         this._settingsModel := ""
         this._settingsController := ""
+        this._isDestroyed := true
     }
 
     ; Private helper

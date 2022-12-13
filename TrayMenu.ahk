@@ -4,6 +4,8 @@ class TrayMenu
     static _instance := ""
 
     _setupComplete := false
+    ; Holds a reference to the application
+    _app := ""
 
     Instance[]
     {
@@ -17,11 +19,17 @@ class TrayMenu
         }
     }
 
-    Init()
+    Init(app)
     {
+        If (!InstanceOf(app, Application))
+        {
+            throw Exception("App has the wrong type")
+        }
+
         If (!this._setupComplete)
         {
             this._buildMenu()
+            this._app := app
         }
     }
 
@@ -83,18 +91,18 @@ class TrayMenu
 
     _eventAbout()
     {
-        MsgBox,, % Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), % Format(GetLanguage().Tray_About_MsgBoxBody, Chr(0x00A9))
+        copyright := Chr(0x00A9)
+        MsgBox(Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), Format(GetLanguage().Tray_About_MsgBoxBody, copyright))
     }
 
     _eventOpenWebsite()
     {
-        ; TODO get website via IoC
-        Run, https://github.com/3tmp/Stronghold-Hotkeys
+        Run(StrongholdHotkeysWebsite())
     }
 
     _eventOpenSettingsGui()
     {
-        ; TODO implement
+        this._app.SettingsGui.Show()
     }
 
     _eventVoid()
@@ -103,6 +111,6 @@ class TrayMenu
 
     _eventExit()
     {
-        ExitApp
+        this._app.ExitApp()
     }
 }

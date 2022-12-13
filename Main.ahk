@@ -49,6 +49,7 @@
 #Include Model\SettingsModel.ahk
 #Include Stronghold\StrongholdManager.ahk
 
+#Include Application.ahk
 #Include Localization.ahk
 #Include Ressources.ahk
 #Include TrayMenu.ahk
@@ -63,58 +64,24 @@ Stronghold_Version()
     Return "2.0.0_alpha"
 }
 
-; TODO use the value from SettingsModel or from StrongholdManager and remove from the other
-; The window title groups
-GroupAdd, Stronghold, Stronghold ahk_class FFwinClass
-GroupAdd, Crusader, Crusader ahk_class FFwinClass
-GroupAdd, StrongholdAndCrusader, ahk_class FFwinClass
-
-; Set up the tray menu
-TrayMenu.Instance.Init()
-
-; The path where the settings get stored
-iniPath := "Config.ini"
-
-If (FileExist(iniPath))
-{
-    readConfig := FileRead(iniPath)
-    model := SettingsModel.FromIniString(readConfig)
-    ; Free memory
-    VarSetCapacity(readConfig, 0)
-}
-Else
-{
-    model := SettingsModel.Default()
-}
-
-controller := new SettingsController(model, iniPath)
-
-gui := new SettingsGui(controller, model)
-hotkeyHandler := new StrongholdHotkeyHandler(controller, model)
-
-; Only show the gui when no config file exists (usually the first load), or if the app is in dev mode
-If (!FileExist(iniPath) || IsDebuggerAttatched())
-{
-    controller.SaveToFile()
-    gui.Show()
-}
-
+app := new Application()
+app.Initialize()
 Return
 
 
 ; For testing
 F3::
-model.AutoClicker.Enable := !model.AutoClicker.Enable
-model.AutoClicker.Key := model.AutoClicker.Key == "MButton" ? "XButton1" : "MButton"
-model.MapNavigation.WhereToEnable := model.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold"
+app._settingsmodel.AutoClicker.Enable := !app._settingsmodel.AutoClicker.Enable
+app._settingsmodel.AutoClicker.Key := app._settingsmodel.AutoClicker.Key == "MButton" ? "XButton1" : "MButton"
+app._settingsmodel.MapNavigation.WhereToEnable := app._settingsmodel.MapNavigation.WhereToEnable == "Stronghold" ? "Crusader" : "Stronghold"
 Return
 
 F4::
-model.AutoClicker.Enable ^= true
-model.AutoClicker.Key := "XButton2"
-model.ReplaceKeys.OpenMarket := "x"
+app._settingsmodel.AutoClicker.Enable ^= true
+app._settingsmodel.AutoClicker.Key := "XButton2"
+app._settingsmodel.ReplaceKeys.OpenMarket := "x"
 Return
 
 F6::
-model.ReplaceKeys.Enable ^= true
+app._settingsmodel.ReplaceKeys.Enable ^= true
 Return
