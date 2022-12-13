@@ -24,6 +24,7 @@
 
     __Delete()
     {
+        ; TODO move into Destroy method as the destructor will never be executed as long as this._eventSetting is not blank
         this._settingsModel.RemovePropertyChangeListener(this._eventSettings)
         this._eventSettings := ""
         this._settingsModel := ""
@@ -37,6 +38,8 @@
     {
         ; Enable the AutoClicker in both games
         this._handleAutoClickerHotkeys()
+        ; Enable the toggle key in both game
+        this._handleGeneralHotkeys()
     }
 
     _handleAutoClickerHotkeys()
@@ -44,15 +47,31 @@
         ac := this._settingsModel.AutoClicker
         validGroups := SettingsModel.ValidWindowGroups
 
-        h := this._getOrCreateHotkey("AutoClicker.Key", ac.Key, "AutoClickAtCurrentMousePos", validGroups[3])
+        ; TODO move to own executor object
+        h := this._getOrCreateHotkey("AutoClicker.Key", ac.Key, OBM(StrongholdManager, "AutoClickAtCurrentMousePos"), validGroups[3])
         h.IsActive := ac.Enable
     }
 
+    _handleGeneralHotkeys()
+    {
+        g := this._settingsModel.General
+        validGroups := SettingsModel.ValidWindowGroups
+
+        ; TODO this is just a dummy function
+        h := this._getOrCreateHotkey("General.ToggleKey", g.ToggleKey, OBM(this, "_void"), validGroups[3])
+        h.IsActive := true
+    }
+
+    _void()
+    {
+        OutputDebug(A_Now " Execute Hotkey " A_ThisHotkey)
+    }
+
     ; Gets or creates the given hotkey
-    _getOrCreateHotkey(ByRef hkName, key, ByRef methodName, ByRef winGroup)
+    _getOrCreateHotkey(ByRef hkName, key, callback, ByRef winGroup)
     {
         h := this._hotkeys[hkName]
-        this._hotkeys[hkName] := IsObject(h) && key == h.Key && winGroup == h.WinTitle ? h : new Hotkey(key, OBM(StrongholdManager, methodName), winGroup)
+        this._hotkeys[hkName] := IsObject(h) && key == h.Key && winGroup == h.WinTitle ? h : new Hotkey(key, callback, winGroup)
         Return this._hotkeys[hkName]
     }
 
@@ -77,33 +96,6 @@
     _handleAutoClicker(before, after)
     {
         this._handleAutoClickerHotkeys()
-        ;If (before.Enable !== after.Enable)
-        ;{
-        ;    this._handleAutoClickerEnable(after.Enable)
-        ;}
-
-        ;If (before.Key != after.Key)
-        ;{
-        ;    this._handleAutoClickerKey(after.Key)
-        ;}
-    }
-
-    _handleAutoClickerEnable(enable)
-    {
-        fn := ""
-        If (!this._hotkeys.HasKey(this._settingsModel.AutoClicker.Key))
-        {
-
-        }
-        If (enable)
-        {
-            this._startHotkey()
-        }
-    }
-
-    _handleAutoClickerKey(key)
-    {
-
     }
 
     ; before, after instance of MapNavigationModel
@@ -131,8 +123,8 @@
     {
         If (before.Togglekey != after.ToggleKey)
         {
-
+            this._handleGeneralHotkeys()
         }
-        ; Don't care for LastCheckedForUpdate or CheckForUpdatesFrequency
+        ; Don't care for any other properties
     }
 }
