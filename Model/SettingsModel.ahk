@@ -177,7 +177,7 @@
         }
     }
 
-    ; Resets all inner models and replaces them with their defaults
+    ; Resets an inner model and replaces it with the default
     _resetModel(propertyName, default, fn, eventName)
     {
         before := this[propertyName]
@@ -295,7 +295,6 @@
         result .= this._replaceKeys.ToIniString()
         result .= "`n"
         result .= this._general.ToIniString()
-        result .= "`n"
         Return result
     }
 
