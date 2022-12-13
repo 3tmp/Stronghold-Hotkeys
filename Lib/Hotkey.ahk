@@ -9,7 +9,7 @@ class Hotkey
     {
         If (key == "" || !TypeOf(fn, "Func"))
         {
-            throw new Exception(A_ThisFunc " Invalid parameter.")
+            throw Exception(A_ThisFunc " Invalid parameter.")
         }
         ; Always use the "Hook" option to prevent the script from self triggering of Hotkeys
         this._key := "$" key
