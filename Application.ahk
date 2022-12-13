@@ -32,15 +32,15 @@
         this._hotkeyHandler := new StrongholdHotkeyHandler(this._settingsController, this._settingsModel)
         this._updateChecker := new UpdatesChecker(this._settingsController, this._settingsModel)
 
+        ; Set up the tray menu (has to be done before the gui to ensure the Stronghold icon in the window title bar)
+        TrayMenu.Instance.Init(this)
+
         ; Only show the gui when no config file exists (usually the first load), or if the app is in dev mode
         If (!FileExist(Application._iniPath) || IsDebuggerAttatched())
         {
             this._settingsController.SaveToFile()
             this._getOrCreateSettingsGui().Show()
         }
-
-        ; Set up the tray menu
-        TrayMenu.Instance.Init(this)
     }
 
     ; Get a reference to a settings gui instance
