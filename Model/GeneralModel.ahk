@@ -109,7 +109,8 @@
         {
             result.ToggleKey := ini.Pairs.ToggleKey
             result.CheckForUpdatesFrequency := ini.Pairs.CheckForUpdatesFrequency
-            result.LastCheckedForUpdates := ini.Pairs.LastCheckedForUpdates
+            result.LastCheckedForUpdate := ini.Pairs.LastCheckedForUpdate
+            result.LatestVersion := ini.Pairs.LatestVersion
         }
         catch, e
         {
@@ -121,7 +122,10 @@
 
     ToIniSection()
     {
-        Return new _iniSection("General", {"ToggleKey": this._toggleKey, "CheckForUpdatesFrequency": this._checkForUpdatesFrequency, "LastCheckedForUpdate": this._lastCheckedForUpdate})
+        Return new _iniSection("General", {"ToggleKey": this._toggleKey
+                                         , "CheckForUpdatesFrequency": this._checkForUpdatesFrequency
+                                         , "LastCheckedForUpdate": this._lastCheckedForUpdate
+                                         , "LatestVersion": this._latestVersion})
     }
 
     ToIniString()
