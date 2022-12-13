@@ -129,7 +129,7 @@
 
         this._ctrlRK_RemoveHotkeyBtn := this.AddButton("x+m Disabled", "Remove binding").OnClick(OBM(this, "_onRK_RemoveHotkeyBtnClick"))
 
-        this._ctrlRK_HotkeyInUseText := this.AddText("xs Hidden", "Hotkey is already in use")
+        this._ctrlRK_HotkeyWarningText := this.AddText("xs Hidden w" this._width - 3 * this._margin)
 
         this._ctrlRK_ResetToDefaultsBtn := this.AddButton("Disabled" disable, "Reset to default").OnClick(OBM(this, "_onRK_ResetToDefaultBtnClick"))
     }
@@ -185,17 +185,26 @@
         this._ctrlRK_Hotkey.Disable()
         this._ctrlRK_ApplyHotkeyBtn.Disable()
         this._ctrlRK_RemoveHotkeyBtn.Disable()
-        this._hideHotkeyInUseWarning()
+        this._hideHotkeyWarning()
     }
 
     _showHotkeyInUseWarning()
     {
-        this._ctrlRK_HotkeyInUseText.Show()
+        ; TODO localization
+        this._ctrlRK_HotkeyWarningText.Text := "Hotkey is already in use"
+        this._ctrlRK_HotkeyWarningText.Show()
     }
 
-    _hideHotkeyInUseWarning()
+    _showHotkeyIsReserverdWarning()
     {
-        this._ctrlRK_HotkeyInUseText.Hide()
+        ; TODO localization
+        this._ctrlRK_HotkeyWarningText.Text := "'w', 'a', 's', 'd' are reserved for MapNavigation"
+        this._ctrlRK_HotkeyWarningText.Show()
+    }
+
+    _hideHotkeyWarning()
+    {
+        this._ctrlRK_HotkeyWarningText.Hide()
     }
 
     ; Determines if any ReplaceKey contains the given key combo string
@@ -264,7 +273,6 @@
 
     OnClose()
     {
-        ; TODO save to file
         this.Destroy()
     }
 
@@ -381,14 +389,18 @@
 
     _onRK_HotkeyChange(eventArgs)
     {
-        ; TODO check for wasd to be invalid
-        If (this._isKeyInUse(eventArgs.KeyComboString))
+        ; wasd keys cannot be used in replace key combos as they are reserved for map navigation
+        If (eventArgs.KeyComboString.In("w", "a", "s", "d"))
+        {
+            this._showHotkeyIsReserverdWarning()
+        }
+        Else If (this._isKeyInUse(eventArgs.KeyComboString))
         {
             this._showHotkeyInUseWarning()
         }
         Else
         {
-            this._hideHotkeyInUseWarning()
+            this._hideHotkeyWarning()
         }
     }
 
@@ -398,14 +410,19 @@
         replaceKeys := this._settingsModel.ReplaceKeys
         action := this._getFocusedLvRow().At(1).Text
 
-        If (!this._isKeyInUse(keyCombo) && replaceKeys[action] !== keyCombo)
+        If (keyCombo.In("w", "a", "s", "d"))
         {
-            this._settingsController.SetReplaceKeysByProperty(action, keyCombo)
+            ; TODO localization
+            Msgbox("'w', 'a', 's', 'd' Hotkeys are reserved for MapNavigation, choose a differrent one")
         }
-        Else
+        Else If (this._isKeyInUse(keyCombo) || replaceKeys[action] == keyCombo)
         {
             ; TODO localization
             Msgbox("Hotkey is already in use, choose a differrent one")
+        }
+        Else
+        {
+            this._settingsController.SetReplaceKeysByProperty(action, keyCombo)
         }
     }
 

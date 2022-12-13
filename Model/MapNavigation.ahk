@@ -62,7 +62,6 @@
             throw Exception("Ini string is not a MapNavigation")
         }
 
-        ; TODO load the where to enable
         If (!ini.Pairs.Enable.In(true, false) || !SettingsModel.ValidWindowGroups.Contains(ini.Pairs.WhereToEnable))
         {
             throw Exception("Ini string is not a MapNavigation")
