@@ -202,6 +202,20 @@
         this._ctrlRK_HotkeyWarningText.Show()
     }
 
+    _showHotkeyInvalidComboWarning()
+    {
+        ; TODO localization
+        this._ctrlRK_HotkeyWarningText.Text := "The typed key combo is invalid"
+        this._ctrlRK_HotkeyWarningText.Show()
+    }
+
+    _showHotkeyIsEmptyWarning()
+    {
+        ; TODO localization
+        this._ctrlRK_HotkeyWarningText.Text := "The key combo must not be empty"
+        this._ctrlRK_HotkeyWarningText.Show()
+    }
+
     _hideHotkeyWarning()
     {
         this._ctrlRK_HotkeyWarningText.Hide()
@@ -211,6 +225,12 @@
     _isKeyInUse(keyCombo)
     {
         Return keyCombo !== "" && this._settingsModel.ReplaceKeys.ContainsAny(keyCombo)
+    }
+
+    ; Determines if the given key combo string is a valid ReplaceKey key combo string
+    _isInvalidKeyCombo(keyCombo)
+    {
+        Return !SettingsModel.ValidReplaceKeys.Contains(keyCombo)
     }
 
     _getFocusedLvRow()
@@ -384,19 +404,28 @@
         {
             ; Set ReplaceKeys to the system defaults
             this._settingsController.ResetReplaceKeys()
+            ; TODO save to file?
         }
     }
 
     _onRK_HotkeyChange(eventArgs)
-    {
+    { 
+        If (eventArgs.KeyComboString == "")
+        {
+            this._showHotkeyIsEmptyWarning()
+        }
         ; wasd keys cannot be used in replace key combos as they are reserved for map navigation
-        If (eventArgs.KeyComboString.In("w", "a", "s", "d"))
+        Else If (eventArgs.KeyComboString.In("w", "a", "s", "d"))
         {
             this._showHotkeyIsReserverdWarning()
         }
         Else If (this._isKeyInUse(eventArgs.KeyComboString))
         {
             this._showHotkeyInUseWarning()
+        }
+        Else If (this._isInvalidKeyCombo(eventArgs.KeyComboString))
+        {
+            this._showHotkeyInvalidComboWarning()
         }
         Else
         {
@@ -410,15 +439,25 @@
         replaceKeys := this._settingsModel.ReplaceKeys
         action := this._getFocusedLvRow().At(1).Text
 
-        If (keyCombo.In("w", "a", "s", "d"))
+        If (keyCombo == "")
         {
             ; TODO localization
-            Msgbox("'w', 'a', 's', 'd' Hotkeys are reserved for MapNavigation, choose a differrent one")
+            Msgbox("You have to enter a key to set a new Hotkey")
+        }
+        Else If (keyCombo.In("w", "a", "s", "d"))
+        {
+            ; TODO localization
+            Msgbox("'w', 'a', 's', 'd' Hotkeys are reserved for MapNavigation, choose a different one")
         }
         Else If (this._isKeyInUse(keyCombo) || replaceKeys[action] == keyCombo)
         {
             ; TODO localization
-            Msgbox("Hotkey is already in use, choose a differrent one")
+            Msgbox("Hotkey is already in use, choose a different one")
+        }
+        Else If (this._isInvalidKeyCombo(keyCombo))
+        {
+            ; TODO localization
+            Msgbox("This is an invalid Hotkey combo, choose a different one")
         }
         Else
         {
