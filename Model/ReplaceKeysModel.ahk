@@ -262,7 +262,7 @@
         validGroups := SettingsModel.ValidWindowGroups
         obj := {"Enable": true, "WhereToEnable": validGroups[3], "OpenGranary": "g"
               , "OpenArmoury": "y", "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
-              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": "Tab"
+              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": ""
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)
     }
@@ -272,15 +272,43 @@
         ini := _iniSection.Parse(str)
         If (ini.Title != "ReplaceKeys")
         {
-            throw Exception("Ini string is not an ReplaceKeys")
+            throw Exception("Ini string is not a ReplaceKeys")
         }
 
-        If (!ini.Pairs.Enable.In(true, false) || !ini.Pairs.Key.In("MButton", "XButton1", "XButton2"))
+        validGroups := SettingsModel.ValidWindowGroups
+
+        If (!ini.Pairs.Enable.In(true, false) || !validGroups.Contains(ini.Pairs.WhereToEnable))
         {
-            throw Exception("Ini string is not an ReplaceKeys")
+            throw Exception("Ini string is not a ReplaceKeys")
         }
 
-        Return new ReplaceKeysModel(ini.Pairs.Enable, ini.Pairs.Key)
+        ; Clone the key value pair list and remove the non-(keyboard-)key pairs
+        kvPair := ini.Pairs.Clone()
+        kvPair.Delete("Enable")
+        kvPair.Delete("WhereToEnable")
+
+        ; Ensure that no (keyboard)-key is set double
+        uniqueValues := {}
+        For key, value in kvPair
+        {
+            If (uniqueValues.HasKey(value))
+            {
+                throw Exception("Ini string is not a ReplaceKeys")
+            }
+            uniqueValues[value] := 1
+        }
+
+        ; Ensure that only valid (keyboard)-key are set
+        validKeysList := SettingsModel.ValidReplaceKeys
+        For each, key in kvPair
+        {
+            If (!validKeysList.Contains(key))
+            {
+                throw Exception("Ini string is not a ReplaceKeys")
+            }
+        }
+
+        Return new ReplaceKeysModel(ini.Pairs)
     }
 
     ToIniSection()
