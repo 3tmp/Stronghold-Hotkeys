@@ -46,6 +46,7 @@
             this._settingsModel.General.LastCheckedForUpdate := "1970"
             this._settingsModel.General.LatestVersion := ""
         }
+        this.SaveToFile()
     }
 
     SaveToFile()
