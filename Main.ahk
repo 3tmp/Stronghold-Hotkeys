@@ -14,6 +14,7 @@
 #Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
 #Include Lib\OBM.ahk
+#Include Lib\RecurrenceTimer.ahk
 #Include Lib\WinApi.ahk
 
 #Include Lib\Events\BaseEvent.ahk
@@ -39,6 +40,7 @@
 #Include Controller\SettingsController.ahk
 #Include View\Gui\SettingsGui.ahk
 #Include View\Stronghold\StrongholdHotkeyHandler.ahk
+#Include View\Update\UpdatesChecker.ahk
 #Include Model\ASettingsModel.ahk
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk
