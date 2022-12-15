@@ -14,6 +14,8 @@
 #Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
 #Include Lib\OBM.ahk
+#Include Lib\OnErrorListener.ahk
+#Include Lib\OnExitListener.ahk
 #Include Lib\RecurrenceTimer.ahk
 #Include Lib\WinApi.ahk
 
@@ -36,6 +38,12 @@
 #Include Lib\Gui\Controls\ListView.ahk
 #Include Lib\Gui\Controls\Tab.ahk
 #Include Lib\Gui\Controls\Text.ahk
+
+#Include Lib\Logger\LogLevel.ahk
+#Include Lib\Logger\FileAppender.ahk
+#Include Lib\Logger\Logger.ahk
+#Include Lib\Logger\LoggerFactory.ahk
+#Include Lib\Logger\OutputDebugAppender.ahk
 
 #Include Controller\SettingsController.ahk
 #Include View\Gui\SettingsGui.ahk
