@@ -4,10 +4,14 @@
 
     If (!IsSet(l))
     {
-        ; All german language codes end with "07"
-        l := InStr(A_Language, "07", true, 3) ? _language_de() : _language_en()
+        l := _getSystemLanguage().StartsWith("de") ? _language_de() : _language_en()
     }
     Return l
+}
+
+_getSystemLanguage()
+{
+    Return WinApi_LCIDToLocaleName(A_Language)
 }
 
 _language_en()
