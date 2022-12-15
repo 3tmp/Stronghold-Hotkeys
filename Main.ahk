@@ -40,6 +40,8 @@
 #Include Lib\Gui\Controls\Text.ahk
 
 #Include Lib\Logger\LogLevel.ahk
+#Include Lib\Logger\ErrorLogger.ahk
+#Include Lib\Logger\ExitLogger.ahk
 #Include Lib\Logger\FileAppender.ahk
 #Include Lib\Logger\Logger.ahk
 #Include Lib\Logger\LoggerFactory.ahk
