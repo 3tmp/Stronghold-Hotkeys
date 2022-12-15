@@ -62,7 +62,7 @@
 
         Set
         {
-            ; TODO implement value checking
+            this._verifyKey("OpenGranary", value)
             this._setValue("_openGranary", value)
         }
     }
@@ -76,6 +76,7 @@
 
         Set
         {
+            this._verifyKey("OpenArmoury", value)
             this._setValue("_openArmoury", value)
         }
     }
@@ -89,6 +90,7 @@
 
         Set
         {
+            this._verifyKey("OpenEngineersGuild", value)
             this._setValue("_openEngineersGuild", value)
         }
     }
@@ -102,6 +104,7 @@
 
         Set
         {
+            this._verifyKey("OpenKeep", value)
             this._setValue("_openKeep", value)
         }
     }
@@ -115,6 +118,7 @@
 
         Set
         {
+            this._verifyKey("OpenTunnlerGuild", value)
             this._setValue("_openTunnlerGuild", value)
         }
     }
@@ -128,6 +132,7 @@
 
         Set
         {
+            this._verifyKey("OpenBarracks", value)
             this._setValue("_openBarracks", value)
         }
     }
@@ -141,6 +146,7 @@
 
         Set
         {
+            this._verifyKey("OpenMercenaries", value)
             this._setValue("_openMercenaries", value)
         }
     }
@@ -154,6 +160,7 @@
 
         Set
         {
+            this._verifyKey("OpenMarket", value)
             this._setValue("_openMarket", value)
         }
     }
@@ -167,6 +174,7 @@
 
         Set
         {
+            this._verifyKey("OpenAdministration", value)
             this._setValue("_openAdministration", value)
         }
     }
@@ -180,6 +188,7 @@
 
         Set
         {
+            this._verifyKey("SendRandomTauntMessage", value)
             this._setValue("_sendRandomTauntMessage", value)
         }
     }
@@ -193,6 +202,7 @@
 
         Set
         {
+            this._verifyKey("IncreaseGameSpeed", value)
             this._setValue("_increaseGameSpeed", value)
         }
     }
@@ -206,6 +216,7 @@
 
         Set
         {
+            this._verifyKey("DecreaseGameSpeed", value)
             this._setValue("_decreaseGameSpeed", value)
         }
     }
@@ -321,7 +332,7 @@
         Return this.ToIniSection().ToString()
     }
 
-    ; Returns an object with 
+    ; Returns an object with all properties from here set to string values
     _toObject()
     {
         result := {}
@@ -335,5 +346,30 @@
             }
         }
         Return result
+    }
+
+    ; Ensures that the given key is valid
+    ; property: The name the public property that called this func
+    ; key: The (keyboard-)key to check
+    _verifyKey(property, key)
+    {
+        If (IsObject(key))
+        {
+            throw Exception("The given key must not be an object")
+        }
+        If (key.In("w", "a", "s", "d"))
+        {
+            throw Exception("The given key is reserved for map navigation")
+        }
+        allCurrentKeys := this.GetAllReplaceKeyOptions()
+        ; In case the same key as the current gets passed, do nothing
+        allCurrentKeys.Delete(property)
+        For each, value in allCurrentKeys
+        {
+            If (value == key)
+            {
+                throw Exception("The given key is already in use")
+            }
+        }
     }
 }
