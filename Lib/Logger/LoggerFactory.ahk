@@ -1,7 +1,6 @@
 ﻿class LoggerFactory
 {
-    static _loggers := []
-         , _minLogLevel := _logLevel.Debug
+    static _minLogLevel := _logLevel.Debug
          , _format := "%date %level %clsOrFn %s"
 
          , _appenders := [new _outputDebugAppender(), new _fileAppender("log.txt")]
@@ -15,9 +14,19 @@
     GetLogger(clsOrFn)
     {
         clsOrFn := IsObject(clsOrFn) ? ClassName(clsOrFn) : clsOrFn
-        logger := new _defaultLogger(clsOrFn)
-        LoggerFactory._loggers.Add(logger)
-        Return logger
+        Return new _defaultLogger(clsOrFn)
+    }
+
+    ; Creates a new logger that logs all uncaught errors in the script
+    GetErrorLogger()
+    {
+        Return new _onErrorLogger()
+    }
+
+    ; Creates a new logger that logs all script exits
+    GetExitLogger()
+    {
+        Return new _onExitLogger()
     }
 
     SetMinLogLevel(logLevel)
@@ -76,6 +85,7 @@
         LoggerFactory._sync()
     }
 
+    ; Immediately syncs all changes
     _sync()
     {
         If (LoggerFactory._buffer.IsEmpty())
