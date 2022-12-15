@@ -1,5 +1,7 @@
 ﻿class UpdatesChecker
 {
+    static _logger := LoggerFactory.GetLogger(UpdatesChecker)
+
     __New(controller, model)
     {
         If (!InstanceOf(controller, SettingsController))
@@ -57,7 +59,7 @@
 
     _checkForUpdates()
     {
-        OutputDebug(A_Now " Checking for updates...")
+        UpdatesChecker._logger.Debug("Checking for updates...")
         ; If option is "startup" don't always make calls to the webservise if in dev mode
         If (!IsDebuggerAttatched())
         {
@@ -102,17 +104,17 @@
 
     _handleCheckUpdatesFrequencyChanged(newValue)
     {
-        OutputDebug("GeneralModel.CheckForUpdatesFrequency changed. New value: " newValue)
+        UpdatesChecker._logger.Trace("GeneralModel.CheckForUpdatesFrequency changed. New value: " newValue)
     }
 
     _handleLastCheckedForUpdatesChanged(newValue)
     {
-        OutputDebug("GeneralModel.LastCheckedForUpdate changed. New value: " newValue)
+        UpdatesChecker._logger.Trace("GeneralModel.LastCheckedForUpdate changed. New value: " newValue)
     }
 
     _handleLatestVersionChanged(newValue)
     {
-        OutputDebug("GeneralModel.LatestVersion changed. New value: " newValue)
+        UpdatesChecker._logger.Trace("GeneralModel.LatestVersion changed. New value: " newValue)
 
         If (Stronghold_Version() == newValue)
         {

@@ -2,6 +2,7 @@
 {
     static _applicationName := "Stronghold Hotkeys"
          , _iniPath := "Config.ini"
+         , _logger := LoggerFactory.GetLogger(Application)
 
     __New()
     {
@@ -10,20 +11,41 @@
         this._settingsGui := ""
         this._hotkeyHandler := ""
         this._updateChecker := ""
+
+        this._errorLogger := ""
+        this._exitLogger := ""
     }
 
     Initialize()
     {
+        ; Set up the logger
+        If (IsDebuggerAttatched())
+        {
+            LoggerFactory.SetMinLogLevel(_logLevel.Trace)
+            LoggerFactory.SetBufferSize(1)
+        }
+        Else
+        {
+            LoggerFactory.SetMinLogLevel(_logLevel.Warn)
+            LoggerFactory.SetBufferSize(1)
+        }
+        this._errorLogger := LoggerFactory.GetErrorLogger()
+        this._exitLogger := LoggerFactory.GetExitLogger()
+
+        Application._logger.Info("App is starting up...")
+
         this._registerWindowGroups()
 
         ; Create the settings model from the config file (if it exists), otherwise create a default one
         If (FileExist(Application._iniPath))
         {
+            Application._logger.Trace("Applying the saved settings.")
             readConfig := FileRead(Application._iniPath)
             this._settingsModel := SettingsModel.FromIniString(readConfig)
         }
         Else
         {
+            Application._logger.Trace("No saved settings. Use the default settings.")
             this._settingsModel := SettingsModel.Default()
         }
 
@@ -41,6 +63,8 @@
             this._settingsController.SaveToFile()
             this._getOrCreateSettingsGui().Show()
         }
+
+        Application._logger.Info("App startup finished.")
     }
 
     ; Get a reference to a settings gui instance
@@ -55,6 +79,7 @@
     ; The central application exit point
     ExitApp()
     {
+        Application._logger.Info("App is shutting down...")
         ExitApp
     }
 

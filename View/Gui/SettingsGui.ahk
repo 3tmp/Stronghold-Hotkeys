@@ -1,5 +1,7 @@
 ﻿class SettingsGui extends GuiBase
 {
+    static _logger := LoggerFactory.GetLogger(SettingsGui)
+
     __New(controller, model, title := "", options := "")
     {
         If (!InstanceOf(controller, SettingsController))
@@ -172,7 +174,7 @@
 
     _printToConsole(eventArgs)
     {
-        OutputDebug(eventArgs.ToString())
+        SettingsGui._logger.Trace(eventArgs.ToString())
     }
 
     _enableHotkeyAndSetValue()
@@ -571,6 +573,8 @@
         {
             this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, SettingsModel.ValidToggleKeys, after.Togglekey)
         }
+
+        ; TODO subscribe to the Updates events in case someone clicks the update button and waits for any feedback
 
         ; Don't care for LastCheckedForUpdate and LatestVersion
     }

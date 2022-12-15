@@ -1,5 +1,7 @@
 ﻿class StrongholdHotkeyHandler
 {
+    static _logger := LoggerFactory.GetLogger(StrongholdHotkeyHandler)
+
     __New(controller, model)
     {
         If (!InstanceOf(controller, SettingsController))
@@ -64,7 +66,7 @@
 
     _void()
     {
-        OutputDebug(A_Now " Execute Hotkey " A_ThisHotkey)
+        StrongholdHotkeyHandler._logger.Debug("Execute Hotkey " A_ThisHotkey)
     }
 
     ; Gets or creates the given hotkey
