@@ -180,10 +180,11 @@
     _enableHotkeyAndSetValue()
     {
         keyCombo := this._getFocusedLvRow().At(2).Text
-        ; As in AutoHotkey v1.1.36.02 there is a bug where it does not allow to set a "+" as hotkey, use this workaround
-        If (keyCombo == "+")
+        ; As in AutoHotkey v1.1.36.02 there is a bug where it does not allow to set "+", "!", "^" as hotkey, use this workaround
+        If (keyCombo == "+" || keyCombo == "!" || keyCombo == "^")
         {
-            ControlSend,, {+}, % "ahk_id" this._ctrlRK_Hotkey.Hwnd
+            ; As ControlSend simulates a key press, it will also trigger the event
+            ControlSend,, % "{" keyCombo "}", % "ahk_id" this._ctrlRK_Hotkey.Hwnd
         }
         Else
         {
@@ -432,7 +433,13 @@
         }
         Else If (this._isKeyInUse(eventArgs.KeyComboString))
         {
-            this._showHotkeyInUseWarning()
+            ; Check if the key is the same key as in the model, if yes, do nothing
+            action := this._getFocusedLvRow().At(1).Text
+            replaceKeys := this._settingsModel.ReplaceKeys
+            If (replaceKeys[action] != eventArgs.KeyComboString)
+            {
+                this._showHotkeyInUseWarning()
+            }
         }
         Else If (this._isInvalidKeyCombo(eventArgs.KeyComboString))
         {
@@ -459,7 +466,11 @@
         {
             Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrReserved)
         }
-        Else If (this._isKeyInUse(keyCombo) || replaceKeys[action] == keyCombo)
+        Else If (replaceKeys[action] == keyCombo)
+        {
+            Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrSameKey)
+        }
+        Else If (this._isKeyInUse(keyCombo))
         {
             Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrInUse)
         }

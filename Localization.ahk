@@ -4,12 +4,12 @@
 
     If (!IsSet(l))
     {
-        l := _getSystemLanguage().StartsWith("de") ? _language_de() : _language_en()
+        l := GetSystemLanguage().StartsWith("de") ? _language_de() : _language_en()
     }
     Return l
 }
 
-_getSystemLanguage()
+GetSystemLanguage()
 {
     Return WinApi_LCIDToLocaleName(A_Language)
 }
@@ -68,6 +68,7 @@ _language_en()
           , "RK_MbApplyErrTitle": "Error"
           , "RK_MbApplyErrEmpty": "You have to enter a key to set a new Hotkey"
           , "RK_MbApplyErrReserved": "'w', 'a', 's', 'd' Hotkeys are reserved for MapNavigation, choose a different one"
+          , "RK_MbApplyErrSameKey": "Same hotkey, choose a different one"
           , "RK_MbApplyErrInUse": "Hotkey is already in use, choose a different one"
           , "RK_MbApplyErrInv": "This is an invalid Hotkey combo, choose a different one"}
 }
@@ -122,9 +123,10 @@ _language_de()
           , "RK_WarnEmpty": "Die Tastenkombination darf nicht leer sein"
           , "RK_MbResetTitle": "Setzt Hotkeys zurück"
           , "RK_MbResetBody": "Alle Hotkeys auf die Standardwerte zurücksetzen?"
-          , "RK_MbApplyErrTitle": "Error"
+          , "RK_MbApplyErrTitle": "Fehler"
           , "RK_MbApplyErrEmpty": "Eine Taste klicken um einen neuen Hotkey zu setzen"
           , "RK_MbApplyErrReserved": "'w', 'a', 's', 'd' sind für die Kartennavigation reserviert, bitte eine andere wählen"
+          , "RK_MbApplyErrSameKey": "Gleiche Tastenkombination, bitte eine andere wählen"
           , "RK_MbApplyErrInUse": "Die Tastenkombination wird bereits verwendet, bitte eine andere wählen"
           , "RK_MbApplyErrInv": "Die Tastenkombination ist ungültig, bitte eine andere wählen"}
 }
