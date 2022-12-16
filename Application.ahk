@@ -34,6 +34,11 @@
 
         Application._logger.Info("App is starting up...")
 
+        If (IsDebuggerAttatched())
+        {
+            Application._logger.Info("App is running in dev mode.")
+        }
+
         this._registerWindowGroups()
 
         ; Create the settings model from the config file (if it exists), otherwise create a default one

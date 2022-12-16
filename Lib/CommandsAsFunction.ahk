@@ -276,7 +276,7 @@ WinGetClass(ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "",
 WinGet(ByRef Cmd := "", ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "", ByRef ExcludeText := "")
 {
     WinGet, OutputVar, %Cmd%, %WinTitle%, %WinText%, %ExcludeTitle%, %ExcludeText%
-    If (Cmd.EqualsIgnoreCase("List"))
+    If (Cmd = "List")
     {
         result := []
         result.Reserve(OutputVar)
