@@ -10,7 +10,7 @@
     _logAhkErrors(ex)
     {
         logMessage := this._formatLogMessage(ex)
-        LoggerFactory._log(logMessage)
+        LoggerFactory._log(logMessage, _logLevel.Error)
         LoggerFactory._sync()
     }
 

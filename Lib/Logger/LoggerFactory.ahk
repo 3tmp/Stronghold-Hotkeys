@@ -5,6 +5,7 @@
 
          , _appenders := [new _outputDebugAppender(), new _fileAppender("log.txt")]
          , _maxBufferSize := 10
+         ; A list of objects with the keys "msg" and "level"
          , _buffer := []
          ; Add listeners for errors and exits to write to sync in those cases
          , _onErrorListener := new OnErrorListener(OBM(LoggerFactory, "_sync"))
@@ -58,13 +59,13 @@
         LoggerFactory._maxBufferSize := size
     }
 
-    _log(logMessage)
+    _log(logMessage, level)
     {
         If (IsObject(logMessage))
         {
             throw Exception("The given parameter has the wrong type.")
         }
-        LoggerFactory._buffer.Add(logMessage)
+        LoggerFactory._buffer.Add({"msg": logMessage, "level": level})
         LoggerFactory._syncIfBufferFull()
     }
 

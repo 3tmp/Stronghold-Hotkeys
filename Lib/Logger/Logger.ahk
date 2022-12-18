@@ -48,7 +48,7 @@
 
         logMessage := this._formatLogMessage(level, message, vars)
 
-        LoggerFactory._log(logMessage)
+        LoggerFactory._log(logMessage, level)
     }
 
     ; Formats the log message according to LoggerFactory._format

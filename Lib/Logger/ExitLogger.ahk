@@ -15,7 +15,7 @@
         }
 
         logMessage := this._formatLogMessage(exitReason, exitCode)
-        LoggerFactory._log(logMessage)
+        LoggerFactory._log(logMessage, this._logLevel)
         LoggerFactory._sync()
     }
 

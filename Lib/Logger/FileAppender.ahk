@@ -5,17 +5,10 @@
         this._fileName := name
     }
 
-    ; Appends the given string or list of strings to the file
-    Append(ByRef msgOrMsgList)
+    ; Appends the list of objects with the keys "msg" and "level" to the file
+    Append(list)
     {
-        If (IsObject(msgOrMsgList))
-        {
-            this._appendBatch(msgOrMsgList)
-        }
-        Else
-        {
-            this._append(msgOrMsgList)
-        }
+        this._appendBatch(list)
     }
 
     ; Appends the message to the file
@@ -25,16 +18,16 @@
     }
 
     ; Concatenates any number of messages into a single string for faster processing
-    _appendBatch(messageList)
+    _appendBatch(list)
     {
         result := ""
-        For each, message in messageList
+        For each, message in list
         {
             If (A_Index != 1)
             {
                 result .= "`n"
             }
-            result .= message
+            result .= message.msg
         }
         this._append(result)
     }
