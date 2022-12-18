@@ -93,7 +93,7 @@
         try this._settingsModel.AutoClicker.Enable := enable
         catch, e
         {
-            SettingsController._logger.Debug("Setting AutoClicker.Enable failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting AutoClicker.Enable failed. Error: {}", e)
         }
     }
 
@@ -102,7 +102,7 @@
         try this._settingsModel.AutoClicker.Key := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting AutoClicker.Key failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting AutoClicker.Key failed. Error: {}", e)
         }
     }
 
@@ -111,7 +111,7 @@
         try this._settingsModel.General.ToggleKey := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting General.ToggleKey failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting General.ToggleKey failed. Error: {}", e)
         }
     }
 
@@ -120,7 +120,7 @@
         try this._settingsModel.General.CheckForUpdatesFrequency := frequency
         catch, e
         {
-            SettingsController._logger.Debug("General.CheckForUpdatesFrequency failed. Error: {}", e)
+            SettingsController._logger.Warn("General.CheckForUpdatesFrequency failed. Error: {}", e)
         }
     }
 
@@ -129,7 +129,7 @@
         try this._settingsModel.General.LastCheckedForUpdate := dateString
         catch, e
         {
-            SettingsController._logger.Debug("Setting General.LastCheckedForUpdate failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting General.LastCheckedForUpdate failed. Error: {}", e)
         }
     }
 
@@ -138,7 +138,7 @@
         try this._settingsModel.MapNavigation.Enable := enable
         catch, e
         {
-            SettingsController._logger.Debug("Setting MapNavigation.Enable failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting MapNavigation.Enable failed. Error: {}", e)
         }
     }
 
@@ -147,7 +147,7 @@
         try this._settingsModel.MapNavigation.WhereToEnable := whereToEnable
         catch, e
         {
-            SettingsController._logger.Debug("Setting MapNavigation.WhereToEnable failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting MapNavigation.WhereToEnable failed. Error: {}", e)
         }
     }
 
@@ -184,7 +184,7 @@
             Case "DecreaseGameSpeed":
                 this.SetReplaceKeysDecreaseGameSpeed(key)
             Default:
-                SettingsController._logger.Debug("Passed an invalid propertyName. Name: '" propertyName "'")
+                SettingsController._logger.Warn("Passed an invalid propertyName. Name: '" propertyName "'")
                 throw Exception("The property '" propertyName "' is not supported")
         }
     }
@@ -194,7 +194,7 @@
         try this._settingsModel.ReplaceKeys.Enable := enable
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.Enable failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.Enable failed. Error: {}", e)
         }
     }
 
@@ -203,7 +203,7 @@
         try this._settingsModel.ReplaceKeys.WhereToEnable := whereToEnable
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.WhereToEnable failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.WhereToEnable failed. Error: {}", e)
         }
     }
 
@@ -212,7 +212,7 @@
         try this._settingsModel.ReplaceKeys.OpenGranary := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenGranary failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenGranary failed. Error: {}", e)
         }
     }
 
@@ -221,7 +221,7 @@
         try this._settingsModel.ReplaceKeys.OpenArmoury := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenArmoury failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenArmoury failed. Error: {}", e)
         }
     }
 
@@ -230,7 +230,7 @@
         try this._settingsModel.ReplaceKeys.OpenEngineersGuild := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenEngineersGuild failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenEngineersGuild failed. Error: {}", e)
         }
     }
 
@@ -239,7 +239,7 @@
         try this._settingsModel.ReplaceKeys.OpenKeep := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenKeep failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenKeep failed. Error: {}", e)
         }
     }
 
@@ -248,7 +248,7 @@
         try this._settingsModel.ReplaceKeys.OpenTunnlerGuild := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenTunnlerGuild failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenTunnlerGuild failed. Error: {}", e)
         }
     }
 
@@ -257,7 +257,7 @@
         try this._settingsModel.ReplaceKeys.OpenBarracks := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenBarracks failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenBarracks failed. Error: {}", e)
         }
     }
 
@@ -266,7 +266,7 @@
         try this._settingsModel.ReplaceKeys.OpenMercenaries := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenMercenaries failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenMercenaries failed. Error: {}", e)
         }
     }
 
@@ -275,7 +275,7 @@
         try this._settingsModel.ReplaceKeys.OpenMarket := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenMarket failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenMarket failed. Error: {}", e)
         }
     }
 
@@ -284,7 +284,7 @@
         try this._settingsModel.ReplaceKeys.OpenAdministration := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.OpenAdministration failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.OpenAdministration failed. Error: {}", e)
         }
     }
 
@@ -293,7 +293,7 @@
         try this._settingsModel.ReplaceKeys.SendRandomTauntMessage := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.SendRandomTauntMessage failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.SendRandomTauntMessage failed. Error: {}", e)
         }
     }
 
@@ -302,7 +302,7 @@
         try this._settingsModel.ReplaceKeys.IncreaseGameSpeed := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.IncreaseGameSpeed failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.IncreaseGameSpeed failed. Error: {}", e)
         }
     }
 
@@ -311,7 +311,7 @@
         try this._settingsModel.ReplaceKeys.DecreaseGameSpeed := key
         catch, e
         {
-            SettingsController._logger.Debug("Setting ReplaceKeys.DecreaseGameSpeed failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.DecreaseGameSpeed failed. Error: {}", e)
         }
     }
 }

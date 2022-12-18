@@ -152,11 +152,16 @@
     ; Gets called before the gui gets destroyed
     OnDestroy()
     {
+        If (this._isDestroyed)
+        {
+            Return
+        }
         this._settingsModel.RemovePropertyChangeListener(this._eventSettings)
         this._eventSettings := ""
         this._settingsModel := ""
         this._settingsController := ""
         this._isDestroyed := true
+        SettingsGui._logger.Debug("Gui is now destroyed")
     }
 
     ; Private helper
@@ -344,12 +349,16 @@
 
         ; Don't apply the Replacekeys here as they get set via the "Apply Hotkey" button
 
+        SettingsGui._logger.Debug("Close the gui and save the settings")
+
         this._settingsController.SaveToFile()
         this.Close()
     }
 
     _onCancelBtnClick(eventArgs)
     {
+        SettingsGui._logger.Debug("Close the gui without saving the settings")
+
         this.Close()
     }
 
@@ -414,6 +423,8 @@
         ; Ask for user confirm
         If ("Yes" == MsgBox(4, l.RK_MbResetTitle, l.RK_MbResetBody))
         {
+            SettingsGui._logger.Debug("Set all ReplaceKeys to the default values")
+
             ; Set ReplaceKeys to the system defaults
             this._settingsController.ResetReplaceKeys()
             ; TODO save to file?
@@ -480,6 +491,8 @@
         }
         Else
         {
+            SettingsGui._logger.Debug("Set '" action "' to the key '" keyCombo "'")
+
             this._settingsController.SetReplaceKeysByProperty(action, keyCombo)
         }
     }
@@ -487,8 +500,12 @@
     _onRK_RemoveHotkeyBtnClick(eventArgs)
     {
         row := this._getFocusedLvRow()
+        action := row.At(1).Text
+
+        SettingsGui._logger.Debug("Remove the keyCombo from '" action "'")
+
         ; Pass an empty string to indicate the removal of the hotkey binding
-        this._settingsController.SetReplaceKeysByProperty(row.At(1).Text, "")
+        this._settingsController.SetReplaceKeysByProperty(action, "")
     }
 
     ; SettingsModel events

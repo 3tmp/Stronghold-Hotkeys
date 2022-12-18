@@ -2,6 +2,7 @@
 class TrayMenu
 {
     static _instance := ""
+         , _logger := LoggerFactory.GetLogger(TrayMenu)
 
     _setupComplete := false
     ; Holds a reference to the application
@@ -76,19 +77,28 @@ class TrayMenu
         If (FileExist(shcSteam))
         {
             try Menu, Tray, Icon, % shcSteam
+            TrayMenu._logger.Debug("Using the Crusader (Steam) icon")
         }
         Else If (FileExist(shSteam))
         {
             try Menu, Tray, Icon, % shSteam
+            TrayMenu._logger.Debug("Using the Stronghold (Steam) icon")
         }
         Else If (FileExist(sheSteam))
         {
             try, Menu, Tray, Icon, % sheSteam
+            TrayMenu._logger.Debug("Using the Extreme (Steam) icon")
+        }
+        Else
+        {
+            TrayMenu._logger.Debug("Using the default AutoHotkey icon")
         }
     }
 
     _eventShowDebugWindow(whichWindow)
     {
+        TrayMenu._logger.Debug("Showing the " whichWindow " debug window")
+
         If (whichWindow == "ListLines")
         {
             ListLines
@@ -101,17 +111,23 @@ class TrayMenu
 
     _eventAbout()
     {
+        TrayMenu._logger.Debug("Showing the about dialog")
+
         copyright := Chr(0x00A9)
         MsgBox(Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), Format(GetLanguage().Tray_About_MsgBoxBody, copyright))
     }
 
     _eventOpenWebsite()
     {
+        TrayMenu._logger.Debug("Running the website")
+
         Run(StrongholdHotkeysWebsite())
     }
 
     _eventOpenSettingsGui()
     {
+        TrayMenu._logger.Debug("Showing the settings gui")
+
         this._app.SettingsGui.Show()
     }
 
@@ -121,6 +137,7 @@ class TrayMenu
 
     _eventExit()
     {
+        TrayMenu._logger.Debug("Shutting down the app")
         this._app.ExitApp()
     }
 }
