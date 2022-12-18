@@ -10,10 +10,7 @@ class ChangeableHotkey
         this._enable := enable
 
         this._hotkey := new HookHotkey(this._key, this._fn, this._group)
-        If (this._enable)
-        {
-            this._hotkey.Enable()
-        }
+        this._hotkey.IsActive := this._enable
     }
 
     SetKey(key)
@@ -28,7 +25,7 @@ class ChangeableHotkey
 
     SetEnable(enable)
     {
-        If (!enable.In(true, false))
+        If (enable !== true && enable !== false)
         {
             throw Exception("Wrong enable value given")
         }
