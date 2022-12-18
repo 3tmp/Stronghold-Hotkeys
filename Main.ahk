@@ -10,7 +10,7 @@
 #Include Lib\CommandsAsFunction.ahk
 #Include Lib\Debugger.ahk
 #Include Lib\DefaultIterator.ahk
-#Include Lib\Hotkey.ahk
+#Include Lib\HookHotkey.ahk
 #Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
 #Include Lib\OBM.ahk

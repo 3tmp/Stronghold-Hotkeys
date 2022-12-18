@@ -73,7 +73,7 @@
     _getOrCreateHotkey(ByRef hkName, key, callback, ByRef winGroup)
     {
         h := this._hotkeys[hkName]
-        this._hotkeys[hkName] := IsObject(h) && key == h.Key && winGroup == h.WinTitle ? h : new Hotkey(key, callback, winGroup)
+        this._hotkeys[hkName] := IsObject(h) && key == h.Key && winGroup == h.WinTitle ? h : new HookHotkey(key, callback, winGroup)
         Return this._hotkeys[hkName]
     }
 
