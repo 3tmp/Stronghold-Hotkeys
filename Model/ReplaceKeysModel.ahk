@@ -353,6 +353,12 @@
     ; key: The (keyboard-)key to check
     _verifyKey(property, key)
     {
+        ; In case of removing the hotkey, the key will be blank, which is always valid
+        If (key == "")
+        {
+            Return
+        }
+
         If (IsObject(key))
         {
             throw Exception("The given key must not be an object")
