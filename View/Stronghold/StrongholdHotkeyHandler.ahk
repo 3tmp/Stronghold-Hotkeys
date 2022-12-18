@@ -20,8 +20,8 @@
 
         ; A map that contains all hotkeys. Key is category "." Commandname (e.g. "ReplaceKeys.OpenMarket"), value is the hotkey object
         this._hotkeys := {}
-        ; Notifies all listeners as soon as its state changes
-        this._stateChangeListener := new StateChangeListener()
+        ; Notifies all listeners as soon as its state changes. Set its value to true on default
+        this._stateChangeListener := new StateChangeListener(true)
 
         this._initialHotkeyStart()
     }
@@ -42,6 +42,7 @@
     {
         ac := this._settingsModel.AutoClicker
         g := this._settingsModel.General
+        rk := this._settingsModel.ReplaceKeys
         validGroups := SettingsModel.ValidWindowGroups
 
         ; Enable the AutoClicker in both games
@@ -51,6 +52,17 @@
         ; Enable the toggle key in both game
         fn := OBM(new GeneralToggleExecutor(this._stateChangeListener), "Execute")
         this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, validGroups[3], true)
+
+        ; In order to toggle the ReplaceKeys on and off, subscribe to the this._stateChangeListener
+        this._stateChangeListener.OnStateChange(OBM(this, "_handleReplaceKeysHotkeys"))
+
+        ; Start all Hotkeys
+        For command, hk in rk.GetAllReplaceKeyOptions()
+        {
+            fn := OBM(new ReplaceKeysExecutor(command), "Execute")
+            enable := hk !== ""
+            this._hotkeys["ReplaceKeys." command] := new ChangeableHotkey(hk, fn, rk.WhereToEnable, enable)
+        }
     }
 
     _handleAutoClickerHotkeys()
@@ -69,6 +81,25 @@
         h := this._hotkeys["General.ToggleKey"]
         ; Apply all new settings
         h.SetKey(g.ToggleKey)
+    }
+
+    _handleReplaceKeysHotkeys()
+    {
+        rk := this._settingsModel.ReplaceKeys
+        For hotkeyName, h in this._hotkeys
+        {
+            If (!hotkeyName.StartsWith("ReplaceKeys."))
+            {
+                Continue
+            }
+
+            ; Get the currently set key as string
+            key := rk[hotkeyName.Replace("ReplaceKeys.")]
+            h.SetKey(key)
+            ; Only activate the hotkey if the ReplaceKeys.Enable is true and the toggle is also true
+            h.SetEnable(rk.Enable && this._stateChangeListener.State)
+            h.SetWinGroup(rk.WhereToEnable)
+        }
     }
 
     _void()
@@ -116,7 +147,7 @@
     ; before, after instance of ReplaceKeyModel
     _handleReplaceKeys(before, after)
     {
-
+        this._handleReplaceKeysHotkeys()
     }
 
     ; before, after instance of GeneralModel

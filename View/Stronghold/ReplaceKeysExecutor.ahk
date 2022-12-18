@@ -1,14 +1,8 @@
 ﻿class ReplaceKeysExecutor extends IHotkeyExecutor
 {
-    __New(commandName, stateChange)
+    __New(commandName)
     {
-        If (!InstanceOf(stateChange, StateChangeListener))
-        {
-            throw Exception("The given stateChange is not an instance of StateChangeListener")
-        }
-
         this._commandName := commandName
-        this._stateChange := stateChange
     }
 
     Execute(params*)
