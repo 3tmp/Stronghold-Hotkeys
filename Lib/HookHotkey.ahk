@@ -41,6 +41,15 @@ class HookHotkey
         }
     }
 
+    ; The callback function that gets executed when the hotkey gets pressed
+    Func[]
+    {
+        Get
+        {
+            Return this._fn
+        }
+    }
+
     ; Get/Set the active state of the hotkey
     IsActive[]
     {

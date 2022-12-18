@@ -35,46 +35,44 @@
         this._hotkeys := ""
     }
 
-    ; Gets called at the start of the class. Initializes all Hotkeys and stores the bound methods in this._hotkeys
+    ; Gets called at the start of the class. Creates and initializes all Hotkeys and stores them in this._hotkeys
     _initialHotkeyStart()
     {
+        ac := this._settingsModel.AutoClicker
+        g := this._settingsModel.General
+        validGroups := SettingsModel.ValidWindowGroups
+
         ; Enable the AutoClicker in both games
-        this._handleAutoClickerHotkeys()
+        fn := OBM(new AutoClickerExecutor(ac.Key), "Execute")
+        this._hotkeys["AutoClicker.Key"] := new ChangeableHotkey(ac.Key, fn, validGroups[3], ac.Enable)
+
         ; Enable the toggle key in both game
-        this._handleGeneralHotkeys()
+        ; TODO move to own executor object
+        fn := OBM(this, "_void")
+        this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, validGroups[3], true)
     }
 
     _handleAutoClickerHotkeys()
     {
         ac := this._settingsModel.AutoClicker
-        validGroups := SettingsModel.ValidWindowGroups
-
-        ; TODO move to own executor object
-        h := this._getOrCreateHotkey("AutoClicker.Key", ac.Key, OBM(StrongholdManager, "AutoClickAtCurrentMousePos"), validGroups[3])
-        h.IsActive := ac.Enable
+        h := this._hotkeys["AutoClicker.Key"]
+        ; Apply all new settings
+        h.SetKey(ac.Key)
+        h.SetCallback(OBM(new AutoClickerExecutor(ac.Key), "Execute"))
+        h.SetEnable(ac.Enable)
     }
 
     _handleGeneralHotkeys()
     {
         g := this._settingsModel.General
-        validGroups := SettingsModel.ValidWindowGroups
-
-        ; TODO this is just a dummy function
-        h := this._getOrCreateHotkey("General.ToggleKey", g.ToggleKey, OBM(this, "_void"), validGroups[3])
-        h.IsActive := true
+        h := this._hotkeys["General.ToggleKey"]
+        ; Apply all new settings
+        h.SetKey(g.ToggleKey)
     }
 
     _void()
     {
         StrongholdHotkeyHandler._logger.Debug("Execute Hotkey " A_ThisHotkey)
-    }
-
-    ; Gets or creates the given hotkey
-    _getOrCreateHotkey(ByRef hkName, key, callback, ByRef winGroup)
-    {
-        h := this._hotkeys[hkName]
-        this._hotkeys[hkName] := IsObject(h) && key == h.Key && winGroup == h.WinTitle ? h : new HookHotkey(key, callback, winGroup)
-        Return this._hotkeys[hkName]
     }
 
     ; SettingsModel events
