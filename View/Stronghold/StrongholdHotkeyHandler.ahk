@@ -20,6 +20,8 @@
 
         ; A map that contains all hotkeys. Key is category "." Commandname (e.g. "ReplaceKeys.OpenMarket"), value is the hotkey object
         this._hotkeys := {}
+        ; Notifies all listeners as soon as its state changes
+        this._stateChangeListener := new StateChangeListener()
 
         this._initialHotkeyStart()
     }
@@ -47,8 +49,7 @@
         this._hotkeys["AutoClicker.Key"] := new ChangeableHotkey(ac.Key, fn, validGroups[3], ac.Enable)
 
         ; Enable the toggle key in both game
-        ; TODO move to own executor object
-        fn := OBM(this, "_void")
+        fn := OBM(new GeneralToggleExecutor(this._stateChangeListener), "Execute")
         this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, validGroups[3], true)
     }
 

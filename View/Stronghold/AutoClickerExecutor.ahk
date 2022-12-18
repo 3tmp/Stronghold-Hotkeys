@@ -1,5 +1,5 @@
 ﻿; The AutoClicker hotkey gets bound to an instance of this class.
-class AutoClickerExecutor
+class AutoClickerExecutor extends IHotkeyExecutor
 {
     static _sleep := 15
 

@@ -49,8 +49,12 @@
 
 #Include Controller\SettingsController.ahk
 #Include View\Gui\SettingsGui.ahk
-#Include View\Stronghold\AutoClickerExecutor.ahk
 #Include View\Stronghold\ChangeableHotkey.ahk
+#Include View\Stronghold\IHotkeyExecutor.ahk
+#Include View\Stronghold\AutoClickerExecutor.ahk
+#Include View\Stronghold\GeneralToggleExecutor.ahk
+#Include View\Stronghold\ReplaceKeysExecutor.ahk
+#Include View\Stronghold\StateChangeListener.ahk
 #Include View\Stronghold\StrongholdHotkeyHandler.ahk
 #Include View\Update\UpdatesChecker.ahk
 #Include Model\ASettingsModel.ahk
