@@ -161,8 +161,6 @@
                 this.SetReplaceKeysWhereToEnable(key)
             Case "OpenGranary":
                 this.SetReplaceKeysOpenGranary(key)
-            Case "OpenArmoury":
-                this.SetReplaceKeysOpenArmoury(key)
             Case "OpenEngineersGuild":
                 this.SetReplaceKeysOpenEngineersGuild(key)
             Case "OpenKeep":
@@ -213,15 +211,6 @@
         catch, e
         {
             SettingsController._logger.Warn("Setting ReplaceKeys.OpenGranary failed. Error: {}", e)
-        }
-    }
-
-    SetReplaceKeysOpenArmoury(key)
-    {
-        try this._settingsModel.ReplaceKeys.OpenArmoury := key
-        catch, e
-        {
-            SettingsController._logger.Warn("Setting ReplaceKeys.OpenArmoury failed. Error: {}", e)
         }
     }
 

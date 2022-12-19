@@ -6,7 +6,6 @@
         this._enable := param.Enable
         this._whereToEnable := param.WhereToEnable
         this._openGranary := param.OpenGranary
-        this._openArmoury := param.OpenArmoury
         this._openEngineersGuild := param.OpenEngineersGuild
         this._openKeep := param.OpenKeep
         this._openBarracks := param.OpenBarracks
@@ -64,20 +63,6 @@
         {
             this._verifyKey("OpenGranary", value)
             this._setValue("_openGranary", value)
-        }
-    }
-
-    OpenArmoury[]
-    {
-        Get
-        {
-            Return this._openArmoury
-        }
-
-        Set
-        {
-            this._verifyKey("OpenArmoury", value)
-            this._setValue("_openArmoury", value)
         }
     }
 
@@ -272,7 +257,7 @@
         ; so get the list and later get the desired element
         validGroups := SettingsModel.ValidWindowGroups
         obj := {"Enable": true, "WhereToEnable": validGroups[3], "OpenGranary": "g"
-              , "OpenArmoury": "y", "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
+              , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
               , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": ""
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)

@@ -36,12 +36,6 @@ class StrongholdManager
         this._sendKeyWithCtrlModifier("g")
     }
 
-    ; TODO remove
-    OpenArmoury()
-    {
-        this._sendKeyWithCtrlModifier("a")
-    }
-
     OpenEngineersGuild()
     {
         this._sendKeyWithCtrlModifier("i")
