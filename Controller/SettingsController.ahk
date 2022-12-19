@@ -161,6 +161,8 @@
                 this.SetReplaceKeysWhereToEnable(key)
             Case "OpenGranary":
                 this.SetReplaceKeysOpenGranary(key)
+            Case "GoToSignPost":
+                this.SetReplaceKeysGoToSignPost(key)
             Case "OpenEngineersGuild":
                 this.SetReplaceKeysOpenEngineersGuild(key)
             Case "OpenKeep":
@@ -173,8 +175,16 @@
                 this.SetReplaceKeysOpenMercenaries(key)
             Case "OpenMarket":
                 this.SetReplaceKeysOpenMarket(key)
+            Case "RotateScreenClockWise":
+                this.SetReplaceKeysRotateScreenClockWise(key)
+            Case "RotateScreenCounterClockWise":
+                this.SetReplaceKeysRotateScreenCounterClockWise(key)
             Case "ToggleUI":
                 this.SetReplaceKeysToggleUI(key)
+            Case "ToggleZoom":
+                this.SetReplaceKeysToggleZoom(key)
+            Case "TogglePause":
+                this.SetReplaceKeysTogglePause(key)
             Case "SendRandomTauntMessage":
                 this.SetReplaceKeysSendRandomTauntMessage(key)
             Case "IncreaseGameSpeed":
@@ -211,6 +221,15 @@
         catch, e
         {
             SettingsController._logger.Warn("Setting ReplaceKeys.OpenGranary failed. Error: {}", e)
+        }
+    }
+
+    SetReplaceKeysGoToSignPost(key)
+    {
+        try this._settingsModel.ReplaceKeys.GoToSignPost := key
+        catch, e
+        {
+            SettingsController._logger.Warn("Setting ReplaceKeys.GoToSignPost failed. Error: {}", e)
         }
     }
 
@@ -268,12 +287,48 @@
         }
     }
 
+    SetReplaceKeysRotateScreenClockWise(key)
+    {
+        try this._settingsModel.ReplaceKeys.RotateScreenClockWise := key
+        catch, e
+        {
+            SettingsController._logger.Warn("Setting ReplaceKeys.RotateScreenClockWise failed. Error: {}", e)
+        }
+    }
+
+    SetReplaceKeysRotateScreenCounterClockWise(key)
+    {
+        try this._settingsModel.ReplaceKeys.RotateScreenCounterClockWise := key
+        catch, e
+        {
+            SettingsController._logger.Warn("Setting ReplaceKeys.RotateScreenCounterClockWise failed. Error: {}", e)
+        }
+    }
+
     SetReplaceKeysToggleUI(key)
     {
         try this._settingsModel.ReplaceKeys.ToggleUI := key
         catch, e
         {
             SettingsController._logger.Warn("Setting ReplaceKeys.ToggleUI failed. Error: {}", e)
+        }
+    }
+
+    SetReplaceKeysToggleZoom(key)
+    {
+        try this._settingsModel.ReplaceKeys.ToggleZoom := key
+        catch, e
+        {
+            SettingsController._logger.Warn("Setting ReplaceKeys.ToggleZoom failed. Error: {}", e)
+        }
+    }
+
+    SetReplaceKeysTogglePause(key)
+    {
+        try this._settingsModel.ReplaceKeys.TogglePause := key
+        catch, e
+        {
+            SettingsController._logger.Warn("Setting ReplaceKeys.TogglePause failed. Error: {}", e)
         }
     }
 

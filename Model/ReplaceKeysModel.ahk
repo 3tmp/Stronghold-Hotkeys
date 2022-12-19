@@ -5,6 +5,7 @@
         base.__New()
         this._enable := param.Enable
         this._whereToEnable := param.WhereToEnable
+        this._goToSignPost := param.GoToSignPost
         this._openGranary := param.OpenGranary
         this._openEngineersGuild := param.OpenEngineersGuild
         this._openKeep := param.OpenKeep
@@ -12,7 +13,11 @@
         this._openTunnlerGuild := param.OpenTunnlerGuild
         this._openMercenaries := param.OpenMercenaries
         this._openMarket := param.OpenMarket
+        this._rotateScreenClockWise := param.RotateScreenClockWise
+        this._rotateScreenCounterClockWise := param.RotateScreenCounterClockWise
         this._toggleUI := param.ToggleUI
+        this._toggleZoom := param.ToggleZoom
+        this._togglePause := param.TogglePause
         this._sendRandomTauntMessage := param.SendRandomTauntMessage
         this._increaseGameSpeed := param.IncreaseGameSpeed
         this._decreaseGameSpeed := param.DecreaseGameSpeed
@@ -49,6 +54,20 @@
                 throw Exception(A_ThisFunc " wrong value passed")
             }
             this._setValue("_whereToEnable", value)
+        }
+    }
+
+    GoToSignPost[]
+    {
+        Get
+        {
+            Return this._goToSignPost
+        }
+
+        Set
+        {
+            this._verifyKey("GoToSignPost", value)
+            this._setValue("_goToSignPost", value)
         }
     }
 
@@ -150,6 +169,34 @@
         }
     }
 
+    RotateScreenClockWise[]
+    {
+        Get
+        {
+            Return this._rotateScreenClockWise
+        }
+
+        Set
+        {
+            this._verifyKey("RotateScreenClockWise", value)
+            this._setValue("_rotateScreenClockWise", value)
+        }
+    }
+
+    RotateScreenCounterClockWise[]
+    {
+        Get
+        {
+            Return this._rotateScreenCounterClockWise
+        }
+
+        Set
+        {
+            this._verifyKey("RotateScreenCounterClockWise", value)
+            this._setValue("_rotateScreenCounterClockWise", value)
+        }
+    }
+
     ToggleUI[]
     {
         Get
@@ -161,6 +208,34 @@
         {
             this._verifyKey("ToggleUI", value)
             this._setValue("_toggleUI", value)
+        }
+    }
+
+    ToggleZoom[]
+    {
+        Get
+        {
+            Return this._toggleZoom
+        }
+
+        Set
+        {
+            this._verifyKey("ToggleZoom", value)
+            this._setValue("_toggleZoom", value)
+        }
+    }
+
+    TogglePause[]
+    {
+        Get
+        {
+            Return this._togglePause
+        }
+
+        Set
+        {
+            this._verifyKey("TogglePause", value)
+            this._setValue("_togglePause", value)
         }
     }
 
@@ -256,9 +331,10 @@
         ; It seems as if AutoHotkey cannot do SettingsModel.ValidWindowGroups[3],
         ; so get the list and later get the desired element
         validGroups := SettingsModel.ValidWindowGroups
-        obj := {"Enable": true, "WhereToEnable": validGroups[3], "OpenGranary": "g"
+        obj := {"Enable": true, "WhereToEnable": validGroups[3], "GoToSignPost": "", "OpenGranary": "g"
               , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
-              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "ToggleUI": ""
+              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "ToggleUI": "", "ToggleZoom": ""
+              , "TogglePause": "", "RotateScreenClockWise": "", "RotateScreenCounterClockWise": ""
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)
     }
