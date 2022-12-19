@@ -23,6 +23,9 @@
         ; Notifies all listeners as soon as its state changes. Set its value to true on default
         this._stateChangeListener := new StateChangeListener(true)
 
+        ; MapNavigation is a special case
+        this._mapNavHandler := ""
+
         this._initialHotkeyStart()
     }
 
@@ -42,6 +45,7 @@
     {
         ac := this._settingsModel.AutoClicker
         g := this._settingsModel.General
+        mn := this._settingsModel.MapNavigation
         rk := this._settingsModel.ReplaceKeys
         validGroups := SettingsModel.ValidWindowGroups
 
@@ -52,6 +56,9 @@
         ; Enable the toggle key in both game
         fn := OBM(new GeneralToggleExecutor(this._stateChangeListener), "Execute")
         this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, validGroups[3], true)
+
+        ; Handle the map navigation
+        this._mapNavHandler := new MapNavigationHandler(this._stateChangeListener, mn.Enable, mn.WhereToEnable)
 
         ; In order to toggle the ReplaceKeys on and off, subscribe to the this._stateChangeListener
         this._stateChangeListener.OnStateChange(OBM(this, "_handleReplaceKeysHotkeys"))
@@ -135,12 +142,12 @@
     {
         If (before.Enable !== after.Enable)
         {
-
+            this._mapNavHandler.MapNavEnableEvent(after.Enable)
         }
 
         If (before.WhereToEnable != after.WhereToEnable)
         {
-
+            this._mapNavHandler.MapNavWhereToEnableEvent(after.WhereToEnable)
         }
     }
 

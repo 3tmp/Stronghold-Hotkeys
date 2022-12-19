@@ -53,6 +53,7 @@
 #Include View\Stronghold\IHotkeyExecutor.ahk
 #Include View\Stronghold\AutoClickerExecutor.ahk
 #Include View\Stronghold\GeneralToggleExecutor.ahk
+#Include View\Stronghold\MapNavigationHandler.ahk
 #Include View\Stronghold\ReplaceKeysExecutor.ahk
 #Include View\Stronghold\StateChangeListener.ahk
 #Include View\Stronghold\StrongholdHotkeyHandler.ahk
@@ -85,3 +86,5 @@ Stronghold_Version()
 app := new Application()
 app.Initialize()
 Return
+
+#Include View\Stronghold\MapNavigationHotkeys.ahk
