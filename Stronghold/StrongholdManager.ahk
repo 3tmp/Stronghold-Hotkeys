@@ -111,7 +111,7 @@ class StrongholdManager
 
         If (message >= 1 && message <= 12)
         {
-            this._send("F" message)
+            this._sendKey("F" message)
         }
     }
 
@@ -127,7 +127,7 @@ class StrongholdManager
 
     TogglePause()
     {
-        this._send("p")
+        this._sendKey("p")
     }
 
     ; Private helper
