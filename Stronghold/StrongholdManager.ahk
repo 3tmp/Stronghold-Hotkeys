@@ -36,6 +36,7 @@ class StrongholdManager
         this._sendKeyWithCtrlModifier("g")
     }
 
+    ; TODO remove
     OpenArmoury()
     {
         this._sendKeyWithCtrlModifier("a")
@@ -74,14 +75,30 @@ class StrongholdManager
         this._sendKeyWithCtrlModifier("m")
     }
 
+    ; TODO rename command to ToggleUI
     OpenAdministration()
     {
-        this._send("tab")
+        this._sendKey("Tab")
     }
 
-    RotateScreen()
+    ToggleZoom()
     {
-        this._sendKeyWithCtrlModifier("a")
+        this._sendKey("z")
+    }
+
+    GoToSignPost()
+    {
+        this._sendKey("s")
+    }
+
+    RotateScreenClockWise()
+    {
+        this._sendKey("c")
+    }
+
+    RotateScreenCounterClockWise()
+    {
+        this._sendKey("x")
     }
 
     ; Valid input: numbers 1 - 12, "random"
@@ -100,12 +117,12 @@ class StrongholdManager
 
     IncreaseGameSpeed()
     {
-        this._send("NumpadAdd")
+        this._sendKey("NumpadAdd")
     }
 
     DecreaseGameSpeed()
     {
-        this._send("NumpadSub")
+        this._sendKey("NumpadSub")
     }
 
     TogglePause()
@@ -146,9 +163,14 @@ class StrongholdManager
         Sleep, % sleep
     }
 
-    _sendKeyWithCtrlModifier(keys)
+    _sendKeyWithCtrlModifier(key)
     {
         this._send("{ctrl down}{" key "}{ctrl up}")
+    }
+
+    _sendKey(key)
+    {
+        this._send("{" key "}")
     }
 
     _send(keys)
