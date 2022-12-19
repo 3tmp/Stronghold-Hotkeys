@@ -12,7 +12,7 @@
         this._openTunnlerGuild := param.OpenTunnlerGuild
         this._openMercenaries := param.OpenMercenaries
         this._openMarket := param.OpenMarket
-        this._openAdministration := param.OpenAdministration
+        this._toggleUI := param.ToggleUI
         this._sendRandomTauntMessage := param.SendRandomTauntMessage
         this._increaseGameSpeed := param.IncreaseGameSpeed
         this._decreaseGameSpeed := param.DecreaseGameSpeed
@@ -150,17 +150,17 @@
         }
     }
 
-    OpenAdministration[]
+    ToggleUI[]
     {
         Get
         {
-            Return this._openAdministration
+            Return this._toggleUI
         }
 
         Set
         {
-            this._verifyKey("OpenAdministration", value)
-            this._setValue("_openAdministration", value)
+            this._verifyKey("ToggleUI", value)
+            this._setValue("_toggleUI", value)
         }
     }
 
@@ -258,7 +258,7 @@
         validGroups := SettingsModel.ValidWindowGroups
         obj := {"Enable": true, "WhereToEnable": validGroups[3], "OpenGranary": "g"
               , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
-              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "OpenAdministration": ""
+              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "ToggleUI": ""
               , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
         Return new ReplaceKeysModel(obj)
     }

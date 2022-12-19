@@ -173,8 +173,8 @@
                 this.SetReplaceKeysOpenMercenaries(key)
             Case "OpenMarket":
                 this.SetReplaceKeysOpenMarket(key)
-            Case "OpenAdministration":
-                this.SetReplaceKeysOpenAdministration(key)
+            Case "ToggleUI":
+                this.SetReplaceKeysToggleUI(key)
             Case "SendRandomTauntMessage":
                 this.SetReplaceKeysSendRandomTauntMessage(key)
             Case "IncreaseGameSpeed":
@@ -268,12 +268,12 @@
         }
     }
 
-    SetReplaceKeysOpenAdministration(key)
+    SetReplaceKeysToggleUI(key)
     {
-        try this._settingsModel.ReplaceKeys.OpenAdministration := key
+        try this._settingsModel.ReplaceKeys.ToggleUI := key
         catch, e
         {
-            SettingsController._logger.Warn("Setting ReplaceKeys.OpenAdministration failed. Error: {}", e)
+            SettingsController._logger.Warn("Setting ReplaceKeys.ToggleUI failed. Error: {}", e)
         }
     }
 

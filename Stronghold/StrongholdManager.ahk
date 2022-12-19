@@ -69,8 +69,8 @@ class StrongholdManager
         this._sendKeyWithCtrlModifier("m")
     }
 
-    ; TODO rename command to ToggleUI
-    OpenAdministration()
+    ; Show/Hide the build menu (the one at the bottom of the screen)
+    ToggleUI()
     {
         this._sendKey("Tab")
     }
