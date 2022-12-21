@@ -38,7 +38,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidAutoClickerKeys.Contains(value))
+            If (!EAutoClickerKeys.ValidValue(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }

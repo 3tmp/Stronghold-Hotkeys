@@ -50,7 +50,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidWindowGroups.Contains(value))
+            If (!EWindowGroups.ValidValue(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
