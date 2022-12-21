@@ -15,16 +15,14 @@ class _Enum
     ; Returns the name of the enum property where the value is the same as the given, null() if value not found
     GetName(value)
     {
-        result := null()
         For name, item in this
         {
             If (value = item)
             {
-                result := name
-                Break
+                Return name
             }
         }
-        Return result
+        Return null()
     }
 
     ; Determines if any enum property has the given value
