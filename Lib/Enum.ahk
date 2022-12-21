@@ -79,6 +79,10 @@ class _Enum
                 {
                     Continue
                 }
+                If (IsFunc(_v))
+                {
+                    Continue
+                }
                 k := _k
                 v := _v
                 Return true
