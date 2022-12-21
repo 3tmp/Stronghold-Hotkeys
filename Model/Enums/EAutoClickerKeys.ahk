@@ -1,4 +1,4 @@
-﻿class AutoClickerKeys extends _Enum
+﻿class EAutoClickerKeys extends _Enum
 {
     static MButton := "MButton"
          , XButton1 := "XButton1"
@@ -7,6 +7,6 @@
     ; Override _Enum.Values() for performance and sorting reasons
     Values()
     {
-        Return [AutoClickerKeys.MButton, AutoClickerKeys.XButton1, AutoClickerKeys.XButton2]
+        Return [EAutoClickerKeys.MButton, EAutoClickerKeys.XButton1, EAutoClickerKeys.XButton2]
     }
 }

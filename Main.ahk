@@ -62,11 +62,11 @@
 #Include View\Stronghold\StrongholdHotkeyHandler.ahk
 #Include View\Update\UpdatesChecker.ahk
 
-#Include Model\Enums\AutoClickerKeys.ahk
-#Include Model\Enums\CheckForUpdatesFrequency.ahk
-#Include Model\Enums\ReplaceKeys.ahk
-#Include Model\Enums\ToggleKeys.ahk
-#Include Model\Enums\WindowGroups.ahk
+#Include Model\Enums\EAutoClickerKeys.ahk
+#Include Model\Enums\ECheckForUpdatesFrequency.ahk
+#Include Model\Enums\EReplaceKeys.ahk
+#Include Model\Enums\EToggleKeys.ahk
+#Include Model\Enums\EWindowGroups.ahk
 #Include Model\ASettingsModel.ahk
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk

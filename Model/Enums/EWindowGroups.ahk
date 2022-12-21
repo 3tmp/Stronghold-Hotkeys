@@ -1,4 +1,4 @@
-﻿class WindowGroups extends _Enum
+﻿class EWindowGroups extends _Enum
 {
     static Stronghold := "Stronghold"
          , Crusader := "Crusader"
@@ -7,6 +7,6 @@
     ; Override _Enum.Values() for performance and sorting reasons
     Values()
     {
-        Return [WindowGroups.Stronghold, WindowGroups.Crusader, WindowGroups.StrongholdAndCrusader]
+        Return [EWindowGroups.Stronghold, EWindowGroups.Crusader, EWindowGroups.StrongholdAndCrusader]
     }
 }

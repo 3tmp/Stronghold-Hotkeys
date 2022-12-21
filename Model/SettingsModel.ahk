@@ -103,7 +103,7 @@
     {
         Get
         {
-            Return WindowGroups.Values()
+            Return EWindowGroups.Values()
         }
     }
 
@@ -112,7 +112,7 @@
     {
         Get
         {
-            Return AutoClickerKeys.Values()
+            Return EAutoClickerKeys.Values()
         }
     }
 
@@ -121,7 +121,7 @@
     {
         Get
         {
-            Return ToggleKeys.Values()
+            Return EToggleKeys.Values()
         }
     }
 
@@ -130,7 +130,7 @@
     {
         Get
         {
-            Return ReplaceKeys.Values()
+            Return EReplaceKeys.Values()
         }
     }
 
@@ -139,7 +139,7 @@
     {
         Get
         {
-            Return CheckForUpdatesFrequency.Values()
+            Return ECheckForUpdatesFrequency.Values()
         }
     }
 

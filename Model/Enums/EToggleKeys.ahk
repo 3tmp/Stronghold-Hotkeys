@@ -1,4 +1,4 @@
-﻿class ToggleKeys extends _Enum
+﻿class EToggleKeys extends _Enum
 {
     static CapsLock := "CapsLock"
          , Tab := "Tab"
@@ -22,8 +22,8 @@
     ; Override _Enum.Values() for performance and sorting reasons
     Values()
     {
-        Return [ToggleKeys.CapsLock, ToggleKeys.Tab, ToggleKeys.F1, ToggleKeys.F2, ToggleKeys.F3, ToggleKeys.F4
-              , ToggleKeys.F5, ToggleKeys.F6, ToggleKeys.F7, ToggleKeys.F8, ToggleKeys.F9, ToggleKeys.F10, ToggleKeys.F11
-              , ToggleKeys.F12, ToggleKeys.NumpadEnter, ToggleKeys.NumpadMult, ToggleKeys.NumpadDiv, ToggleKeys.NumpadDot]
+        Return [EToggleKeys.CapsLock, EToggleKeys.Tab, EToggleKeys.F1, EToggleKeys.F2, EToggleKeys.F3, EToggleKeys.F4
+              , EToggleKeys.F5, EToggleKeys.F6, EToggleKeys.F7, EToggleKeys.F8, EToggleKeys.F9, EToggleKeys.F10, EToggleKeys.F11
+              , EToggleKeys.F12, EToggleKeys.NumpadEnter, EToggleKeys.NumpadMult, EToggleKeys.NumpadDiv, EToggleKeys.NumpadDot]
     }
 }

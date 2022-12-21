@@ -1,4 +1,4 @@
-﻿class ReplaceKeys extends _Enum
+﻿class EReplaceKeys extends _Enum
 {
     static b := "b"
          , c := "c"
@@ -50,14 +50,14 @@
     ; Override _Enum.Values() for performance and sorting reasons
     Values()
     {
-        Return [ReplaceKeys.b, ReplaceKeys.c, ReplaceKeys.e, ReplaceKeys.f, ReplaceKeys.g, ReplaceKeys.h, ReplaceKeys.i
-              , ReplaceKeys.j, ReplaceKeys.k, ReplaceKeys.l, ReplaceKeys.m, ReplaceKeys.n, ReplaceKeys.o, ReplaceKeys.p
-              , ReplaceKeys.q, ReplaceKeys.r, ReplaceKeys.t, ReplaceKeys.u, ReplaceKeys.v, ReplaceKeys.x
-              , ReplaceKeys.y, ReplaceKeys.z
-              , ReplaceKeys.0, ReplaceKeys.1, ReplaceKeys.2, ReplaceKeys.3, ReplaceKeys.4
-              , ReplaceKeys.5, ReplaceKeys.6, ReplaceKeys.7, ReplaceKeys.8, ReplaceKeys.9
-              , ReplaceKeys.Numpad0, ReplaceKeys.Numpad1, ReplaceKeys.Numpad2, ReplaceKeys.Numpad3, ReplaceKeys.Numpad4
-              , ReplaceKeys.Numpad5, ReplaceKeys.Numpad6, ReplaceKeys.Numpad7, ReplaceKeys.Numpad8, ReplaceKeys.Numpad9
-              , ReplaceKeys.Plus, ReplaceKeys.Minus, ReplaceKeys.Dot, ReplaceKeys.Comma]
+        Return [EReplaceKeys.b, EReplaceKeys.c, EReplaceKeys.e, EReplaceKeys.f, EReplaceKeys.g, EReplaceKeys.h, EReplaceKeys.i
+              , EReplaceKeys.j, EReplaceKeys.k, EReplaceKeys.l, EReplaceKeys.m, EReplaceKeys.n, EReplaceKeys.o, EReplaceKeys.p
+              , EReplaceKeys.q, EReplaceKeys.r, EReplaceKeys.t, EReplaceKeys.u, EReplaceKeys.v, EReplaceKeys.x
+              , EReplaceKeys.y, EReplaceKeys.z
+              , EReplaceKeys.0, EReplaceKeys.1, EReplaceKeys.2, EReplaceKeys.3, EReplaceKeys.4
+              , EReplaceKeys.5, EReplaceKeys.6, EReplaceKeys.7, EReplaceKeys.8, EReplaceKeys.9
+              , EReplaceKeys.Numpad0, EReplaceKeys.Numpad1, EReplaceKeys.Numpad2, EReplaceKeys.Numpad3, EReplaceKeys.Numpad4
+              , EReplaceKeys.Numpad5, EReplaceKeys.Numpad6, EReplaceKeys.Numpad7, EReplaceKeys.Numpad8, EReplaceKeys.Numpad9
+              , EReplaceKeys.Plus, EReplaceKeys.Minus, EReplaceKeys.Dot, EReplaceKeys.Comma]
     }
 }
