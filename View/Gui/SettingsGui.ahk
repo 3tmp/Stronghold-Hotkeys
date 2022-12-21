@@ -247,7 +247,7 @@
     ; Determines if the given key combo string is a valid ReplaceKey key combo string
     _isInvalidKeyCombo(keyCombo)
     {
-        Return !SettingsModel.ValidReplaceKeys.Contains(keyCombo)
+        Return !EReplaceKeys.ValidValue(keyCombo)
     }
 
     _getFocusedLvRow()
@@ -541,7 +541,7 @@
 
         If (before.Key != after.Key)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlAC_DropDown, SettingsModel.ValidAutoClickerKeys, after.Key)
+            this._chooseCorrectIndexIfChanged(this._ctrlAC_DropDown, EAutoClickerKeys.Values(), after.Key)
         }
     }
 
@@ -561,7 +561,7 @@
 
         If (before.WhereToEnable != after.WhereToEnable)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroups, after.WhereToEnable)
+            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, EWindowGroups.Values(), after.WhereToEnable)
         }
     }
 
@@ -579,7 +579,7 @@
 
         If (before.WhereToEnable != after.WhereToEnable)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, SettingsModel.ValidWindowGroups, after.WhereToEnable)
+            this._chooseCorrectIndexIfChanged(this._ctrlMN_WhereDropDown, EWindowGroups.Values(), after.WhereToEnable)
         }
 
         ; For any other property:
@@ -595,11 +595,11 @@
     {
         If (before.Togglekey != after.ToggleKey)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlG_ToggleKeyDropDown, SettingsModel.ValidToggleKeys, after.Togglekey)
+            this._chooseCorrectIndexIfChanged(this._ctrlG_ToggleKeyDropDown, EToggleKeys.Values(), after.Togglekey)
         }
         If (before.CheckForUpdatesFrequency != after.CheckForUpdatesFrequency)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, SettingsModel.ValidToggleKeys, after.Togglekey)
+            this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, EToggleKeys.Values(), after.Togglekey)
         }
 
         ; TODO subscribe to the Updates events in case someone clicks the update button and waits for any feedback
