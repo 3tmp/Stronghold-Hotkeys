@@ -96,52 +96,7 @@
         this._resetModel("_general", GeneralModel.Default(), this._generalPropChange, SettingsModel.Events.General)
     }
 
-    ; Valid options. Static properties
-
-    ; Returns a list of all WindowGroups that are supported
-    ValidWindowGroups[]
-    {
-        Get
-        {
-            Return EWindowGroups.Values()
-        }
-    }
-
-    ; Get a list of all key names that are valid auto clicker keys
-    ValidAutoClickerKeys[]
-    {
-        Get
-        {
-            Return EAutoClickerKeys.Values()
-        }
-    }
-
-    ; Get a list of all key names that are valid map navigation toggle keys
-    ValidToggleKeys[]
-    {
-        Get
-        {
-            Return EToggleKeys.Values()
-        }
-    }
-
-    ; Get a list of all keys that may be used for replacing
-    ValidReplaceKeys[]
-    {
-        Get
-        {
-            Return EReplaceKeys.Values()
-        }
-    }
-
-    ; Get a list of all valid update freuquencies
-    ValidCheckForUpdatesFrequency[]
-    {
-        Get
-        {
-            Return ECheckForUpdatesFrequency.Values()
-        }
-    }
+    ; Private static helper
 
     ; Resets an inner model and replaces it with the default
     _resetModel(propertyName, default, fn, eventName)
