@@ -2,6 +2,7 @@
 #KeyHistory, 0
 #SingleInstance, Force
 SetBatchLines, -1
+ListLines, Off
 SetMouseDelay, 15
 
 Menu, Tray, NoStandard
