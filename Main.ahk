@@ -10,6 +10,7 @@
 #Include Lib\CommandsAsFunction.ahk
 #Include Lib\Debugger.ahk
 #Include Lib\DefaultIterator.ahk
+#Include Lib\Enum.ahk
 #Include Lib\HookHotkey.ahk
 #Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
@@ -47,7 +48,9 @@
 #Include Lib\Logger\LoggerFactory.ahk
 #Include Lib\Logger\OutputDebugAppender.ahk
 
+
 #Include Controller\SettingsController.ahk
+
 #Include View\Gui\SettingsGui.ahk
 #Include View\Stronghold\ChangeableHotkey.ahk
 #Include View\Stronghold\IHotkeyExecutor.ahk
@@ -58,6 +61,12 @@
 #Include View\Stronghold\StateChangeListener.ahk
 #Include View\Stronghold\StrongholdHotkeyHandler.ahk
 #Include View\Update\UpdatesChecker.ahk
+
+#Include Model\Enums\AutoClickerKeys.ahk
+#Include Model\Enums\CheckForUpdatesFrequency.ahk
+#Include Model\Enums\ReplaceKeys.ahk
+#Include Model\Enums\ToggleKeys.ahk
+#Include Model\Enums\WindowGroups.ahk
 #Include Model\ASettingsModel.ahk
 #Include Model\AutoClickerModel.ahk
 #Include Model\GeneralModel.ahk
@@ -66,6 +75,7 @@
 #Include Model\MapNavigation.ahk
 #Include Model\ReplaceKeysModel.ahk
 #Include Model\SettingsModel.ahk
+
 #Include Stronghold\StrongholdManager.ahk
 
 #Include Application.ahk

@@ -103,7 +103,7 @@
     {
         Get
         {
-            Return ["Stronghold", "Crusader", "StrongholdAndCrusader"]
+            Return WindowGroups.Values()
         }
     }
 
@@ -112,7 +112,7 @@
     {
         Get
         {
-            Return ["MButton", "XButton1", "XButton2"]
+            Return AutoClickerKeys.Values()
         }
     }
 
@@ -121,16 +121,7 @@
     {
         Get
         {
-            result := ["CapsLock", "Tab"]
-            Loop, 12
-            {
-                result.Add("F" A_Index)
-            }
-            result.Add("NumpadEnter")
-            result.Add("NumpadMult")
-            result.Add("NumpadDiv")
-            result.Add("NumpadDot")
-            Return result
+            Return ToggleKeys.Values()
         }
     }
 
@@ -139,32 +130,7 @@
     {
         Get
         {
-            result := []
-            ; All letters, except w, a, s, d as they may only be used for navigating the map
-            Loop, 26
-            {
-                chr := Chr(A_Index + 96)
-                If (chr !== "w" && chr !== "a" && chr !== "s" && chr !== "d")
-                {
-                    result.Add(chr)
-                }
-            }
-            ; Numbers 0 to 9
-            Loop, 10
-            {
-                result.Add(A_Index - 1)
-            }
-            ; Numpad numbers 0 to 9
-            Loop, 10
-            {
-                result.Add("Numpad" (A_Index - 1))
-            }
-            ; Some other characters
-            result.Add(".")
-            result.Add(",")
-            result.Add("+")
-            result.Add("-")
-            Return result
+            Return ReplaceKeys.Values()
         }
     }
 
@@ -173,7 +139,7 @@
     {
         Get
         {
-            Return ["startup", "day", "week", "month", "never"]
+            Return CheckForUpdatesFrequency.Values()
         }
     }
 
