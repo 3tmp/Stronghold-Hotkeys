@@ -67,13 +67,13 @@
         this.AddText("w" this._maxTextWidth, l.G_Desc)
         this.AddText()
         this.AddText(, l.G_ToggleDesc)
-        index := SettingsModel.ValidToggleKeys.IndexOf(this._settingsModel.General.ToggleKey)
-        this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidToggleKeys).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
+        index := EToggleKeys.Values().IndexOf(this._settingsModel.General.ToggleKey)
+        this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, EToggleKeys.Values()).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
         this.AddText()
         this.AddText(, l.G_UpdatesDesc)
-        index := SettingsModel.ValidCheckForUpdatesFrequency.IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
-        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, SettingsModel.ValidCheckForUpdatesFrequency).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
+        index := ECheckForUpdatesFrequency.Values().IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
+        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, ECheckForUpdatesFrequency.Values()).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
         this._ctrlG_updateNowBtn := this.AddButton(, l.G_UpdateNow).OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
@@ -86,10 +86,10 @@
         this.AddText()
         check := this._settingsModel.AutoClicker.Enable
         disable := !check
-        index := SettingsModel.ValidAutoClickerKeys.IndexOf(this._settingsModel.AutoClicker.Key)
+        index := EAutoClickerKeys.Values().IndexOf(this._settingsModel.AutoClicker.Key)
         this._ctrlAC_Check := this.AddCheckBox("Checked" check, l.AC_Enable).OnClick(OBM(this, "_onAC_CheckClick"))
         this._ctrlAC_Text := this.AddText("Disabled" disable, l.AC_Text)
-        this._ctrlAC_DropDown := this.AddDropDownList("Choose" index " Disabled" disable, SettingsModel.ValidAutoClickerKeys).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
+        this._ctrlAC_DropDown := this.AddDropDownList("Choose" index " Disabled" disable, EAutoClickerKeys.Values()).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
     }
 
     ; Map navigation
@@ -101,10 +101,10 @@
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable
         disable := !check
-        index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
+        index := EWindowGroups.Values().IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
         this._ctrlMN_EnableCheck := this.AddCheckbox("Checked" check, l.MN_Enable).OnClick(OBM(this, "_onMN_EnableCheck"))
         this._ctrlMN_Text1 := this.AddText("Disabled" disable, l.MN_Text1 " ")
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, EWindowGroups.Values()).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
         this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " " l.MN_Text2)
     }
 
@@ -118,11 +118,11 @@
 
         check := this._settingsModel.ReplaceKeys.Enable
         disable := !check
-        index := SettingsModel.ValidWindowGroups.IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
+        index := EWindowGroups.Values().IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
 
         this._ctrlRK_EnableCheck := this.AddCheckbox("Checked" check, l.RK_Enable).OnClick(OBM(this, "_onRK_EnableCheck"))
         this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, l.RK_Text1 " ")
-        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, SettingsModel.ValidWindowGroups).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, EWindowGroups.Values()).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
         this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " " l.RK_Text2)
 
         noHdrReorder := "-LV0x10"
