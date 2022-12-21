@@ -1,5 +1,6 @@
 ﻿class AutoClickerModel extends ASettingsModel
 {
+    ; Private ctor
     __New(enable, key)
     {
         base.__New()
@@ -55,7 +56,7 @@
 
     Default()
     {
-        Return new AutoClickerModel(true, "MButton")
+        Return new AutoClickerModel(true, EAutoClickerKeys.MButton)
     }
 
     FromIniString(str)
@@ -66,7 +67,7 @@
             throw Exception("Ini string is not an AutoClicker")
         }
 
-        If (!ini.Pairs.Enable.In(true, false) || !SettingsModel.ValidAutoClickerKeys.Contains(ini.Pairs.Key))
+        If (!ini.Pairs.Enable.In(true, false) || !EAutoClickerKeys.ValidValue(ini.Pairs.Key))
         {
             throw Exception("Ini string is not an AutoClicker")
         }

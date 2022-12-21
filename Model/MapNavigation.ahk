@@ -33,7 +33,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidWindowGroups.Contains(value))
+            If (!EWindowGroups.ValidValue(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
@@ -51,7 +51,7 @@
 
     Default()
     {
-        Return new MapNavigationModel(true, "Stronghold")
+        Return new MapNavigationModel(true, EWindowGroups.Stronghold)
     }
 
     FromIniString(str)
@@ -62,7 +62,7 @@
             throw Exception("Ini string is not a MapNavigation")
         }
 
-        If (!ini.Pairs.Enable.In(true, false) || !SettingsModel.ValidWindowGroups.Contains(ini.Pairs.WhereToEnable))
+        If (!ini.Pairs.Enable.In(true, false) || !EWindowGroups.ValidValue(ini.Pairs.WhereToEnable))
         {
             throw Exception("Ini string is not a MapNavigation")
         }

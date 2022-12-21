@@ -1,5 +1,6 @@
 ﻿class GeneralModel extends ASettingsModel
 {
+    ; Private ctor
     __New(toggleKey, checkForUpdateFrequency, lastCheckedForUpdate, latestVersion)
     {
         base.__New()
@@ -18,7 +19,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidToggleKeys.Contains(value))
+            If (!EToggleKeys.ValidValue(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
@@ -35,7 +36,7 @@
 
         Set
         {
-            If (!SettingsModel.ValidCheckForUpdatesFrequency.Contains(value))
+            If (!ECheckForUpdatesFrequency.ValidValue(value))
             {
                 throw Exception(A_ThisFunc " wrong value passed")
             }
@@ -92,7 +93,7 @@
     {
         ; Set the time to the begin of the unix epoch and the latest version to blank
         ; to indicate that no checks were performed
-        Return new GeneralModel("CapsLock", "startup", "1970", "")
+        Return new GeneralModel(EToggleKeys.CapsLock, ECheckForUpdatesFrequency.startup, "1970", "")
     }
 
     FromIniString(str)

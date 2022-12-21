@@ -1,5 +1,6 @@
 ﻿class ReplaceKeysModel extends ASettingsModel
 {
+    ; Private ctor
     __New(param)
     {
         base.__New()
@@ -327,15 +328,11 @@
 
     Default()
     {
-        ; TODO ValidWindowGroups make something better
-        ; It seems as if AutoHotkey cannot do SettingsModel.ValidWindowGroups[3],
-        ; so get the list and later get the desired element
-        validGroups := SettingsModel.ValidWindowGroups
-        obj := {"Enable": true, "WhereToEnable": validGroups[3], "GoToSignPost": "", "OpenGranary": "g"
-              , "OpenEngineersGuild": "i", "OpenKeep": "h", "OpenTunnlerGuild": "t"
-              , "OpenBarracks": "b", "OpenMercenaries": "n", "OpenMarket": "m", "ToggleUI": "", "ToggleZoom": ""
+        obj := {"Enable": true, "WhereToEnable": EWindowGroups.StrongholdAndCrusader, "GoToSignPost": "", "OpenGranary": EReplaceKeys.g
+              , "OpenEngineersGuild": EReplaceKeys.i, "OpenKeep": EReplaceKeys.h, "OpenTunnlerGuild": EReplaceKeys.t
+              , "OpenBarracks": EReplaceKeys.b, "OpenMercenaries": EReplaceKeys.n, "OpenMarket": EReplaceKeys.m, "ToggleUI": "", "ToggleZoom": ""
               , "TogglePause": "", "RotateScreenClockWise": "", "RotateScreenCounterClockWise": ""
-              , "SendRandomTauntMessage": "", "IncreaseGameSpeed": "+", "DecreaseGameSpeed": "-"}
+              , "SendRandomTauntMessage": "", "IncreaseGameSpeed": EReplaceKeys.Plus, "DecreaseGameSpeed": EReplaceKeys.Minus}
         Return new ReplaceKeysModel(obj)
     }
 
@@ -347,9 +344,7 @@
             throw Exception("Ini string is not a ReplaceKeys")
         }
 
-        validGroups := SettingsModel.ValidWindowGroups
-
-        If (!ini.Pairs.Enable.In(true, false) || !validGroups.Contains(ini.Pairs.WhereToEnable))
+        If (!ini.Pairs.Enable.In(true, false) || !EWindowGroups.ValidValue(ini.Pairs.WhereToEnable))
         {
             throw Exception("Ini string is not a ReplaceKeys")
         }
@@ -363,6 +358,10 @@
         uniqueValues := {}
         For key, value in kvPair
         {
+            If (value == "")
+            {
+                Continue
+            }
             If (uniqueValues.HasKey(value))
             {
                 throw Exception("Ini string is not a ReplaceKeys")
@@ -371,10 +370,13 @@
         }
 
         ; Ensure that only valid (keyboard)-key are set
-        validKeysList := SettingsModel.ValidReplaceKeys
         For each, key in kvPair
         {
-            If (!validKeysList.Contains(key))
+            If (key == "")
+            {
+                Continue
+            }
+            If (!EReplaceKeys.ValidValue(key))
             {
                 throw Exception("Ini string is not a ReplaceKeys")
             }
@@ -410,7 +412,7 @@
     }
 
     ; Ensures that the given key is valid
-    ; property: The name the public property that called this func
+    ; property: The name of the public property that called this func
     ; key: The (keyboard-)key to check
     _verifyKey(property, key)
     {
