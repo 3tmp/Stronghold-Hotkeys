@@ -97,7 +97,7 @@
             Return
         }
 
-        For each, group in SettingsModel.ValidWindowGroups
+        For each, group in EWindowGroups
         {
             GroupAdd(group, StrongholdManager.WindowTitles[group])
         }

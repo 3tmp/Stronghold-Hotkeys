@@ -10,7 +10,7 @@ class ChangeableHotkey
     {
         If (IsObject(key)
          || !TypeOf(fn, "Func")
-         || !SettingsModel.ValidWindowGroups.Contains(winGroup)
+         || !EWindowGroups.ValidValue(winGroup)
          || enable !== true && enable !== false)
         {
             throw Exception("Invalid parameter passed to the ctor")
@@ -57,7 +57,7 @@ class ChangeableHotkey
 
     SetWinGroup(group)
     {
-        If (!SettingsModel.ValidWindowGroups.Contains(group))
+        If (!EWindowGroups.ValidValue(group))
         {
             throw Exception("Wrong window group given")
         }

@@ -47,15 +47,14 @@
         g := this._settingsModel.General
         mn := this._settingsModel.MapNavigation
         rk := this._settingsModel.ReplaceKeys
-        validGroups := SettingsModel.ValidWindowGroups
 
         ; Enable the AutoClicker in both games
         fn := OBM(new AutoClickerExecutor(ac.Key), "Execute")
-        this._hotkeys["AutoClicker.Key"] := new ChangeableHotkey(ac.Key, fn, validGroups[3], ac.Enable)
+        this._hotkeys["AutoClicker.Key"] := new ChangeableHotkey(ac.Key, fn, EWindowGroups.StrongholdAndCrusader, ac.Enable)
 
         ; Enable the toggle key in both game
         fn := OBM(new GeneralToggleExecutor(this._stateChangeListener), "Execute")
-        this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, validGroups[3], true)
+        this._hotkeys["General.ToggleKey"] := new ChangeableHotkey(g.ToggleKey, fn, EWindowGroups.StrongholdAndCrusader, true)
 
         ; Handle the map navigation
         this._mapNavHandler := new MapNavigationHandler(this._stateChangeListener, mn.Enable, mn.WhereToEnable)

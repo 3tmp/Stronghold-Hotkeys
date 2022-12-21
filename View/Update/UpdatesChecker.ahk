@@ -40,16 +40,15 @@
     _initUpdatesCheck()
     {
         frequency := this._settingsModel.General.CheckForUpdatesFrequency
-        validFrequencies := SettingsModel.ValidCheckForUpdatesFrequency
 
         ; startup
-        If (frequency == validFrequencies[1])
+        If (frequency == ECheckForUpdatesFrequency.startup)
         {
             ; Give the app some time to finish booting before checking for updates once
             this._checkInNewThread()
         }
         ; never
-        Else If (frequency == validFrequencies[5])
+        Else If (frequency == ECheckForUpdatesFrequency.never)
         {
             ; Don't do anything
         }
@@ -111,12 +110,11 @@
              , secondsPerMonth := 60 * 60 * 24 * 31
 
         frequency := this._settingsModel.General.CheckForUpdatesFrequency
-        validFrequencies := SettingsModel.ValidCheckForUpdatesFrequency
         lastChecked := this._settingsModel.General.LastCheckedForUpdate
 
-        toAdd := frequency == validFrequencies[2] ? secondsPerDay
-               : frequency == validFrequencies[3] ? secondsPerWeek
-               : frequency == validFrequencies[4] ? secondsPerMonth
+        toAdd := frequency == ECheckForUpdatesFrequency.day ? secondsPerDay
+               : frequency == ECheckForUpdatesFrequency.week ? secondsPerWeek
+               : frequency == ECheckForUpdatesFrequency.month ? secondsPerMonth
                : -1
 
         Return toAdd == -1 ? false : this._isAfter(this._addSeconds(lastChecked, toAdd), A_Now)
@@ -156,13 +154,11 @@
     {
         UpdatesChecker._logger.Trace("GeneralModel.CheckForUpdatesFrequency changed. New value: " newValue)
 
-        validFrequencies := SettingsModel.ValidCheckForUpdatesFrequency
-
         ; Stop any timer (in case one exists)
         this._checkerTimer := ""
 
-        ; If frequency is "day", "week", "month"
-        If (newValue !== validFrequencies[1] && newValue !== validFrequencies[5])
+        ; If frequency is "day", "week", "month", start the periodic timer
+        If (newValue == ECheckForUpdatesFrequency.day || newValue == ECheckForUpdatesFrequency.week || ECheckForUpdatesFrequency.month)
         {
             this._startPeriodicChecker()
         }
