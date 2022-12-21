@@ -446,8 +446,8 @@
         {
             ; Check if the key is the same key as in the model, if yes, do nothing
             action := this._getFocusedLvRow().At(1).Text
-            replaceKeys := this._settingsModel.ReplaceKeys
-            If (replaceKeys[action] != eventArgs.KeyComboString)
+            rk := this._settingsModel.ReplaceKeys
+            If (rk[action] != eventArgs.KeyComboString)
             {
                 this._showHotkeyInUseWarning()
             }
@@ -466,7 +466,7 @@
     {
         l := GetLanguage()
         keyCombo := this._ctrlRK_Hotkey.KeyComboString
-        replaceKeys := this._settingsModel.ReplaceKeys
+        rk := this._settingsModel.ReplaceKeys
         action := this._getFocusedLvRow().At(1).Text
 
         If (keyCombo == "")
@@ -477,7 +477,7 @@
         {
             Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrReserved)
         }
-        Else If (replaceKeys[action] == keyCombo)
+        Else If (rk[action] == keyCombo)
         {
             Msgbox(l.RK_MbApplyErrTitle, l.RK_MbApplyErrSameKey)
         }
