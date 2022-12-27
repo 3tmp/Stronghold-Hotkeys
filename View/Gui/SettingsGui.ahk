@@ -72,8 +72,10 @@
 
         this.AddText()
         this.AddText(, l.G_UpdatesDesc)
-        index := ECheckForUpdatesFrequency.Values().IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
-        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, ECheckForUpdatesFrequency.Values()).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
+        index := this._getSupportedUpdatesFrequencies().IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
+        ; Currently only support checking for updates on startup or never
+        ddlValues := this._getSupportedUpdatesFrequenciesLocalized()
+        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, ddlValues).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
         this._ctrlG_updateNowBtn := this.AddButton(, l.G_UpdateNow).OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
@@ -165,6 +167,36 @@
     }
 
     ; Private helper
+
+    _getSupportedUpdatesFrequencies()
+    {
+        Return [ECheckForUpdatesFrequency.startup, ECheckForUpdatesFrequency.never]
+    }
+
+    _getSupportedUpdatesFrequenciesLocalized()
+    {
+        Return this._getSupportedUpdatesFrequencies().Map(OBM(this, "_localizeUpdatesFrequency"))
+    }
+
+    ; Transforms the given ECheckForUpdatesFrequency into a localized string
+    _localizeUpdatesFrequency(item)
+    {
+        Switch item
+        {
+            Case ECheckForUpdatesFrequency.startup:
+                Return GetLanguage().G_UpdatesFrequencyStartup
+            Case ECheckForUpdatesFrequency.day:
+                Return GetLanguage().G_UpdatesFrequencyDay
+            Case ECheckForUpdatesFrequency.week:
+                Return GetLanguage().G_UpdatesFrequencyWeek
+            Case ECheckForUpdatesFrequency.month:
+                Return GetLanguage().G_UpdatesFrequencyMonth
+            Case ECheckForUpdatesFrequency.never:
+                Return GetLanguage().G_UpdatesFrequencyNever
+            Default:
+                Return item
+        }
+    }
 
     _refillRKListView()
     {
@@ -323,7 +355,8 @@
         value := this._ctrlG_ToggleKeyDropDown.GetSelectedText()
         this._settingsController.SetGeneralToggleKey(value)
 
-        value := this._ctrlG_updatesDropDown.GetSelectedText()
+        index := this._ctrlG_updatesDropDown.GetSelectedIndex()
+        value := this._getSupportedUpdatesFrequencies()[index]
         this._settingsController.SetGeneralCheckForUpdatesFrequency(value)
 
         ; AutoClicker
@@ -595,11 +628,18 @@
     {
         If (before.Togglekey != after.ToggleKey)
         {
+            ; The keys don't get localized
             this._chooseCorrectIndexIfChanged(this._ctrlG_ToggleKeyDropDown, EToggleKeys.Values(), after.Togglekey)
         }
-        If (before.CheckForUpdatesFrequency != after.CheckForUpdatesFrequency)
+        If (before.CheckForUpdatesFrequency !== after.CheckForUpdatesFrequency)
         {
-            this._chooseCorrectIndexIfChanged(this._ctrlG_updatesDropDown, EToggleKeys.Values(), after.Togglekey)
+            ; As the gui currently only supports startup and never, all other options get ignored
+            If (this._getSupportedUpdatesFrequencies().Contains(after.CheckForUpdatesFrequency))
+            {
+                ; The updates frequency gets localized
+                index := this._getSupportedUpdatesFrequencies().IndexOf(after.CheckForUpdatesFrequency)
+                this._ctrlG_updatesDropDown.Select(index)
+            }
         }
 
         ; TODO subscribe to the Updates events in case someone clicks the update button and waits for any feedback

@@ -26,7 +26,7 @@ _language_en()
           , "Tray_About_MsgBoxBody": "A small helper program for Stronghold.`n`nPress and hold the configured mouse button for an auto clicker.`nIf enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n{} 2022 3tmp`n`nProject website: https://github.com/3tmp/Stronghold-Hotkeys"
 
           ; Gui
-          , "Title": "Stronghold - Config v{}"
+          , "Title": "Stronghold - Settings v{}"
           , "TabTitle": ["General", "Autoclicker", "Map navigation", "Replace keys"]
           , "Cancel": "Cancel"
           , "Apply": "Apply"
@@ -37,7 +37,11 @@ _language_en()
             ; TODO
           , "G_ToggleDesc": "This is the toggle key description"
           , "G_UpdatesDesc": "When should this app search online for an update?"
-          , "G_UpdatesFrequency": ["On app startup", "Daily", "Weekly", "Monthly", "Never"]
+          , "G_UpdatesFrequencyStartup": "On app startup"
+          , "G_UpdatesFrequencyDay": "Daily"
+          , "G_UpdatesFrequencyWeek": "Weekly"
+          , "G_UpdatesFrequencyMonth": "Monthly"
+          , "G_UpdatesFrequencyNever": "Never"
           , "G_UpdateNow": "Check for updates now"
           ; Autoclicker
           , "AC_Desc": "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`nThis option takes effect in Stronghold and Crusader"
@@ -83,8 +87,9 @@ _language_de()
           , "Tray_Tip": "Stronghold v{}"
           , "Tray_About_MsgBoxTitle": "Stronghold - Über v{}"
           , "Tray_About_MsgBoxBody": "Ein kleines Hilfsprogramm für Stronghold.`n`nDrücke und halte die konfigurierte Maustaste um den Autoclicker zu aktivieren.`nFalls eingeschalten können die 'w' 'a' 's' 'd' Tasten verwendet werden um auf der Karte zu navigieren`n`n{} 2022 3tmp`n`nProjekt website: https://github.com/3tmp/Stronghold-Hotkeys"
+
           ; Gui
-          , "Title": "Stronghold - Einst. v{}"
+          , "Title": "Stronghold - Einstellungen v{}"
           , "TabTitle": ["Allgemein", "Autoclicker", "Kartennavigation", "Tasten tauschen"]
           , "Cancel": "Abbrechen"
           , "Apply": "Übernehmen"
@@ -95,7 +100,11 @@ _language_de()
           ; TODO
           , "G_ToggleDesc": "Das ist die Toggle Tasten Beschreibung"
           , "G_UpdatesDesc": "Wann soll die App online nach Updates suchen?"
-          , "G_UpdatesFrequency": ["Beim Programmstart", "Täglich", "Wöchentlich", "Monatlich", "Nie"]
+          , "G_UpdatesFrequencyStartup": "Beim Start"
+          , "G_UpdatesFrequencyDay": "Täglich"
+          , "G_UpdatesFrequencyWeek": "Wöchentlich"
+          , "G_UpdatesFrequencyMonth": "Monatlich"
+          , "G_UpdatesFrequencyNever": "Nie"
           , "G_UpdateNow": "Jetzt nach Updates suchen"
           ; Autoclicker
           , "AC_Desc": "Mit Hilfe dieser Option können beliebig viele Linksklicks an das Spiel gesendet werden während die gewählte Maustaste gedrückt wird.`nDiese Option wirkt sich auf Stronghold und Crusader aus"
