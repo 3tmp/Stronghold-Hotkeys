@@ -72,10 +72,11 @@
 
         this.AddText()
         this.AddText(, l.G_UpdatesDesc)
-        index := this._getSupportedUpdatesFrequencies().IndexOf(this._settingsModel.General.CheckForUpdatesFrequency)
         ; Currently only support checking for updates on startup or never
         ddlValues := this._getSupportedUpdatesFrequenciesLocalized()
-        this._ctrlG_updatesDropDown := this.AddDropDownList("Choose" index, ddlValues).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
+        this._ctrlG_updatesDropDown := this.AddDropDownList(, ddlValues).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
+        this._setUpdatesFrequencyFromEnum(this._settingsModel.General.CheckForUpdatesFrequency)
+
         this._ctrlG_updateNowBtn := this.AddButton(, l.G_UpdateNow).OnClick(OBM(this, "_onG_UpdateNowBtnClick"))
     }
 
@@ -176,6 +177,23 @@
     _getSupportedUpdatesFrequenciesLocalized()
     {
         Return this._getSupportedUpdatesFrequencies().Map(OBM(this, "_localizeUpdatesFrequency"))
+    }
+
+    _selectedUpdatesFrequencyToEnumValue()
+    {
+        index := this._ctrlG_updatesDropDown.GetSelectedIndex()
+        Return this._getSupportedUpdatesFrequencies()[index]
+    }
+
+    _setUpdatesFrequencyFromEnum(enumValue)
+    {
+        suppFreq := this._getSupportedUpdatesFrequencies()
+        If (suppFreq.Contains(enumValue))
+        {
+            ; The updates frequency gets localized
+            index := suppFreq.IndexOf(enumValue)
+            this._ctrlG_updatesDropDown.Select(index)
+        }
     }
 
     ; Transforms the given ECheckForUpdatesFrequency into a localized string
@@ -355,8 +373,7 @@
         value := this._ctrlG_ToggleKeyDropDown.GetSelectedText()
         this._settingsController.SetGeneralToggleKey(value)
 
-        index := this._ctrlG_updatesDropDown.GetSelectedIndex()
-        value := this._getSupportedUpdatesFrequencies()[index]
+        value := this._selectedUpdatesFrequencyToEnumValue()
         this._settingsController.SetGeneralCheckForUpdatesFrequency(value)
 
         ; AutoClicker
@@ -634,12 +651,7 @@
         If (before.CheckForUpdatesFrequency !== after.CheckForUpdatesFrequency)
         {
             ; As the gui currently only supports startup and never, all other options get ignored
-            If (this._getSupportedUpdatesFrequencies().Contains(after.CheckForUpdatesFrequency))
-            {
-                ; The updates frequency gets localized
-                index := this._getSupportedUpdatesFrequencies().IndexOf(after.CheckForUpdatesFrequency)
-                this._ctrlG_updatesDropDown.Select(index)
-            }
+            this._setUpdatesFrequencyFromEnum(after.CheckForUpdatesFrequency)
         }
 
         ; TODO subscribe to the Updates events in case someone clicks the update button and waits for any feedback
