@@ -173,7 +173,13 @@
     {
         UpdatesChecker._logger.Trace("GeneralModel.LatestVersion changed. New value: " newValue)
 
-        If (Stronghold_Version() == newValue)
+        ; TODO localization
+        If (newValue == "")
+        {
+            UpdatesChecker._logger.Debug("The updates checking failed.")
+            MsgBox("Error", "Could not connect to the web server, please try again later")
+        }
+        Else If (Stronghold_Version() == newValue)
         {
             UpdatesChecker._logger.Debug("Latest version is already installed: " Stronghold_Version())
             MsgBox("No updates", "You are using the latest version: " Stronghold_Version())
