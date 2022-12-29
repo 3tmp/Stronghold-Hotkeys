@@ -89,10 +89,11 @@
         this.AddText()
         check := this._settingsModel.AutoClicker.Enable
         disable := !check
-        index := EAutoClickerKeys.Values().IndexOf(this._settingsModel.AutoClicker.Key)
         this._ctrlAC_Check := this.AddCheckBox("Checked" check, l.AC_Enable).OnClick(OBM(this, "_onAC_CheckClick"))
         this._ctrlAC_Text := this.AddText("Disabled" disable, l.AC_Text)
-        this._ctrlAC_DropDown := this.AddDropDownList("Choose" index " Disabled" disable, EAutoClickerKeys.Values()).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
+        index := EAutoClickerKeys.Values().IndexOf(this._settingsModel.AutoClicker.Key)
+        ddlValues := EAutoClickerKeys.Values().Map(OBM(this, "_localizeAutoClickerKey"))
+        this._ctrlAC_DropDown := this.AddDropDownList("w130 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onAC_DropDownChange"))
     }
 
     ; Map navigation
@@ -104,10 +105,11 @@
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable
         disable := !check
-        index := EWindowGroups.Values().IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
         this._ctrlMN_EnableCheck := this.AddCheckbox("Checked" check, l.MN_Enable).OnClick(OBM(this, "_onMN_EnableCheck"))
         this._ctrlMN_Text1 := this.AddText("Disabled" disable, l.MN_Text1 " ")
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, EWindowGroups.Values()).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        index := EWindowGroups.Values().IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
+        ddlValues := EWindowGroups.Values().Map(OBM(this, "_localizeGameGroups"))
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
         this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " " l.MN_Text2)
     }
 
@@ -121,11 +123,12 @@
 
         check := this._settingsModel.ReplaceKeys.Enable
         disable := !check
-        index := EWindowGroups.Values().IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
 
         this._ctrlRK_EnableCheck := this.AddCheckbox("Checked" check, l.RK_Enable).OnClick(OBM(this, "_onRK_EnableCheck"))
         this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, l.RK_Text1 " ")
-        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, EWindowGroups.Values()).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        index := EWindowGroups.Values().IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
+        ddlValues := EWindowGroups.Values().Map(OBM(this, "_localizeGameGroups"))
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
         this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " " l.RK_Text2)
 
         noHdrReorder := "-LV0x10"
@@ -196,6 +199,18 @@
         }
     }
 
+    _selectedAutoClickerKeyToEnumValue()
+    {
+        index := this._ctrlAC_DropDown.GetSelectedIndex()
+        Return EAutoClickerKeys.Values()[index]
+    }
+
+    _selectedGameGroupToEnumValue(ddl)
+    {
+        index := ddl.GetSelectedIndex()
+        Return EWindowGroups.Values()[index]
+    }
+
     ; Transforms the given ECheckForUpdatesFrequency into a localized string
     _localizeUpdatesFrequency(item)
     {
@@ -214,6 +229,20 @@
             Default:
                 Return item
         }
+    }
+
+    ; Transforms the given EAutoClickerKeys into a localized string
+    _localizeAutoClickerKey(item)
+    {
+        index := EAutoClickerKeys.Values().IndexOf(item)
+        Return GetLanguage().AC_Keys[index]
+    }
+
+    ; Transforms the given EWindowGroups into a localized string
+    _localizeGameGroups(item)
+    {
+        index := EWindowGroups.Values().IndexOf(item)
+        Return GetLanguage().GameGroups[index]
     }
 
     _refillRKListView()
@@ -380,21 +409,21 @@
         value := this._ctrlAC_Check.IsChecked
         this._settingsController.SetAutoClickerEnable(value)
 
-        value := this._ctrlAC_DropDown.GetSelectedText()
+        value := this._selectedAutoClickerKeyToEnumValue()
         this._settingsController.SetAutoClickerToggleKey(value)
 
         ; MapNavigation
         value := this._ctrlMN_EnableCheck.IsChecked
         this._settingsController.SetMapNavigationEnable(value)
 
-        value := this._ctrlMN_WhereDropDown.GetSelectedText()
+        value := this._selectedGameGroupToEnumValue(this._ctrlMN_WhereDropDown)
         this._settingsController.SetMapNavigationWhereToEnable(value)
 
         ; ReplaceKeys
         value := this._ctrlRK_EnableCheck.IsChecked
         this._settingsController.SetReplaceKeysEnable(value)
 
-        value := this._ctrlRK_WhereDropDown.GetSelectedText()
+        value := this._selectedGameGroupToEnumValue(this._ctrlRK_WhereDropDown)
         this._settingsController.SetReplaceKeysWhereToEnable(value)
 
         ; Don't apply the Replacekeys here as they get set via the "Apply Hotkey" button
