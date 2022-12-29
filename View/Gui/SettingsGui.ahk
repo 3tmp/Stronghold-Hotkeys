@@ -102,7 +102,7 @@
     {
         l := GetLanguage()
 
-        this.AddLink("w" this._maxTextWidth, Stronghold_Version().Format(l.MN_Desc))
+        this.AddLink("w" this._maxTextWidth, UCPWebsite().Format(l.MN_Desc))
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable
         disable := !check
