@@ -109,7 +109,7 @@
         this._ctrlMN_Text1 := this.AddText("Disabled" disable, l.MN_Text1 " ")
         index := EWindowGroups.Values().IndexOf(this._settingsModel.MapNavigation.WhereToEnable)
         ddlValues := EWindowGroups.Values().Map(OBM(this, "_localizeGameGroups"))
-        this._ctrlMN_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
+        this._ctrlMN_WhereDropDown := this.AddDropDownList("w150 x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onMN_WhereDropDown"))
         this._ctrlMN_Text2 := this.AddText("x+0 Disabled" disable, " " l.MN_Text2)
     }
 
@@ -128,7 +128,7 @@
         this._ctrlRK_Text1 := this.AddText("Section Disabled" disable, l.RK_Text1 " ")
         index := EWindowGroups.Values().IndexOf(this._settingsModel.ReplaceKeys.WhereToEnable)
         ddlValues := EWindowGroups.Values().Map(OBM(this, "_localizeGameGroups"))
-        this._ctrlRK_WhereDropDown := this.AddDropDownList("x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
+        this._ctrlRK_WhereDropDown := this.AddDropDownList("w150 x+0 Choose" index " Disabled" disable, ddlValues).OnSelectionChange(OBM(this, "_onRK_WhereDropDown"))
         this._ctrlRK_Text2 := this.AddText("x+0 Disabled" disable, " " l.RK_Text2)
 
         noHdrReorder := "-LV0x10"
