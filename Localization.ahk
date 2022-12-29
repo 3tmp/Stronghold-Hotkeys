@@ -16,7 +16,10 @@ GetSystemLanguage()
 
 _language_en()
 {
-    Return {"Tray_Title": "Stronghold Hotkeys v{}"
+    Return {"Key_Ctrl": "Ctrl"
+          , "Key_Shift": "Shift"
+
+          , "Tray_Title": "Stronghold Hotkeys v{}"
           , "Tray_Config": "Configure Settings"
           , "Tray_Website": "Open Website"
           , "Tray_About": "About"
@@ -55,7 +58,7 @@ _language_en()
           , "RK_Enable": "Enable Replace keys"
           , "RK_Text1": "Enable only when"
           , "RK_Text2": "is the active game"
-          , "RK_LvHeader": ["Command", "Key"]
+          , "RK_LvHeader": ["Command", "Key", "Original in Stronghold"]
           , "RK_Options": ["Decrease Gamespeed", "Go to Signpost", "Increase Gamespeed", "Open Barracks", "Open Engineers guild", "Open Granary", "Open Keep", "Open Market", "Open Mercenaries", "Open Tunnler guild", "Rotate clockwise", "Rotate counter clockwise", "Send Taunt message", "Pause", "Show/Hide UI Band", "Zoom in/out"]
           , "RK_ApplyHk": "Apply Hotkey"
           , "RK_RemBinding": "Remove binding"
@@ -76,7 +79,10 @@ _language_en()
 
 _language_de()
 {
-    Return {"Tray_Title": "Stronghold Hotkeys v{}"
+    Return {"Key_Ctrl": "Strg"
+          , "Key_Shift": "Umschalt"
+
+          , "Tray_Title": "Stronghold Hotkeys v{}"
           , "Tray_Config": "Einstellungen ändern"
           , "Tray_Website": "Website öffnen"
           , "Tray_About": "Über"
@@ -115,7 +121,7 @@ _language_de()
           , "RK_Enable": "Tasten tauschen aktivieren"
           , "RK_Text1": "Nur aktivieren, wenn"
           , "RK_Text2": "das aktive Spiel ist"
-          , "RK_LvHeader": ["Befehl", "Taste"]
+          , "RK_LvHeader": ["Befehl", "Taste", "Original in Stronghold"]
           , "RK_Options": ["Verringere Geschwindigkeit", "Zum Wegweiser springen", "Erhöhe Geschwindigkeit", "Öffne Ausbildungslager", "Öffne Baumeistergilde", "Öffne Kornspeicher", "Öffne Bergfried", "Öffne Marktplatz", "Öffne Söldnerposten", "Öffne Tunnelbauergilde", "Im Uhrzeigersinn drehen", "Gegen Uhrzeigersinn drehen", "Beschimpfung senden", "Pause", "UI Band anzeigen/ausblenden", "Heran/Wegzoomen"]
           , "RK_ApplyHk": "Setze Hotkey"
           , "RK_RemBinding": "Entferne Hotkey"

@@ -303,6 +303,31 @@
         Return result
     }
 
+    ; Returns the original stronghold key combo object (keys are "shift" (bool), "ctrl" (bool), "key" (string))
+    GetOriginalKeyCombo(option)
+    {
+        Switch option
+        {
+            Case "GoToSignPost": Return {"shift": false, "ctrl": false, "key": "s"}
+            Case "OpenGranary": Return {"shift": false, "ctrl": true, "key": "g"}
+            Case "OpenEngineersGuild": Return {"shift": false, "ctrl": true, "key": "i"}
+            Case "OpenKeep": Return {"shift": false, "ctrl": true, "key": "k"}
+            Case "OpenTunnlerGuild": Return {"shift": false, "ctrl": true, "key": "t"}
+            Case "OpenBarracks": Return {"shift": false, "ctrl": true, "key": "b"}
+            Case "OpenMercenaries": Return {"shift": false, "ctrl": true, "key": "n"}
+            Case "OpenMarket": Return {"shift": false, "ctrl": true, "key": "m"}
+            Case "RotateScreenClockWise": Return {"shift": false, "ctrl": false, "key": "c"}
+            Case "RotateScreenCounterClockWise": Return {"shift": false, "ctrl": false, "key": "x"}
+            Case "ToggleUI": Return {"shift": false, "ctrl": false, "key": "Tab"}
+            Case "ToggleZoom": Return {"shift": false, "ctrl": false, "key": "z"}
+            Case "TogglePause": Return {"shift": false, "ctrl": false, "key": "p"}
+            Case "SendRandomTauntMessage": Return {"shift": false, "ctrl": false, "key": ""}
+            Case "IncreaseGameSpeed": Return {"shift": false, "ctrl": false, "key": "NumpadAdd"}
+            Case "DecreaseGameSpeed": Return {"shift": false, "ctrl": false, "key": "NumpadSub"}
+            Default: Return {"shift": false, "ctrl": false, "key": ""}
+        }
+    }
+
     Equals(other)
     {
         If (this == other)

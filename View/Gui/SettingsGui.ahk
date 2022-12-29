@@ -260,6 +260,15 @@
         Return GetLanguage().RK_Options[index]
     }
 
+    _localizeKeyCombo(keyCombo)
+    {
+        l := GetLanguage()
+        result := keyCombo.shift ? l.Key_Shift : ""
+        result .= keyCombo.ctrl ? (result ? " + " : "") l.Key_Ctrl : ""
+        result .= keyCombo.key ? (result ? " + " : "") keyCombo.key : ""
+        Return result
+    }
+
     ; Transforms the given ListView index into a ReplaceKeys option
     _lvRowIndexToReplaceKeys(index)
     {
@@ -293,7 +302,7 @@
         ; Reload all values
         For key, value in this._settingsModel.ReplaceKeys.GetAllReplaceKeyOptions()
         {
-            this._ctrlRK_Lv.Add(, this._localizeReplaceKeys(key), value)
+            this._ctrlRK_Lv.Add(, this._localizeReplaceKeys(key), value, this._localizeKeyCombo(ReplaceKeysModel.GetOriginalKeyCombo(key)))
         }
     }
 
