@@ -214,21 +214,8 @@
     ; Transforms the given ECheckForUpdatesFrequency into a localized string
     _localizeUpdatesFrequency(item)
     {
-        Switch item
-        {
-            Case ECheckForUpdatesFrequency.startup:
-                Return GetLanguage().G_UpdatesFrequencyStartup
-            Case ECheckForUpdatesFrequency.day:
-                Return GetLanguage().G_UpdatesFrequencyDay
-            Case ECheckForUpdatesFrequency.week:
-                Return GetLanguage().G_UpdatesFrequencyWeek
-            Case ECheckForUpdatesFrequency.month:
-                Return GetLanguage().G_UpdatesFrequencyMonth
-            Case ECheckForUpdatesFrequency.never:
-                Return GetLanguage().G_UpdatesFrequencyNever
-            Default:
-                Return item
-        }
+        index := ECheckForUpdatesFrequency.Values().IndexOf(item)
+        Return GetLanguage().G_UpdatesFrequency[index]
     }
 
     ; Transforms the given EAutoClickerKeys into a localized string

@@ -37,11 +37,7 @@ _language_en()
             ; TODO
           , "G_ToggleDesc": "This is the toggle key description"
           , "G_UpdatesDesc": "When should this app search online for an update?"
-          , "G_UpdatesFrequencyStartup": "On app startup"
-          , "G_UpdatesFrequencyDay": "Daily"
-          , "G_UpdatesFrequencyWeek": "Weekly"
-          , "G_UpdatesFrequencyMonth": "Monthly"
-          , "G_UpdatesFrequencyNever": "Never"
+          , "G_UpdatesFrequency": ["On app startup", "Daily", "Weekly", "Monthly", "Never"]
           , "G_UpdateNow": "Check for updates now"
           ; Autoclicker
           , "AC_Desc": "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`nThis option takes effect in Stronghold and Crusader"
@@ -100,11 +96,7 @@ _language_de()
           ; TODO
           , "G_ToggleDesc": "Das ist die Toggle Tasten Beschreibung"
           , "G_UpdatesDesc": "Wann soll die App online nach Updates suchen?"
-          , "G_UpdatesFrequencyStartup": "Beim Start"
-          , "G_UpdatesFrequencyDay": "Täglich"
-          , "G_UpdatesFrequencyWeek": "Wöchentlich"
-          , "G_UpdatesFrequencyMonth": "Monatlich"
-          , "G_UpdatesFrequencyNever": "Nie"
+          , "G_UpdatesFrequency": ["Beim Start", "Täglich", "Wöchentlich", "Monatlich", "Nie"]
           , "G_UpdateNow": "Jetzt nach Updates suchen"
           ; Autoclicker
           , "AC_Desc": "Mit Hilfe dieser Option können beliebig viele Linksklicks an das Spiel gesendet werden während die gewählte Maustaste gedrückt wird.`nDiese Option wirkt sich auf Stronghold und Crusader aus"
