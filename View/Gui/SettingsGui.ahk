@@ -232,6 +232,60 @@
         Return GetLanguage().GameGroups[index]
     }
 
+    ; Transforms the given ReplaceKeys option into a localized string
+    _localizeReplaceKeys(item)
+    {
+        Switch item
+        {
+            Case "GoToSignPost": index := 2
+            Case "OpenGranary": index := 6
+            Case "OpenEngineersGuild": index := 5
+            Case "OpenKeep": index := 7
+            Case "OpenTunnlerGuild": index := 10
+            Case "OpenBarracks": index := 4
+            Case "OpenMercenaries": index := 9
+            Case "OpenMarket": index := 8
+            Case "RotateScreenClockWise": index := 11
+            Case "RotateScreenCounterClockWise": index := 12
+            Case "ToggleUI": index := 15
+            Case "ToggleZoom": index := 16
+            Case "TogglePause": index := 14
+            Case "SendRandomTauntMessage": index := 13
+            Case "IncreaseGameSpeed": index := 3
+            Case "DecreaseGameSpeed": index := 1
+            Default:
+                Return item
+        }
+
+        Return GetLanguage().RK_Options[index]
+    }
+
+    ; Transforms the given ListView index into a ReplaceKeys option
+    _lvRowIndexToReplaceKeys(index)
+    {
+        Switch index
+        {
+            Case  2: Return "GoToSignPost"
+            Case  6: Return "OpenGranary"
+            Case  5: Return "OpenEngineersGuild"
+            Case  7: Return "OpenKeep"
+            Case 10: Return "OpenTunnlerGuild"
+            Case  4: Return "OpenBarracks"
+            Case  9: Return "OpenMercenaries"
+            Case  8: Return "OpenMarket"
+            Case 11: Return "RotateScreenClockWise"
+            Case 12: Return "RotateScreenCounterClockWise"
+            Case 15: Return "ToggleUI"
+            Case 16: Return "ToggleZoom"
+            Case 14: Return "TogglePause"
+            Case 13: Return "SendRandomTauntMessage"
+            Case  3: Return "IncreaseGameSpeed"
+            Case  1: Return "DecreaseGameSpeed"
+            Default:
+                throw Exception("The given lv row index is invalid. index: " index)
+        }
+    }
+
     _refillRKListView()
     {
         ; Clear the listview
@@ -239,7 +293,7 @@
         ; Reload all values
         For key, value in this._settingsModel.ReplaceKeys.GetAllReplaceKeyOptions()
         {
-            this._ctrlRK_Lv.Add(, key, value)
+            this._ctrlRK_Lv.Add(, this._localizeReplaceKeys(key), value)
         }
     }
 
@@ -319,6 +373,11 @@
     _getFocusedLvRow()
     {
         Return this._ctrlRK_Lv.GetFocused()[1]
+    }
+
+    _getFocusedLvAction()
+    {
+        Return this._lvRowIndexToReplaceKeys(this._ctrlRK_Lv.GetFocused()[1].RowNumber)
     }
 
     ; Loops through the list and checks if the index of the compareValue is the same as its value in the ddlControl. If not it gets set
@@ -511,7 +570,7 @@
         Else If (this._isKeyInUse(eventArgs.KeyComboString))
         {
             ; Check if the key is the same key as in the model, if yes, do nothing
-            action := this._getFocusedLvRow().At(1).Text
+            action := this._getFocusedLvAction()
             rk := this._settingsModel.ReplaceKeys
             If (rk[action] != eventArgs.KeyComboString)
             {
@@ -533,7 +592,7 @@
         l := GetLanguage()
         keyCombo := this._ctrlRK_Hotkey.KeyComboString
         rk := this._settingsModel.ReplaceKeys
-        action := this._getFocusedLvRow().At(1).Text
+        action := this._getFocusedLvAction()
 
         If (keyCombo == "")
         {
@@ -565,8 +624,7 @@
 
     _onRK_RemoveHotkeyBtnClick(eventArgs)
     {
-        row := this._getFocusedLvRow()
-        action := row.At(1).Text
+        action := this._getFocusedLvAction()
 
         SettingsGui._logger.Debug("Remove the keyCombo from '" action "'")
 

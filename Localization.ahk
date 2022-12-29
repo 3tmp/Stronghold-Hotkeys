@@ -56,6 +56,7 @@ _language_en()
           , "RK_Text1": "Enable only when"
           , "RK_Text2": "is the active game"
           , "RK_LvHeader": ["Command", "Key"]
+          , "RK_Options": ["Decrease Gamespeed", "Go to Signpost", "Increase Gamespeed", "Open Barracks", "Open Engineers guild", "Open Granary", "Open Keep", "Open Market", "Open Mercenaries", "Open Tunnler guild", "Rotate clockwise", "Rotate counter clockwise", "Send Taunt message", "Pause", "Show/Hide UI Band", "Zoom in/out"]
           , "RK_ApplyHk": "Apply Hotkey"
           , "RK_RemBinding": "Remove binding"
           , "RK_ResetHk": "Reset to default"
@@ -115,6 +116,7 @@ _language_de()
           , "RK_Text1": "Nur aktivieren, wenn"
           , "RK_Text2": "das aktive Spiel ist"
           , "RK_LvHeader": ["Befehl", "Taste"]
+          , "RK_Options": ["Verringere Geschwindigkeit", "Zum Wegweiser springen", "Erhöhe Geschwindigkeit", "Öffne Ausbildungslager", "Öffne Baumeistergilde", "Öffne Kornspeicher", "Öffne Bergfried", "Öffne Marktplatz", "Öffne Söldnerposten", "Öffne Tunnelbauergilde", "Im Uhrzeigersinn drehen", "Gegen Uhrzeigersinn drehen", "Beschimpfung senden", "Pause", "UI Band anzeigen/ausblenden", "Heran/Wegzoomen"]
           , "RK_ApplyHk": "Setze Hotkey"
           , "RK_RemBinding": "Entferne Hotkey"
           , "RK_ResetHk": "Auf Standard zurücksetzen"
