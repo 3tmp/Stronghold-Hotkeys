@@ -35,6 +35,7 @@
         l := GetLanguage()
 
         this._ctrlTab := this.AddTab("w" this._width " h" this._height, l.TabTitle)
+        this._ctrlTab.OnTabSwitch(OBM(this, "_onTabSwitch"))
         this._buildTab1()
         this._ctrlTab.SetTab(2)
         this._buildTab2()
@@ -448,6 +449,11 @@
     }
 
     ; Gui control events
+
+    _onTabSwitch(eventArgs)
+    {
+        this._ctrlOkBtn.Focus()
+    }
 
     _onOkBtnClick(eventArgs)
     {

@@ -42,3 +42,11 @@ WinApi_LCIDToLocaleName(lcid)
     }
     Return lang
 }
+
+; Sets the keyboard focus to the given control
+; hwnd: A handle to the control
+; Returns a handle to the previous focused window on success, 0 otherwise
+WinApi_SetFocus(hwnd)
+{
+	Return DllCall("User32.dll\SetFocus", "Ptr", hwnd, "Ptr")
+}

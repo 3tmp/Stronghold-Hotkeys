@@ -134,6 +134,11 @@
         GuiControl, Hide, % this._hwnd
     }
 
+    Focus()
+    {
+        Return WinApi_SetFocus(this._hwnd)
+    }
+
     ToString()
     {
         Return this._getClassNN()
