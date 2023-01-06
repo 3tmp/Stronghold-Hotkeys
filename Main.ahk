@@ -5,6 +5,7 @@
 
 #Include Lib\VarFuncs.ahk
 
+#Include Lib\Object.ahk
 #Include Lib\ArrayList.ahk
 #Include Lib\ClassFunctions.ahk
 #Include Lib\CommandsAsFunction.ahk
