@@ -1,4 +1,4 @@
-﻿class _logLevel
+﻿class _logLevel extends _Enum
 {
     static Trace := 1
          , Debug := 2

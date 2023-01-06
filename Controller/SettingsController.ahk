@@ -1,4 +1,4 @@
-﻿class SettingsController
+﻿class SettingsController extends _Object
 {
     static _logger := LoggerFactory.GetLogger(SettingsController)
 

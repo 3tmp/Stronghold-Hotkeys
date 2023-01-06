@@ -1,5 +1,5 @@
 ﻿; Singelton tray menu class
-class TrayMenu
+class TrayMenu extends _Object
 {
     static _instance := ""
          , _logger := LoggerFactory.GetLogger(TrayMenu)

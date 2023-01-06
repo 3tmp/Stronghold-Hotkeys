@@ -1,6 +1,6 @@
 ﻿; A wrapper around the Hotkey command. Always uses the Hook option to prevent self triggering.
 ; Only supports single character hotkeys
-class HookHotkey
+class HookHotkey extends _Object
 {
     ; key: The full name of the key combo
     ; fn: The function that should get executed

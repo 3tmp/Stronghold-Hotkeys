@@ -1,6 +1,6 @@
 ﻿class SettingsModel extends ISettingsModel
 {
-    class Events
+    class Events extends _Enum
     {
         static AutoClicker := "AutoClicker"
              , MapNavigation := "MapNavigation"

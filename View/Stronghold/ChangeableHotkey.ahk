@@ -1,6 +1,6 @@
 ﻿; A wrapper around the HookHotkey class. Allows to easily change any properties of the hotkey.
 ; As hotkeys are have to be recreated as soon as any property changes, this hides away this complexity
-class ChangeableHotkey
+class ChangeableHotkey extends _Object
 {
     ; key: The keyboard key to trigger the hotkey. May be blank which means that no hotkey is started up
     ; fn: The callback function that gets called when the hotkey combo gets pressed

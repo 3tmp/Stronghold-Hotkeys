@@ -1,4 +1,4 @@
-﻿class _fileAppender
+﻿class _fileAppender extends _Object
 {
     __New(name)
     {

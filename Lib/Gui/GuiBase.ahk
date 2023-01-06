@@ -1,4 +1,4 @@
-﻿class GuiBase
+﻿class GuiBase extends _Object
 {
     ; List of all GuiBase instances that are currently existing
     static _instances := {}

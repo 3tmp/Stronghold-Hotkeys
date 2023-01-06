@@ -2,7 +2,7 @@
 ; called "_depth" to the inheritance depth (MyEx extends Exception -> set depth to 1, MyEx2 extends MyEx -> set depth to 2)
 ; A deriving class has to implement a constructor and immediately call the base class constructor
 ; Can directly be used instead of the AutoHotkey Exception() function
-class Exception
+class Exception extends _Object
 {
     __New(ByRef message := "")
     {
@@ -91,7 +91,7 @@ class Exception
     }
 
     ; For performance and simplicity this class does not get created via constructor, but via {"base": Exception.StackItem}
-    class StackItem
+    class StackItem extends _Object
     {
         ; Public properties
 

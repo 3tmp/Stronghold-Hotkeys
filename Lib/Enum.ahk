@@ -1,6 +1,6 @@
 ﻿; A base class for enums
 ; Enums must only contain static properties where each property has a different value
-class _Enum
+class _Enum extends _Object
 {
     ; Get the value of the enum that is associated with the given name
     ; name: The name of the enum value as string

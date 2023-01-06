@@ -1,4 +1,4 @@
-﻿class _onExitLogger
+﻿class _onExitLogger extends _Object
 {
     __New()
     {

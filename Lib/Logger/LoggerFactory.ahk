@@ -1,4 +1,4 @@
-﻿class LoggerFactory
+﻿class LoggerFactory extends _Object
 {
     static _minLogLevel := _logLevel.Debug
          , _format := "%date %level %clsOrFn %s"

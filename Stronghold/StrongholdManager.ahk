@@ -1,15 +1,15 @@
 ﻿; Performs various functions in the game. Assumes that Stronghold is the foreground window
-class StrongholdManager
+class StrongholdManager extends _Object
 {
     ; The window titles of the games that can directly be used with the Ahk window commands
-    class WindowTitles
+    class WindowTitles extends _Enum
     {
         static Stronghold := "Stronghold ahk_class FFwinClass"
              , Crusader := "Crusader ahk_class FFwinClass"
              , StrongholdAndCrusader := "ahk_class FFwinClass"
     }
 
-    class InstallPaths
+    class InstallPaths extends _Enum
     {
         ; Program Files Env Var = "ProgramFiles"
         static StrongholdSteam := EnvGet("ProgramFiles(x86)") "\Steam\steamapps\common\Stronghold\Stronghold.exe"

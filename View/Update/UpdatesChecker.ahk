@@ -1,4 +1,4 @@
-﻿class UpdatesChecker
+﻿class UpdatesChecker extends _Object
 {
     static _logger := LoggerFactory.GetLogger(UpdatesChecker)
          ; Check every hour

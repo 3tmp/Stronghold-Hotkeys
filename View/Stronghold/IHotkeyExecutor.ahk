@@ -1,4 +1,4 @@
-﻿class IHotkeyExecutor
+﻿class IHotkeyExecutor extends _Object
 {
     Execute()
     {

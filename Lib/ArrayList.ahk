@@ -10,7 +10,7 @@ Array(params*)
 
 ; Gives access to several array methods.
 ; Only supports linear arrays
-class ArrayList
+class ArrayList extends _Object
 {
     ; Adds the item to the list
     Add(item)

@@ -1,5 +1,5 @@
 ﻿; A class that wraps the OnError() function. As soon as the object gets destroyed, it stops listening
-class OnErrorListener
+class OnErrorListener extends _Object
 {
     __New(callback)
     {

@@ -1,4 +1,4 @@
-﻿class _outputDebugAppender
+﻿class _outputDebugAppender extends _Object
 {
                      ; White
     static _colors := {_logLevel.Trace: Chr(27) "[37m"

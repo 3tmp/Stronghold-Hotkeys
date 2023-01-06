@@ -1,4 +1,4 @@
-﻿class PropertyChangeSupport
+﻿class PropertyChangeSupport extends _Object
 {
     __New()
     {

@@ -1,4 +1,4 @@
-﻿class GuiBase_BaseControl
+﻿class GuiBase_BaseControl extends _Object
 {
     ; Returns the type of the control (Button, Text, Edit, etc.)
     Type[]

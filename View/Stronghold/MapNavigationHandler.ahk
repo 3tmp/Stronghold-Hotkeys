@@ -1,7 +1,7 @@
 ﻿; Special case of the hotkeys handler. Cannot encapsulate it into a class as the hotkeys can only be defined like this,
 ; otherwise they would not trigger continously.
 
-class MapNavigationHandler
+class MapNavigationHandler extends _Object
 {
     static _logger := LoggerFactory.GetLogger(MapNavigationHandler)
 

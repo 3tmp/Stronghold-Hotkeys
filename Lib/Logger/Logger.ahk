@@ -1,4 +1,4 @@
-﻿class _defaultLogger
+﻿class _defaultLogger extends _Object
 {
     ; clsOrFn: The class or the function as string that owns the logger
     __New(clsOrFn)

@@ -1,4 +1,4 @@
-﻿class Application
+﻿class Application extends _Object
 {
     static _applicationName := "Stronghold Hotkeys"
          , _iniPath := "Config.ini"

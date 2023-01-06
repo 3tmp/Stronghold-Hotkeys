@@ -1,5 +1,5 @@
 ﻿; A wrapper class for SetTimer
-class RecurrenceTimer
+class RecurrenceTimer extends _Object
 {
     __New(callback, time := "On", once := false, priority := "")
     {

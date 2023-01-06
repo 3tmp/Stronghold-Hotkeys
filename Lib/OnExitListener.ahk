@@ -1,5 +1,5 @@
 ﻿; A class that wraps the OnExit() function. As soon as the object gets destroyed, it stops listening
-class OnExitListener
+class OnExitListener extends _Object
 {
     __New(callback)
     {

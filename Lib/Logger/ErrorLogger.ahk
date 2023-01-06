@@ -1,4 +1,4 @@
-﻿class _onErrorLogger
+﻿class _onErrorLogger extends _Object
 {
     __New()
     {

@@ -1,5 +1,5 @@
 ﻿; A simple class for event support
-class BaseEvent
+class BaseEvent extends _Object
 {
     __New()
     {

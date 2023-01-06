@@ -1,4 +1,4 @@
-﻿class StrongholdHotkeyHandler
+﻿class StrongholdHotkeyHandler extends _Object
 {
     static _logger := LoggerFactory.GetLogger(StrongholdHotkeyHandler)
 

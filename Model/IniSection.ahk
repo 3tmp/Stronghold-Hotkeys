@@ -1,4 +1,4 @@
-﻿class _iniSection
+﻿class _iniSection extends _Object
 {
     __New(title, pairs)
     {

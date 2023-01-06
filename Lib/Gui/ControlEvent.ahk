@@ -13,7 +13,7 @@ class GuiBase_ControlEventHandler extends BaseEvent
 }
 
 ; The base class for all gui control events
-class GuiBase_EventArgs
+class GuiBase_EventArgs extends _Object
 {
     ; @param sender The sender of the event (= control that fired the event)
     ; @param event The A_GuiEvent AutoHotkey variable

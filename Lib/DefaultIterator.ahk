@@ -1,5 +1,5 @@
 ﻿; Can be used as a custom iterator that loops through a linear array
-class DefaultIterator
+class DefaultIterator extends _Object
 {
     __New(list)
     {

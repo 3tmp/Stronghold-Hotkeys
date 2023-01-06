@@ -559,7 +559,7 @@
     }
 
     ; Represents one row of the ListView
-    class ListViewRow
+    class ListViewRow extends _Object
     {
         ; lv: a reference to the ListView
         ; index: the row number
@@ -690,7 +690,7 @@
     }
 
     ; Represents one entry in the ListView
-    class ListViewItem
+    class ListViewItem extends _Object
     {
         ; row: A reference to a ListViewRow object
         ; column: An integer value representing the column

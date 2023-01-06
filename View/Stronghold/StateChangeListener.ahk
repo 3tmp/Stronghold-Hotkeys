@@ -1,5 +1,5 @@
 ﻿; A class that holds a state (true/false) and fires an event once it changes
-class StateChangeListener
+class StateChangeListener extends _Object
 {
     __New(initialState := false)
     {

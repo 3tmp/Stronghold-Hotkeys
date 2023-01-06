@@ -1,11 +1,6 @@
 ﻿; All classes that implement this interface are immutable
-class ISettingsModel
+class ISettingsModel extends _Object
 {
-    Equals(other)
-    {
-        throw Exception("Cannot call a method on an Interface")
-    }
-
     Default()
     {
         throw Exception("Cannot call a method on an Interface")
