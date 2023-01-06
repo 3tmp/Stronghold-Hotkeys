@@ -87,9 +87,9 @@
 #Include TrayMenu.ahk
 
 
-SetWorkingDir, % A_ScriptDir
 ListLines, % IsDebuggerAttatched() ? "On" : "Off"
 SetBatchLines, -1
+SetWorkingDir, % A_ScriptDir
 
 Stronghold_Version()
 {
