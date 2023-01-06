@@ -6,11 +6,11 @@
     {
         If (!InstanceOf(controller, SettingsController))
         {
-            throw Exception("Controller has a wrong type")
+            throw new UnsupportedTypeException("Controller has a wrong type")
         }
         If (!InstanceOf(model, SettingsModel))
         {
-            throw Exception("Model has a wrong type")
+            throw new UnsupportedTypeException("Model has a wrong type")
         }
 
         this._settingsController := controller
@@ -292,7 +292,7 @@
             Case  3: Return "IncreaseGameSpeed"
             Case  1: Return "DecreaseGameSpeed"
             Default:
-                throw Exception("The given lv row index is invalid. index: " index)
+                throw new IllegalArgumentException("The given lv row index is invalid. index: " index)
         }
     }
 

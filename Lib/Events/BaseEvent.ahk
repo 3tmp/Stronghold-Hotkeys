@@ -13,7 +13,7 @@ class BaseEvent extends _Object
     {
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
         If (!this._listeners.Contains(callback))
         {

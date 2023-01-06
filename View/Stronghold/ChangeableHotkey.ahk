@@ -13,7 +13,7 @@ class ChangeableHotkey extends _Object
          || !EWindowGroups.ValidValue(winGroup)
          || enable !== true && enable !== false)
         {
-            throw Exception("Invalid parameter passed to the ctor")
+            throw new IllegalArgumentException("Invalid parameter passed to the ctor")
         }
         ; A blank key is the only value that may be empty
         this._key := key
@@ -29,7 +29,7 @@ class ChangeableHotkey extends _Object
     {
         If (IsObject(key))
         {
-            throw Exception("Key must not be an object")
+            throw new IllegalArgumentException("Key must not be an object")
         }
 
         If (this._key == key)
@@ -44,7 +44,7 @@ class ChangeableHotkey extends _Object
     {
         If (enable !== true && enable !== false)
         {
-            throw Exception("Wrong enable value given")
+            throw new IllegalArgumentException("Wrong enable value given")
         }
 
         If (enable == this._enable)
@@ -59,7 +59,7 @@ class ChangeableHotkey extends _Object
     {
         If (!EWindowGroups.ValidValue(group))
         {
-            throw Exception("Wrong window group given")
+            throw new IllegalArgumentException("Wrong window group given")
         }
 
         If (this._group == group)
@@ -74,7 +74,7 @@ class ChangeableHotkey extends _Object
     {
         If (!TypeOf(fn, "Func"))
         {
-            throw Exception("Given fn is nor a valid function")
+            throw new IllegalArgumentException("Given fn is nor a valid function")
         }
 
         If (this._fn == fn)

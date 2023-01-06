@@ -8,11 +8,11 @@
     {
         If (!InstanceOf(controller, SettingsController))
         {
-            throw Exception("Controller has a wrong type")
+            throw new IsInterfaceException("Controller has a wrong type")
         }
         If (!InstanceOf(model, SettingsModel))
         {
-            throw Exception("Model has a wrong type")
+            throw new IsInterfaceException("Model has a wrong type")
         }
 
         this._settingsController := controller

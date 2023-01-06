@@ -34,7 +34,7 @@ class ArrayList extends _Object
     {
         If (!this.HasKey(index))
         {
-            throw Exception("The index is out of bounds.")
+            throw new OutOfBoundsException("The index is out of bounds.", index)
         }
         Return ObjRemoveAt(this, index)
     }
@@ -62,7 +62,7 @@ class ArrayList extends _Object
     {
         If (!this.HasKey(index))
         {
-            throw Exception("The index is out of bounds.")
+            throw new OutOfBoundsException("The index is out of bounds.", index)
         }
         Return this[index]
     }
@@ -72,7 +72,7 @@ class ArrayList extends _Object
     {
         If (!this.HasKey(index))
         {
-            throw Exception("The index is out of bounds.")
+            throw new OutOfBoundsException("The index is out of bounds.", index)
         }
         oldValue := this[index]
         this[index] := value
@@ -164,7 +164,7 @@ class ArrayList extends _Object
         ; Check for correct callback ("Func" or "BoundFunc")
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
 
         result := []
@@ -187,7 +187,7 @@ class ArrayList extends _Object
         ; Check for correct callback ("Func" or "BoundFunc")
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
 
         For each, item in this
@@ -236,7 +236,7 @@ class ArrayList extends _Object
         ; Check for correct callback ("Func" or "BoundFunc")
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
 
         result := []

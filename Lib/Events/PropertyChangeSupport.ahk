@@ -11,7 +11,7 @@
     {
         If (!InstanceOf(listener, PropertyChangeListener))
         {
-            throw Exception("The listener is of the wrong type")
+            throw new UnsupportedTypeException("The listener is of the wrong type")
         }
         this._listeners.Add(listener)
     }
@@ -55,7 +55,7 @@
     {
         If (IsObject(eventName) || eventName == "")
         {
-            throw Exception("The event name must be a string")
+            throw new IllegalArgumentException("The event name must be a string")
         }
 
         event := new _propertyChangeEvent(eventName, oldValue, newValue)

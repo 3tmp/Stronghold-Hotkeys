@@ -32,7 +32,7 @@
     ; Override this method in any deriving class. It gets called when the gui gets initialized
     BuildGui()
     {
-        throw Exception("Cannot create an instance of the GuiBase")
+        throw new IsInterfaceException("Cannot create an instance of the GuiBase")
     }
 
     ; Destroy the window and all controls

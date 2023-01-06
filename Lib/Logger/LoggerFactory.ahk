@@ -43,7 +43,7 @@
         }
         If (!found)
         {
-            throw Exception("The given log level is invalid")
+            throw new IllegalArgumentException("The given log level is invalid")
         }
 
         LoggerFactory._minLogLevel := logLevel
@@ -54,7 +54,7 @@
         ; Digit means only 0-9 allowed, so no sign
         If (!size.Is("Digit"))
         {
-            throw Exception("The given parameter has the wrong type.")
+            throw new IllegalArgumentException("The given parameter has the wrong type.")
         }
         LoggerFactory._maxBufferSize := size
     }
@@ -63,7 +63,7 @@
     {
         If (IsObject(logMessage))
         {
-            throw Exception("The given parameter has the wrong type.")
+            throw new IllegalArgumentException("The given parameter has the wrong type.")
         }
         LoggerFactory._buffer.Add({"msg": logMessage, "level": level})
         LoggerFactory._syncIfBufferFull()

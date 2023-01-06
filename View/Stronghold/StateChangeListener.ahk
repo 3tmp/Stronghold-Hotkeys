@@ -19,7 +19,7 @@ class StateChangeListener extends _Object
         {
             If (value !== true && value !== false)
             {
-                throw Exception("Wrong state given")
+                throw new IllegalArgumentException("Wrong state given")
             }
     
             If (this._state == value)

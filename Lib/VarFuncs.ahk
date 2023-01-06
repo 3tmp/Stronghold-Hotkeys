@@ -43,7 +43,7 @@ VarFuncs_ScriptInit()
 
 VarFuncs__Get(ByRef var, params*)
 {
-    throw Exception("Tried to get a non existent property on a var",, params[1])
+    throw new NotImplementedException("Tried to get a non existent property on a var. Propertyname: '" params[1] "'")
 }
 
 ; Returns the character at the given position

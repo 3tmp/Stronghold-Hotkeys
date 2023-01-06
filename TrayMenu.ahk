@@ -24,7 +24,7 @@ class TrayMenu extends _Object
     {
         If (!InstanceOf(app, Application))
         {
-            throw Exception("App has the wrong type")
+            throw new UnsupportedTypeException("App has the wrong type")
         }
 
         If (!this._setupComplete)

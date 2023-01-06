@@ -5,7 +5,7 @@ class OnExitListener extends _Object
     {
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
         this._callback := callback
         OnExit(this._callback, 1)

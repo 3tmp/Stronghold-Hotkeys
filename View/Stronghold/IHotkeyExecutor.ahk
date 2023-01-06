@@ -2,6 +2,6 @@
 {
     Execute()
     {
-        throw Exception("Cannot call a method on an interface")
+        throw new IsInterfaceException("Cannot call a method on an interface")
     }
 }

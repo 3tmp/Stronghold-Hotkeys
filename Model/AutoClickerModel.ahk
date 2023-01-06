@@ -19,7 +19,7 @@
         {
             If (!value.In(true, false))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             If (value == this._enable)
             {
@@ -40,7 +40,7 @@
         {
             If (!EAutoClickerKeys.ValidValue(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_key", value)
         }
@@ -64,12 +64,12 @@
         ini := _iniSection.Parse(str)
         If (ini.Title != "AutoClicker")
         {
-            throw Exception("Ini string is not an AutoClicker")
+            throw new IllegalArgumentException("Ini string is not an AutoClicker")
         }
 
         If (!ini.Pairs.Enable.In(true, false) || !EAutoClickerKeys.ValidValue(ini.Pairs.Key))
         {
-            throw Exception("Ini string is not an AutoClicker")
+            throw new IllegalArgumentException("Ini string is not an AutoClicker")
         }
 
         Return new AutoClickerModel(ini.Pairs.Enable, ini.Pairs.Key)

@@ -5,7 +5,7 @@ class OnErrorListener extends _Object
     {
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
         this._callback := callback
         OnError(this._callback, 1)

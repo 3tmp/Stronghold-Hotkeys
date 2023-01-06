@@ -7,7 +7,7 @@ class PropertyChangeListener extends _Object
     {
         If (!TypeOf(fn, "Func"))
         {
-            throw Exception("Callback is not of type Func or BoundFunc")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
 
         this._fn := fn
@@ -36,7 +36,7 @@ class PropertyChangeListener extends _Object
         {
             If (IsObject(value))
             {
-                throw Exception("Event names must not be objects")
+                throw new IllegalArgumentException("Event names must not be objects")
             }
             this._name := value
         }

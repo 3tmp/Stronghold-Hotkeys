@@ -35,7 +35,7 @@
         {
             If (!value.In(true, false))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_enable", value)
         }
@@ -52,7 +52,7 @@
         {
             If (!EWindowGroups.ValidValue(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_whereToEnable", value)
         }
@@ -366,12 +366,12 @@
         ini := _iniSection.Parse(str)
         If (ini.Title != "ReplaceKeys")
         {
-            throw Exception("Ini string is not a ReplaceKeys")
+            throw new IllegalArgumentException("Ini string is not a ReplaceKeys")
         }
 
         If (!ini.Pairs.Enable.In(true, false) || !EWindowGroups.ValidValue(ini.Pairs.WhereToEnable))
         {
-            throw Exception("Ini string is not a ReplaceKeys")
+            throw new IllegalArgumentException("Ini string is not a ReplaceKeys")
         }
 
         ; Clone the key value pair list and remove the non-(keyboard-)key pairs
@@ -389,7 +389,7 @@
             }
             If (uniqueValues.HasKey(value))
             {
-                throw Exception("Ini string is not a ReplaceKeys")
+                throw new IllegalArgumentException("Ini string is not a ReplaceKeys")
             }
             uniqueValues[value] := 1
         }
@@ -403,7 +403,7 @@
             }
             If (!EReplaceKeys.ValidValue(key))
             {
-                throw Exception("Ini string is not a ReplaceKeys")
+                throw new IllegalArgumentException("Ini string is not a ReplaceKeys")
             }
         }
 
@@ -449,11 +449,11 @@
 
         If (IsObject(key))
         {
-            throw Exception("The given key must not be an object")
+            throw new IllegalArgumentException("The given key must not be an object")
         }
         If (key.In("w", "a", "s", "d"))
         {
-            throw Exception("The given key is reserved for map navigation")
+            throw new IllegalArgumentException("The given key is reserved for map navigation")
         }
         allCurrentKeys := this.GetAllReplaceKeyOptions()
         ; In case the same key as the current gets passed, do nothing
@@ -462,7 +462,7 @@
         {
             If (value == key)
             {
-                throw Exception("The given key is already in use")
+                throw new IllegalArgumentException("The given key is already in use")
             }
         }
     }

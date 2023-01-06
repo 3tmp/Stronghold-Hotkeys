@@ -9,7 +9,7 @@ class HookHotkey extends _Object
     {
         If (key == "" || !TypeOf(fn, "Func"))
         {
-            throw Exception(A_ThisFunc " Invalid parameter.")
+            throw new UnsupportedTypeException(A_ThisFunc " Invalid parameter.")
         }
         ; Always use the "Hook" option to prevent the script from self triggering of Hotkeys
         this._key := "$" key
@@ -118,16 +118,16 @@ class HookHotkey extends _Object
                 Return
             ; Unsupported key name
             Case 2:
-                throw Exception("The key '" key "' cannot be used as hotkey")
+                throw new HotkeyException("The key '" key "' cannot be used as hotkey", error)
             ; The command attempted to modify a nonexistent hotkey.
             Case 5:
-                throw Exception("No hotkey with the combo '" key "' exists.")
+                throw new HotkeyException("No hotkey with the combo '" key "' exists.", error)
             ; The command attempted to modify a nonexistent variant of an existing hotkey.
             Case 6:
-                throw Exception("Cannot modify a non existent hotkey variant of '" key "'")
+                throw new HotkeyException("Cannot modify a non existent hotkey variant of '" key "'", error)
             ; Any other failures:
             Default:
-                throw Exception("The following error occured when trying to set a hotkey: " error)
+                throw new HotkeyException("The following error occured when trying to set a hotkey: " error, error)
         }
     }
 }

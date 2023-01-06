@@ -4,11 +4,11 @@
     {
         If (!TypeOf(title, "String"))
         {
-            throw Exception("The title must be a string")
+            throw new IllegalArgumentException("The title must be a string")
         }
         If (!IsObject(pairs))
         {
-            throw Exception("The pairs must be an object")
+            throw new IllegalArgumentException("The pairs must be an object")
         }
         this._title := title
         this._pairs := pairs
@@ -72,7 +72,7 @@
 
         If (title == "" || failsOccured)
         {
-            throw Exception("Failed to parse ini string")
+            throw new IllegalArgumentException("Failed to parse ini string")
         }
 
         Return new _iniSection(title, pairs)

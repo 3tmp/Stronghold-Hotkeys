@@ -7,7 +7,7 @@ class GeneralToggleExecutor extends IHotkeyExecutor
     {
         If (!InstanceOf(stateChange, StateChangeListener))
         {
-            throw Exception("The given stateChange is not an instance of StateChangeListener")
+            throw new UnsupportedTypeException("The given stateChange is not an instance of StateChangeListener")
         }
 
         this._stateChange := stateChange

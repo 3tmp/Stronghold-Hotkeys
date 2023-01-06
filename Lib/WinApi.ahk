@@ -38,7 +38,7 @@ WinApi_LCIDToLocaleName(lcid)
     ; A_Language returns only the hex code without the leading "0x", make sure to cover this case
     If (!DllCall("Kernel32.dll\LCIDToLocaleName", "UInt", InStr(lcid, "0x") ? lcid : "0x" lcid, "Str", lang, "UInt", LOCALE_NAME_MAX_LENGTH, "UInt", 0))
     {
-        throw Exception("LCID value was not correct")
+        throw new InvalidLanguageCodeException("LCID value was not correct", lcid)
     }
     Return lang
 }

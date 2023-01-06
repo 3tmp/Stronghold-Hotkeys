@@ -5,7 +5,7 @@ class RecurrenceTimer extends _Object
     {
         If (!TypeOf(callback, "Func"))
         {
-            throw Exception("Invalid callback given")
+            throw new InvalidCallbackException("Invalid callback given")
         }
         this._callback := callback
         this._time := Abs(time)

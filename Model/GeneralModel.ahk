@@ -21,7 +21,7 @@
         {
             If (!EToggleKeys.ValidValue(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_toggleKey", value)
         }
@@ -38,7 +38,7 @@
         {
             If (!ECheckForUpdatesFrequency.ValidValue(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_checkForUpdatesFrequency", value)
         }
@@ -56,7 +56,7 @@
         {
             If (!value.Is("Date"))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_lastCheckedForUpdate", value)
         }
@@ -74,7 +74,7 @@
         {
             If (IsObject(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_latestVersion", value)
         }
@@ -101,7 +101,7 @@
         ini := _iniSection.Parse(str)
         If (ini.Title != "General")
         {
-            throw Exception("Ini string is not a General")
+            throw new IllegalArgumentException("Ini string is not a General")
         }
 
         ; TODO better constructor
@@ -115,7 +115,7 @@
         }
         catch, e
         {
-            throw Exception("Ini string is not a General")
+            throw new IllegalArgumentException("Ini string is not a General")
         }
 
         Return result

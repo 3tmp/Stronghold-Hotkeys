@@ -6,7 +6,7 @@
     {
         If (!InstanceOf(model, SettingsModel))
         {
-            throw Exception("Model has a wrong type")
+            throw new UnsupportedTypeException("Model has a wrong type")
         }
 
         this._settingsModel := model
@@ -193,7 +193,7 @@
                 this.SetReplaceKeysDecreaseGameSpeed(key)
             Default:
                 SettingsController._logger.Warn("Passed an invalid propertyName. Name: '" propertyName "'")
-                throw Exception("The property '" propertyName "' is not supported")
+                throw new IllegalArgumentException("The property '" propertyName "' is not supported")
         }
     }
 

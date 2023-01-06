@@ -18,7 +18,7 @@
         {
             If (!value.In(true, false))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_enable", value)
         }
@@ -35,7 +35,7 @@
         {
             If (!EWindowGroups.ValidValue(value))
             {
-                throw Exception(A_ThisFunc " wrong value passed")
+                throw new IllegalArgumentException(A_ThisFunc " wrong value passed")
             }
             this._setValue("_whereToEnable", value)
         }
@@ -59,12 +59,12 @@
         ini := _iniSection.Parse(str)
         If (ini.Title != "MapNavigation")
         {
-            throw Exception("Ini string is not a MapNavigation")
+            throw new IllegalArgumentException("Ini string is not a MapNavigation")
         }
 
         If (!ini.Pairs.Enable.In(true, false) || !EWindowGroups.ValidValue(ini.Pairs.WhereToEnable))
         {
-            throw Exception("Ini string is not a MapNavigation")
+            throw new IllegalArgumentException("Ini string is not a MapNavigation")
         }
 
         Return new MapNavigationModel(ini.Pairs.Enable, ini.Pairs.WhereToEnable)

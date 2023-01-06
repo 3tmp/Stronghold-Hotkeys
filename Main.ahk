@@ -13,6 +13,7 @@
 #Include Lib\DefaultIterator.ahk
 #Include Lib\Enum.ahk
 #Include Lib\Exception.ahk
+#Include Lib\Exceptions.ahk
 #Include Lib\HookHotkey.ahk
 #Include Lib\Jxon.ahk
 #Include Lib\Null.ahk
