@@ -71,7 +71,7 @@
             {
                 If (IsObject(var))
                 {
-                    If (var.HasKey("ToString") && TypeOf(var["ToString"], "Func"))
+                    If (TypeOf(var["ToString"], "Func"))
                     {
                         varsAsStrings.Add(var.ToString())
                     }

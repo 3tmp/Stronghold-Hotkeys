@@ -22,11 +22,13 @@
     {
         result := LoggerFactory._format
 
-        message :=  "Message: " ex.Message.Replace("`n", "\n")
+        message := InstanceOf(ex, Exception)
+                 ? ex.ToString()
+                 : ("Message: " ex.Message.Replace("`n", "\n")
                   . ", What: "  ex.What.Replace("`n", "\n")
                   . ", Extra: " ex.Extra.Replace("`n", "\n")
                   . ", File: "  """" ex.File """"
-                  . ", Line: "  ex.Line
+                  . ", Line: "  ex.Line)
 
         ; Replace the string options
         result := result.Replace("%date", FormatTime(A_Now, "yyyy-MM-dd HH:mm:ss"))
