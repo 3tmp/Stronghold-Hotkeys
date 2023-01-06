@@ -34,7 +34,7 @@
         ; A double space will occur in this special case, remove it
         result := result.Replace("  ", " ")
         result := result.Replace("%level", this._level)
-        result := result.Replace("%s", "Unhandled error: " message)
+        result := result.Replace("%s", "Unhandled error (App version: " Stronghold_Version() "): " message)
         Return result
     }
 }

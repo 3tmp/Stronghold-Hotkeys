@@ -33,6 +33,7 @@
         this._exitLogger := LoggerFactory.GetExitLogger()
 
         Application._logger.Info("App is starting up...")
+        Application._logger.Info("Version: " Stronghold_Version())
 
         If (IsDebuggerAttatched())
         {
