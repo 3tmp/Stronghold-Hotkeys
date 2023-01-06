@@ -40,7 +40,7 @@ class StateChangeListener extends _Object
         }
         Else
         {
-            this._event.RemoveEventListener(listener)
+            this._event.RemoveListener(listener)
         }
     }
 }

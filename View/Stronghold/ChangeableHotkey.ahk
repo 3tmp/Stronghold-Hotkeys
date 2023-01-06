@@ -20,6 +20,7 @@ class ChangeableHotkey extends _Object
         this._fn := fn
         this._group := winGroup
         this._enable := enable
+        this._hotkey := ""
 
         this._changeHotkey()
     }
