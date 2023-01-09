@@ -101,7 +101,8 @@
     {
         l := GetLanguage()
 
-        this.AddLink("w" this._maxTextWidth, UCPWebsite().Format(l.MN_Desc))
+        this._ctrlMN_DescLnk := this.AddLink("w" this._maxTextWidth, UCPWebsite().Format(l.MN_Desc))
+        this._ctrlMN_DescLnk.OnClick(OBM(this, "_onMN_DescLnkClick"))
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable
         disable := !check
@@ -118,7 +119,8 @@
     {
         l := GetLanguage()
 
-        this.AddText("w" this._maxTextWidth, l.RK_Desc)
+        this._ctrlRK_DescLnk := this.AddLink("w" this._maxTextWidth, l.RK_Desc)
+        this._ctrlRK_DescLnk.OnClick(OBM(this, "_onRk_DescLnkClick"))
         this.AddText()
 
         check := this._settingsModel.ReplaceKeys.Enable
@@ -292,6 +294,16 @@
             Case  1: Return "DecreaseGameSpeed"
             Default:
                 throw new IllegalArgumentException("The given lv row index is invalid. index: " index)
+        }
+    }
+
+    ; Navigates to a specifies page in the tab when given a command.
+    ; command: "go-to-toggle-page" -> Go to tab 1
+    _navigateTabByCommand(command)
+    {
+        If (command == "go-to-toggle-page")
+        {
+            this._ctrlTab.Select(1)
         }
     }
 
@@ -526,6 +538,11 @@
         this._printToConsole(eventArgs)
     }
 
+    _onMN_DescLnkClick(eventArgs)
+    {
+        this._navigateTabByCommand(eventArgs.HrefOrId)
+    }
+
     _onMN_EnableCheck(eventArgs)
     {
         this._setMNEnabledState(eventArgs.IsChecked)
@@ -534,6 +551,11 @@
     _onMN_WhereDropDown(eventArgs)
     {
         this._printToConsole(eventArgs)
+    }
+
+    _onRk_DescLnkClick(eventArgs)
+    {
+        this._navigateTabByCommand(eventArgs.HrefOrId)
     }
 
     _onRK_EnableCheck(eventArgs)

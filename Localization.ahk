@@ -48,13 +48,12 @@ _language_en()
           , "AC_Text": "Send clicks as long as the following key gets pressed down"
           , "AC_Keys": ["Middle mouse button", "Side mouse button 1", "Side mouse button 2"]
           ; Map navigation
-          , "MN_Desc": "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`nThis option is also included in the <a href=""{}"">UCP</a>. It is recommended to use the UCP option over this.`nThis option intercepts the key presses and simulates the arrow keys, therefore it also disables the keys when typing any text (e.g. when saving the game). Use the toggle key to fast enable/disable this option."
+          , "MN_Desc": "This option enables to navigate the map with the 'w' 'a' 's' 'd' keys.`nThis option is also included in the <a href=""{}"">UCP</a>. It is recommended to use the UCP option over this.`nThis option intercepts the key presses and simulates the arrow keys, therefore it also disables the keys when typing any text (e.g. when saving the game).`nUse the <a id=""go-to-toggle-page"">toggle key</a> to fast enable/disable this option."
           , "MN_Enable": "Enable Map navigation"
           , "MN_Text1": "Enable only when"
           , "MN_Text2": "is the active game"
           ; Replace keys
-          ; TODO
-          , "RK_Desc": "Some Description of replace keys"
+          , "RK_Desc": "Set custom keys for commands in Stronghold, e.g. change game speed or open building menus.`nUse the <a id=""go-to-toggle-page"">toggle key</a> to fast enable/disable this option."
           , "RK_Enable": "Enable Replace keys"
           , "RK_Text1": "Enable only when"
           , "RK_Text2": "is the active game"
@@ -111,13 +110,12 @@ _language_de()
           , "AC_Text": "Führe Linksklicks aus so lange wie die folgende Maustaste gedrückt wird"
           , "AC_Keys": ["Mittlere Maustaste", "Seitliche Maustaste 1", "Seitliche Maustaste 2"]
           ; Map navigation
-          , "MN_Desc": "Mit Hilfe dieser Option kann die Karte mit den 'w' 'a' 's' 'd' Tasten navigiert werden.`nDiese Option ist ebenfalls im <a href=""{}"">UCP</a> enthalten. Es ist empfohlen die UCP Einstellung zu verwenden anstatt dieser.`nDa diese Option die gedrückten Tasten konsumiert und dafür Pfeiltastenklicks simuliert, kann mit diesen vier Tasten kein Text geschrieben werden (z.B. um das Spiel zu speichern). Verwende die Toggle Option um diese Einstellung schnell und temporär zu ändern."
+          , "MN_Desc": "Mit Hilfe dieser Option kann die Karte mit den 'w' 'a' 's' 'd' Tasten navigiert werden.`nDiese Option ist ebenfalls im <a href=""{}"">UCP</a> enthalten. Es ist empfohlen die UCP Einstellung zu verwenden anstatt dieser.`nDa diese Option die gedrückten Tasten konsumiert und dafür Pfeiltastenklicks simuliert, kann mit diesen vier Tasten kein Text geschrieben werden (z.B. um das Spiel zu speichern).`nVerwende die <a id=""go-to-toggle-page"">Toggle Taste</a> um diese Einstellung schnell und temporär zu ändern."
           , "MN_Enable": "Kartennavigation aktivieren"
           , "MN_Text1": "Nur aktivieren, wenn"
           , "MN_Text2": "das aktive Spiel ist"
           ; Replace keys
-          ; TODO
-          , "RK_Desc": "Eine Beschreibung fürs Tasten tauschen"
+          , "RK_Desc": "Vergebe eigene Tasten für Befehle in Stronghold, wie z.B. Spielgeschwindigkeit ändern oder Gebäudemenüs öffnen.`nVerwende die <a id=""go-to-toggle-page"">Toggle Taste</a> um diese Einstellung schnell und temporär zu ändern."
           , "RK_Enable": "Tasten tauschen aktivieren"
           , "RK_Text1": "Nur aktivieren, wenn"
           , "RK_Text2": "das aktive Spiel ist"
