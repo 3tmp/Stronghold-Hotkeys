@@ -58,21 +58,11 @@ GroupAdd(ByRef GroupName, ByRef WinTitle := "", ByRef WinText := "", ByRef Label
     Return ErrorLevel
 }
 
-
-IfIs(ByRef var, ByRef type)
-{
-    If var is %type%
-    {
-        Return true
-    }
-    Return false
-}
-
 MsgBox(p*)
 {
     ; If a title or body parameter is an object, it gets converted to a string
     ; Title + body
-    If (p.Length() == 2 && !IfIs(p[1], "Integer"))
+    If (p.Length() == 2 && !p[1].Is("Integer"))
     {
         MsgBox,, % _cmdsAsFuncsToString(p[1]), % _cmdsAsFuncsToString(p[2])
     }
@@ -94,6 +84,7 @@ MsgBox(p*)
         }
     }
 }
+
 OutputDebug(ByRef Text)
 {
     ; If the parameter is an object, it gets converted to a string
@@ -117,6 +108,11 @@ _objectToString(obj)
     If (!IsObject(obj))
     {
         Return obj
+    }
+
+    If (InstanceOf(obj, _Object))
+    {
+        Return obj.ToString()
     }
 
     result := ""
