@@ -311,7 +311,7 @@
             Case "GoToSignPost": Return {"shift": false, "ctrl": false, "key": "s"}
             Case "OpenGranary": Return {"shift": false, "ctrl": true, "key": "g"}
             Case "OpenEngineersGuild": Return {"shift": false, "ctrl": true, "key": "i"}
-            Case "OpenKeep": Return {"shift": false, "ctrl": true, "key": "k"}
+            Case "OpenKeep": Return {"shift": false, "ctrl": true, "key": "h"}
             Case "OpenTunnlerGuild": Return {"shift": false, "ctrl": true, "key": "t"}
             Case "OpenBarracks": Return {"shift": false, "ctrl": true, "key": "b"}
             Case "OpenMercenaries": Return {"shift": false, "ctrl": true, "key": "n"}
