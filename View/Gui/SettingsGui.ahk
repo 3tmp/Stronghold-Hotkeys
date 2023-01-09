@@ -26,7 +26,6 @@
     BuildGui()
     {
         this._width := 400
-        this._height := 440
         this._margin := 10
         this._maxTextWidth := this._width - 3 * this._margin
 
@@ -34,7 +33,7 @@
 
         l := GetLanguage()
 
-        this._ctrlTab := this.AddTab("w" this._width " h" this._height, l.TabTitle)
+        this._ctrlTab := this.AddTab("w" this._width, l.TabTitle)
         this._ctrlTab.OnTabSwitch(OBM(this, "_onTabSwitch"))
         this._buildTab1()
         this._ctrlTab.SetTab(2)
@@ -119,7 +118,7 @@
     {
         l := GetLanguage()
 
-        this.AddText(, l.RK_Desc)
+        this.AddText("w" this._maxTextWidth, l.RK_Desc)
         this.AddText()
 
         check := this._settingsModel.ReplaceKeys.Enable
