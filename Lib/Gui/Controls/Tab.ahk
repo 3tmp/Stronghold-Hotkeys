@@ -21,12 +21,10 @@
     }
 
     ; Selectes the tab at the given, one-based index
-    ; Returns the index of the previously selected item on success, 0 on failure
-    Select(index)
+    Select(index, triggerGLabel := true)
     {
-        ; 0x130C is TCM_SETCURSEL
-        SendMessage, 0x130C, index - 1, 0,, % "ahk_id" this._hwnd
-        Return ErrorLevel == "FAIL" || ErrorLevel == -1 ? 0 : ErrorLevel + 1
+        ; Go to the tab control
+        GuiControl, Choose, % this._hwnd,  % (triggerGLabel ? "|" : "") index
     }
 
     ; Returns the one based index of the selected item, -1 if no item is selected
