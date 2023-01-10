@@ -75,7 +75,7 @@ class ChangeableHotkey extends _Object
     {
         If (!TypeOf(fn, "Func"))
         {
-            throw new IllegalArgumentException("Given fn is nor a valid function")
+            throw new InvalidCallbackException("Callback is not of type Func or BoundFunc")
         }
 
         If (this._fn == fn)
