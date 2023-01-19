@@ -101,7 +101,7 @@
     {
         l := GetLanguage()
 
-        this._ctrlMN_DescLnk := this.AddLink("w" this._maxTextWidth, UCPWebsite().Format(l.MN_Desc))
+        this._ctrlMN_DescLnk := this.AddLink("w" this._maxTextWidth, Format(l.MN_Desc, UCPWebsite()))
         this._ctrlMN_DescLnk.OnClick(OBM(this, "_onMN_DescLnkClick"))
         this.AddText()
         check := this._settingsModel.MapNavigation.Enable

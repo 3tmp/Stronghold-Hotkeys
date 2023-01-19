@@ -114,7 +114,8 @@ class TrayMenu extends _Object
         TrayMenu._logger.Debug("Showing the about dialog")
 
         copyright := Chr(0x00A9)
-        MsgBox(Format(GetLanguage().Tray_About_MsgBoxTitle, Stronghold_Version()), Format(GetLanguage().Tray_About_MsgBoxBody, copyright, StrongholdHotkeysWebsite()))
+        l := GetLanguage()
+        MsgBox(Format(l.Tray_About_MsgBoxTitle, Stronghold_Version()), Format(l.Tray_About_MsgBoxBody, copyright, A_Year, StrongholdHotkeysWebsite()))
     }
 
     _eventOpenWebsite()
