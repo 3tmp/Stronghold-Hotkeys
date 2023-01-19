@@ -48,5 +48,12 @@ WinApi_LCIDToLocaleName(lcid)
 ; Returns a handle to the previous focused window on success, 0 otherwise
 WinApi_SetFocus(hwnd)
 {
-	Return DllCall("User32.dll\SetFocus", "Ptr", hwnd, "Ptr")
+    Return DllCall("User32.dll\SetFocus", "Ptr", hwnd, "Ptr")
+}
+
+; Retrieves the process identifier of the calling process (= the script)
+; Returns the PID of the current process
+WinApi_GetCurrentProcessId()
+{
+    Return DllCall("Kernel32.dll\GetCurrentProcessId", "UInt")
 }

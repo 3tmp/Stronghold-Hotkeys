@@ -62,7 +62,7 @@
         }
     }
 
-    ; The result of the check that was performed on LastCheckedForUpdate. If no checks were performed, blank gets returned
+    ; The result of the check that was performed on LastCheckedForUpdate. If no checks were performed or there was an error, blank gets returned
     LatestVersion[]
     {
         Get
@@ -93,7 +93,7 @@
     {
         ; Set the time to the begin of the unix epoch and the latest version to blank
         ; to indicate that no checks were performed
-        Return new GeneralModel(EToggleKeys.CapsLock, ECheckForUpdatesFrequency.startup, "1970", "")
+        Return new GeneralModel(EToggleKeys.CapsLock, ECheckForUpdatesFrequency.never, "1970", "")
     }
 
     FromIniString(str)

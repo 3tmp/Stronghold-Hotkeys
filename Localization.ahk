@@ -28,6 +28,16 @@ _language_en()
           , "Tray_About_MsgBoxTitle": "Stronghold - About v{}"
           , "Tray_About_MsgBoxBody": "A small helper program for Stronghold.`n`nPress and hold the configured mouse button for an auto clicker.`nIf enabled, the 'w' 'a' 's' 'd' keys can be used to navigate the map`n`n{} 2022 3tmp`n`nProject website: {}"
 
+          ; Update checking
+          , "UpdateOk": "Ok"
+          , "UpdateDownload": "Download"
+          , "UpdateErrorTitle": "Error"
+          , "UpdateErrorText": "Could not connect to the web server, please try again later"
+          , "UpdateNoUpdateTitle": "No updates"
+          , "UpdateNoUpdateText": "You are using the latest version: {}"
+          , "UpdateAvailableText": "There is an update available for version {}`nYou have {}`n`nDo you want to download it?"
+          , "UpdateAvailableTitle": "Update available"
+
           ; Gui
           , "Title": "Stronghold - Settings v{}"
           , "TabTitle": ["General", "Autoclicker", "Map navigation", "Replace keys"]
@@ -89,6 +99,16 @@ _language_de()
           , "Tray_Tip": "Stronghold v{}"
           , "Tray_About_MsgBoxTitle": "Stronghold - Über v{}"
           , "Tray_About_MsgBoxBody": "Ein kleines Hilfsprogramm für Stronghold.`n`nDrücke und halte die konfigurierte Maustaste um den Autoclicker zu aktivieren.`nFalls eingeschalten können die 'w' 'a' 's' 'd' Tasten verwendet werden um auf der Karte zu navigieren`n`n{} 2022 3tmp`n`nProjekt website: {}"
+
+          ; Update checking
+          , "UpdateOk": "Ok"
+          , "UpdateDownload": "Download"
+          , "UpdateErrorTitle": "Fehler"
+          , "UpdateErrorText": "Es konnte keine Verbindung mit dem Updateserver hergestellt werden. Bitte später erneut versuchen"
+          , "UpdateAvailableText": "Es ist ein Update auf die Version {} verfügbar`nInstallierte Version {}`n`nNeue Version herunterladen?"
+          , "UpdateNoUpdateTitle": "Kein Update verfügbar"
+          , "UpdateNoUpdateText": "Es ist bereits die neueste Version installiert: {}"
+          , "UpdateAvailableTitle": "Update verfügbar"
 
           ; Gui
           , "Title": "Stronghold - Einstellungen v{}"

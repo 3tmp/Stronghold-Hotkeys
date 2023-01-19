@@ -13,6 +13,8 @@
         this._iniPath := iniPath
     }
 
+    ; Calls out to a web service to get the latest version
+    ; First it sets the new version and then it sets the last checked date
     CheckForUpdates()
     {
         currentVersion := Stronghold_Version()
@@ -42,17 +44,15 @@
 
             latestVersion := webResult.tag_name.StartsWith("v") ? webResult.tag_name.SubStr(2) : webResult.tag_name
 
-            this._settingsModel.General.LastCheckedForUpdate := A_NowUTC
             this._settingsModel.General.LatestVersion := latestVersion
         }
         Else
         {
             SettingsController._logger.Debug("Checking for updates failed.")
 
-            ; TODO better error state
-            this._settingsModel.General.LastCheckedForUpdate := "1970"
             this._settingsModel.General.LatestVersion := ""
         }
+        this._settingsModel.General.LastCheckedForUpdate := A_NowUTC
         this.SaveToFile()
     }
 

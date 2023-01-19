@@ -1,5 +1,11 @@
 ﻿; Wrapper functions for some AutoHotkey commands
 
+ControlSetText(ByRef Control := "", ByRef NewText := "", ByRef WinTitle := "", ByRef WinText := "", ByRef ExcludeTitle := "", ByRef ExcludeText := "")
+{
+    ControlSetText, %Control%, %NewText%, %WinTitle%, %WinText%, %ExcludeTitle%, %ExcludeText%
+    Return ErrorLevel
+}
+
 DetectHiddenWindows(ByRef OnOff)
 {
     prev := A_DetectHiddenWindows

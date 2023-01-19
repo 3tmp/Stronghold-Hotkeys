@@ -1,8 +1,6 @@
 ﻿class UpdatesChecker extends _Object
 {
     static _logger := LoggerFactory.GetLogger(UpdatesChecker)
-         ; Check every hour
-         , _periodicCheckerTime := 1000 * 60 * 60
 
     __New(controller, model)
     {
@@ -17,11 +15,11 @@
 
         this._settingsController := controller
         this._settingsModel := model
-        this._eventSettings := new PropertyChangeListener(OBM(this, "_onPropChangeEventSettings"))
+        ; Only get the "General" event, don't care for the other events
+        this._eventSettings := new PropertyChangeListener(OBM(this, "_onPropChangeEventSettings"), SettingsModel.Events.General)
         this._settingsModel.AddPropertyChangeListener(this._eventSettings)
 
         this._oneTimeCheckerTimer := ""
-        this._checkerTimer := ""
 
         this._initUpdatesCheck()
     }
@@ -32,8 +30,6 @@
         this._eventSettings := ""
         this._settingsModel := ""
         this._settingsController := ""
-        ; Dispose the timer
-        this._checkerTimer := ""
     }
 
     ; Gets only called from the ctor and sets the object up
@@ -41,35 +37,16 @@
     {
         frequency := this._settingsModel.General.CheckForUpdatesFrequency
 
-        ; startup
+        If (frequency == ECheckForUpdatesFrequency.never)
+        {
+            ; Don't do anything
+            Return
+        }
         If (frequency == ECheckForUpdatesFrequency.startup)
         {
             ; Give the app some time to finish booting before checking for updates once
             this._checkInNewThread()
         }
-        ; never
-        Else If (frequency == ECheckForUpdatesFrequency.never)
-        {
-            ; Don't do anything
-        }
-        ; day, week or month
-        Else
-        {
-            ; Start continously checking for updates
-            this._startPeriodicChecker()
-        }
-    }
-
-    ; Sets up the periodic checker
-    _startPeriodicChecker()
-    {
-        ; Get the last checked time and compare with now (before setting the timer).
-        If (this._shouldCheckForUpdates())
-        {
-            this._checkInNewThread()
-        }
-        ; Now start the timer and check again later
-        this._checkerTimer := RecurrenceTimer.StartNew(OBM(this, "_periodicCheck"), UpdatesChecker._periodicCheckerTime)
     }
 
     ; Starts a timer that triggers in one second and calls the webservice
@@ -81,54 +58,28 @@
     ; Makes the controller call the webservice to check for any updates
     _checkForUpdates()
     {
+        ; Release the timer
+        this._oneTimeCheckerTimer := ""
+
         UpdatesChecker._logger.Debug("Checking for updates...")
         ; Don't make calls to the webservise if in dev mode
-        If (!IsDebuggerAttatched())
+        If (IsDebuggerAttatched())
+        {
+            UpdatesChecker._logger.Debug("App is in dev mode, do not call out to the webservice.")
+        }
+        Else
         {
             this._settingsController.CheckForUpdates()
         }
         UpdatesChecker._logger.Debug("Checking for updates done.")
     }
 
-    ; Gets called by the timer (if checker frequency is "day", "week" "month")
-    ; If the time is bigger than the update frequency, check for updates
-    _periodicCheck()
-    {
-        UpdatesChecker._logger.Trace("Periodic checking for updates...")
-
-        If (this._shouldCheckForUpdates())
-        {
-            this._checkForUpdates()
-        }
-    }
-
-    ; Determines if this should check for updates
-    _shouldCheckForUpdates()
-    {
-        static secondsPerDay := 60 * 60 * 24
-             , secondsPerWeek := 60 * 60 * 24 * 7
-             , secondsPerMonth := 60 * 60 * 24 * 31
-
-        frequency := this._settingsModel.General.CheckForUpdatesFrequency
-        lastChecked := this._settingsModel.General.LastCheckedForUpdate
-
-        toAdd := frequency == ECheckForUpdatesFrequency.day ? secondsPerDay
-               : frequency == ECheckForUpdatesFrequency.week ? secondsPerWeek
-               : frequency == ECheckForUpdatesFrequency.month ? secondsPerMonth
-               : -1
-
-        Return toAdd == -1 ? false : this._isAfter(this._addSeconds(lastChecked, toAdd), A_Now)
-    }
-
     ; SettingsModel events
 
     _onPropChangeEventSettings(event)
     {
-        Switch event.Name
-        {
-            Case SettingsModel.Events.General:
-                this._handleGeneral(event.OldValue, event.NewValue)
-        }
+        ; Can only be the General event as we are only listening out for this event
+        this._handleGeneral(event.OldValue, event.NewValue)
     }
 
     ; before, after instance of GeneralModel
@@ -154,59 +105,72 @@
     {
         UpdatesChecker._logger.Trace("GeneralModel.CheckForUpdatesFrequency changed. New value: " newValue)
 
-        ; Stop any timer (in case one exists)
-        this._checkerTimer := ""
-
-        ; If frequency is "day", "week", "month", start the periodic timer
+        ; If frequency is "day", "week", "month"
         If (newValue == ECheckForUpdatesFrequency.day || newValue == ECheckForUpdatesFrequency.week || ECheckForUpdatesFrequency.month)
         {
-            this._startPeriodicChecker()
+            UpdatesChecker._logger.Warn("Unsupported value: " newValue)
         }
     }
 
     _handleLastCheckedForUpdatesChanged(newValue)
     {
         UpdatesChecker._logger.Trace("GeneralModel.LastCheckedForUpdate changed. New value: " newValue)
+
+        l := GetLanguage()
+        latestVersion := this._settingsModel.General.LatestVersion
+
+        ; TODO localization
+        If (latestVersion == "")
+        {
+            UpdatesChecker._logger.Debug("The updates checking failed.")
+            MsgBox(l.UpdateErrorTitle, l.UpdateErrorText)
+        }
+        Else If (Stronghold_Version() == latestVersion)
+        {
+            UpdatesChecker._logger.Debug("Latest version is already installed: " Stronghold_Version())
+            MsgBox(l.UpdateNoUpdateTitle, Format(l.UpdateNoUpdateText, Stronghold_Version()))
+        }
+        Else If (VerCompare(Stronghold_Version(), "<" latestVersion))
+        {
+            UpdatesChecker._logger.Debug("Update is available: " newValue " (currently installed: " Stronghold_Version() ")")
+            this._promptDownload(latestVersion)
+        }
+        Else
+        {
+            UpdatesChecker._logger.Debug("Latest version is lower than the installed one. Installed: " Stronghold_Version() ", latest: " latestVersion)
+            MsgBox(l.UpdateNoUpdateTitle, Format(l.UpdateNoUpdateText, Stronghold_Version()))
+        }
     }
 
     _handleLatestVersionChanged(newValue)
     {
         UpdatesChecker._logger.Trace("GeneralModel.LatestVersion changed. New value: " newValue)
+    }
 
-        ; TODO localization
-        If (newValue == "")
+    _promptDownload(newVersion)
+    {
+        l := GetLanguage()
+
+        OnMessage(0x44, OBM(this, "_onMsgBox"))
+        choise := MsgBox(1, l.UpdateAvailableTitle, Format(l.UpdateAvailableText, newVersion, Stronghold_Version()))
+        OnMessage(0x44, fn, 0)
+
+        ; User clicked on the "Download" button
+        If (choise == "Ok")
         {
-            UpdatesChecker._logger.Debug("The updates checking failed.")
-            MsgBox("Error", "Could not connect to the web server, please try again later")
-        }
-        Else If (Stronghold_Version() == newValue)
-        {
-            UpdatesChecker._logger.Debug("Latest version is already installed: " Stronghold_Version())
-            MsgBox("No updates", "You are using the latest version: " Stronghold_Version())
-        }
-        Else
-        {
-            UpdatesChecker._logger.Debug("Update is available: " newValue " (currently installed: " Stronghold_Version() ")")
-            MsgBox("Update available", "There is an update available for version " newValue "`nYou have " Stronghold_Version())
+            Run(StrongholdHotkeysLatestRelease())
         }
     }
 
-    ; Returns a positive integer if the first one is later, 0 if same and a negative integer if the second one is later
-    _compareTimeStamps(ts1, ts2)
+    _onMsgBox()
     {
-        Return ts1 > ts2 ? 1 : ts1 < ts2 ? -1 : 0
-    }
-
-    ; Returns true if the second one is after the first one, false otherwise
-    _isAfter(ts1, ts2)
-    {
-        Return 0 > this._compareTimeStamps(ts1, ts2)
-    }
-
-    ; Adds the given amount of seconds to the timeString and returns the new timeString
-    _addSeconds(ts, sec)
-    {
-        ts += sec, Seconds
-        Return ts
+        dhw := DetectHiddenWindows("On")
+        If (WinExist("ahk_class #32770 ahk_pid " WinApi_GetCurrentProcessId()))
+        {
+            l := GetLanguage()
+            ControlSetText("Button1", l.UpdateDownload)
+            ControlSetText("Button2", l.UpdateOk)
+        }
+        DetectHiddenWindows(dhw)
     }
 }
