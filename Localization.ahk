@@ -48,12 +48,12 @@ _language_en()
           ; General
           , "G_Desc": "Welcome to the Stronghold Hotkeys. This app allows you to simplify many tideous tasks in Stronghold."
             ; TODO
-          , "G_ToggleDesc": "This is the toggle key description"
+          , "G_ToggleDesc": "Toggle Key`nFor tasks like map navigation or key replacing, this program intercepts the keyboard key presses and prevents Stronghold from reading them. This is usually not a problem, because these keys are rarely used. The only reason where one really wants Stronghold to process the keys are when saving a game. (Or typing any other text)`nThe Toggle key acts as a fast solution as it allows to instantly stop (and start later on) the functions of this program and restore the default Stronghold logic."
           , "G_UpdatesDesc": "When should this app search online for an update?"
           , "G_UpdatesFrequency": ["On app startup", "Daily", "Weekly", "Monthly", "Never"]
           , "G_UpdateNow": "Check for updates now"
           ; Autoclicker
-          , "AC_Desc": "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`nThis option takes effect in Stronghold and Crusader"
+          , "AC_Desc": "This option enables to press and hold down the selected mouse button to send numerous left mouse clicks to the game.`nThis option takes effect in Stronghold and Crusader."
           , "AC_Enable": "Enable Autoclicker"
           , "AC_Text": "Send clicks as long as the following key gets pressed down"
           , "AC_Keys": ["Middle mouse button", "Side mouse button 1", "Side mouse button 2"]
@@ -63,7 +63,7 @@ _language_en()
           , "MN_Text1": "Enable only when"
           , "MN_Text2": "is the active game"
           ; Replace keys
-          , "RK_Desc": "Set custom keys for commands in Stronghold, e.g. change game speed or open building menus.`nUse the <a id=""go-to-toggle-page"">toggle key</a> to fast enable/disable this option."
+          , "RK_Desc": "Set custom keys for commands in Stronghold, e.g. change game speed or open building menus.`nThis option intercepts the key presses, therefore it also disables the keys when typing any text (e.g. when saving the game).`nUse the <a id=""go-to-toggle-page"">toggle key</a> to fast enable/disable this option."
           , "RK_Enable": "Enable Replace keys"
           , "RK_Text1": "Enable only when"
           , "RK_Text2": "is the active game"
@@ -120,12 +120,12 @@ _language_de()
           ; General
           , "G_Desc": "Willkommen bei den Stronghold Hotkeys. Diese App vereinfacht viele mühsame Aufgaben in Stronghold."
           ; TODO
-          , "G_ToggleDesc": "Das ist die Toggle Tasten Beschreibung"
+          , "G_ToggleDesc": "Toggle Taste`nUm Aufgaben wie Kartennavigation oder Tasten tauschen ausführen zu können, konsumiert dieses Programm die Tastenanschläge, bevor diese von Stronghold verarbeitet werden können. Normalerweise ist das kein Problem, da diese Tasten in Stronghold nicht verwendet werden. Der einzige Einsatzzweck für diese Tasten sind das Speichern des Spieles. (Oder wenn allgemein Text geschrieben wird)`nDie Toggle Taste stellt eine schnelle Lösung für dieses Problem bereit, da sie einen schnellen Wechsel der Modi (ein/aus) erlaubt. Wenn sie ausgeschaltet ist, dann funktioniert alles wie immer in Stronghold."
           , "G_UpdatesDesc": "Wann soll die App online nach Updates suchen?"
           , "G_UpdatesFrequency": ["Beim Start", "Täglich", "Wöchentlich", "Monatlich", "Nie"]
           , "G_UpdateNow": "Jetzt nach Updates suchen"
           ; Autoclicker
-          , "AC_Desc": "Mit Hilfe dieser Option können beliebig viele Linksklicks an das Spiel gesendet werden während die gewählte Maustaste gedrückt wird.`nDiese Option wirkt sich auf Stronghold und Crusader aus"
+          , "AC_Desc": "Mit Hilfe dieser Option werden dauerhaft Linksklicks an das Spiel gesendet, solange die gewählte Maustaste gedrückt wird.`nDiese Option wirkt sich auf Stronghold und Crusader aus."
           , "AC_Enable": "Autoclicker aktivieren"
           , "AC_Text": "Führe Linksklicks aus so lange wie die folgende Maustaste gedrückt wird"
           , "AC_Keys": ["Mittlere Maustaste", "Seitliche Maustaste 1", "Seitliche Maustaste 2"]
@@ -135,7 +135,7 @@ _language_de()
           , "MN_Text1": "Nur aktivieren, wenn"
           , "MN_Text2": "das aktive Spiel ist"
           ; Replace keys
-          , "RK_Desc": "Vergebe eigene Tasten für Befehle in Stronghold, wie z.B. Spielgeschwindigkeit ändern oder Gebäudemenüs öffnen.`nVerwende die <a id=""go-to-toggle-page"">Toggle Taste</a> um diese Einstellung schnell und temporär zu ändern."
+          , "RK_Desc": "Vergebe eigene Tasten für Befehle in Stronghold, wie z.B. Spielgeschwindigkeit ändern oder Gebäudemenüs öffnen.`nDa diese Option die gedrückten Tasten konsumiert, kann mit diesen Tasten kein Text geschrieben werden (z.B. um das Spiel zu speichern)`nVerwende die <a id=""go-to-toggle-page"">Toggle Taste</a> um diese Einstellung schnell und temporär zu ändern."
           , "RK_Enable": "Tasten tauschen aktivieren"
           , "RK_Text1": "Nur aktivieren, wenn"
           , "RK_Text2": "das aktive Spiel ist"

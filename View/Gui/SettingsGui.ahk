@@ -66,12 +66,12 @@
 
         this.AddText("w" this._maxTextWidth, l.G_Desc)
         this.AddText()
-        this.AddText(, l.G_ToggleDesc)
+        this.AddText("w" this._maxTextWidth, l.G_ToggleDesc)
         index := EToggleKeys.Values().IndexOf(this._settingsModel.General.ToggleKey)
         this._ctrlG_ToggleKeyDropDown := this.AddDropDownList("Choose" index, EToggleKeys.Values()).OnSelectionChange(OBM(this, "_onG_ToggleKeyDropDownChange"))
 
         this.AddText()
-        this.AddText(, l.G_UpdatesDesc)
+        this.AddText("w" this._maxTextWidth, l.G_UpdatesDesc)
         ; Currently only support checking for updates on startup or never
         ddlValues := this._getSupportedUpdatesFrequenciesLocalized()
         this._ctrlG_updatesDropDown := this.AddDropDownList(, ddlValues).OnSelectionChange(OBM(this, "_onG_updatesDropDown"))
