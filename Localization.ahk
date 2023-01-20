@@ -47,7 +47,6 @@ _language_en()
           , "GameGroups": ["Stronghold", "Crusader", "Stronghold or Crusader"]
           ; General
           , "G_Desc": "Welcome to the Stronghold Hotkeys. This app allows you to simplify many tideous tasks in Stronghold."
-            ; TODO
           , "G_ToggleDesc": "Toggle Key`nFor tasks like map navigation or key replacing, this program intercepts the keyboard key presses and prevents Stronghold from reading them. This is usually not a problem, because these keys are rarely used. The only reason where one really wants Stronghold to process the keys are when saving a game. (Or typing any other text)`nThe Toggle key acts as a fast solution as it allows to instantly stop (and start later on) the functions of this program and restore the default Stronghold logic."
           , "G_UpdatesDesc": "When should this app search online for an update?"
           , "G_UpdatesFrequency": ["On app startup", "Daily", "Weekly", "Monthly", "Never"]
@@ -119,7 +118,6 @@ _language_de()
           , "GameGroups": ["Stronghold", "Crusader", "Stronghold oder Crusader"]
           ; General
           , "G_Desc": "Willkommen bei den Stronghold Hotkeys. Diese App vereinfacht viele mühsame Aufgaben in Stronghold."
-          ; TODO
           , "G_ToggleDesc": "Toggle Taste`nUm Aufgaben wie Kartennavigation oder Tasten tauschen ausführen zu können, konsumiert dieses Programm die Tastenanschläge, bevor diese von Stronghold verarbeitet werden können. Normalerweise ist das kein Problem, da diese Tasten in Stronghold nicht verwendet werden. Der einzige Einsatzzweck für diese Tasten sind das Speichern des Spieles. (Oder wenn allgemein Text geschrieben wird)`nDie Toggle Taste stellt eine schnelle Lösung für dieses Problem bereit, da sie einen schnellen Wechsel der Modi (ein/aus) erlaubt. Wenn sie ausgeschaltet ist, dann funktioniert alles wie immer in Stronghold."
           , "G_UpdatesDesc": "Wann soll die App online nach Updates suchen?"
           , "G_UpdatesFrequency": ["Beim Start", "Täglich", "Wöchentlich", "Monatlich", "Nie"]

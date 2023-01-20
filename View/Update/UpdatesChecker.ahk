@@ -119,7 +119,6 @@
         l := GetLanguage()
         latestVersion := this._settingsModel.General.LatestVersion
 
-        ; TODO localization
         If (latestVersion == "")
         {
             UpdatesChecker._logger.Debug("The updates checking failed.")

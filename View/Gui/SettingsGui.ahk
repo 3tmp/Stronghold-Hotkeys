@@ -764,8 +764,6 @@
             this._setUpdatesFrequencyFromEnum(after.CheckForUpdatesFrequency)
         }
 
-        ; TODO subscribe to the Updates events in case someone clicks the update button and waits for any feedback
-
         ; Don't care for LastCheckedForUpdate and LatestVersion
     }
 }
