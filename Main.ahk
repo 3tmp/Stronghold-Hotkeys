@@ -93,7 +93,7 @@ SetWorkingDir, % A_ScriptDir
 
 Stronghold_Version()
 {
-    Return "2.0.0_alpha"
+    Return "2.0.0"
 }
 
 app := new Application()
