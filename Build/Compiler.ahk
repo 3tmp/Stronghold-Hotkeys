@@ -7,10 +7,12 @@ global resultFileExe := "Stronghold.exe"
 global buildMinimal := true
 global resultFileExeMinimal := "Stronghold_minimal.exe"
 
+global mainFileName := "Main.ahk"
+global mainMinimalName := "Minimal_Autoclicker.ahk"
 global mainPath := GetFullPathName(A_ScriptDir "\..\")
 SetWorkingDir, % mainPath
 
-If (!FileExist("Stronghold.ahk"))
+If (!FileExist(mainFileName))
 {
     MsgBox,, Error, The Main file does not exist
     ExitApp
@@ -18,7 +20,7 @@ If (!FileExist("Stronghold.ahk"))
 
 output := ""
 
-For each, line in FileToLineArray(FileRead("Stronghold.ahk"))
+For each, line in FileToLineArray(FileRead(mainFileName))
 {
     line := removeIndent ? Trim(line) : line
 
@@ -49,7 +51,7 @@ If (FileExist("Build\" resultFileExe))
 {
     FileDelete("Build\" resultFileExe)
 }
-CompileWithAhk2Exe("Stronghold.ahk", resultFileExe)
+CompileWithAhk2Exe("Build\" resultFileAhk, resultFileExe)
 
 If (buildMinimal)
 {
@@ -57,7 +59,7 @@ If (buildMinimal)
     {
         FileDelete("Build\" resultFileExeMinimal)
     }
-    CompileWithAhk2Exe("Minimal_Autoclicker.ahk", resultFileExeMinimal)
+    CompileWithAhk2Exe(mainMinimalName, resultFileExeMinimal)
 }
 
 Msgbox,, Finish, Compiling the files finished
@@ -114,10 +116,11 @@ FileToLineArray(file)
 }
 
 ; Retrieves the full path and file name of the specified file.
-GetFullPathName(fileName, longName := 0)
+GetFullPathName(fileName)
 {
-    ; 522 is 260 (MAX_PATH) plus null termination character and Unicode
-    size := (VarSetCapacity(lpFilePath, longName ? longName * 2 : 522) // 2) - 1
-    res := DllCall("Kernel32.dll\GetFullPathName", "Str", fileName, "UInt", size, "Str", lpFilePath, "Int", 0)
-    Return res ? lpFilePath : ""
+    static MAX_PATH := 260
+    ; +1 for the null terminating character
+    VarSetCapacity(lpFilePath, (MAX_PATH + 1) * 2)
+    res := DllCall("Kernel32.dll\GetFullPathName", "Str", fileName, "UInt", MAX_PATH, "Str", lpFilePath, "Int", 0)
+    Return lpFilePath
 }
