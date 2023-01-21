@@ -1,7 +1,7 @@
 ﻿; A wrapper class for SetTimer
 class RecurrenceTimer extends _Object
 {
-    __New(callback, time := "On", once := false, priority := "")
+    __New(callback, time := 250, once := false, priority := "")
     {
         If (!TypeOf(callback, "Func"))
         {
@@ -32,7 +32,7 @@ class RecurrenceTimer extends _Object
     }
 
     ; Creates a new timer and directly starts it
-    StartNew(callback, time := "On", once := false, priority := "")
+    StartNew(callback, time := 250, once := false, priority := "")
     {
         result := new RecurrenceTimer(callback, time, once, priority)
         result.Start()
