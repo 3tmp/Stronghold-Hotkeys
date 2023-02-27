@@ -2,7 +2,7 @@
 class GuiBase_ControlEventHandler extends BaseEvent
 {
     ; Fires the event and calls each listener
-    ; @param eventArgs A GuiBase.EventArgs object
+    ; @param eventArgs A GuiBase_EventArgs object
     Fire(eventArgs)
     {
         For each, listener in this._listeners

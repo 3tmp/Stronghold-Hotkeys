@@ -88,9 +88,9 @@
     }
 
     ; Edit the guis options
-    Options(Options)
+    Options(options)
     {
-        Gui, % this._hwnd ":" Options
+        Gui, % this._hwnd ":" options
     }
 
     ; Returns the control with the specified hwnd
@@ -103,28 +103,19 @@
     ; Make the gui the default gui
     SetDefault()
     {
-        If (A_DefaultGui != this._hwnd)
-        {
-            Gui, % this._hwnd ":Default"
-        }
+        Gui, % this._hwnd ":Default"
     }
 
     ; Set the guis default ListView
     SetDefaultListView(listView)
     {
-        If (A_DefaultListView != listView.Hwnd)
-        {
-            Gui, % this._hwnd ":ListView", % listView.Hwnd
-        }
+        Gui, % this._hwnd ":ListView", % listView.Hwnd
     }
 
     ; Sets the guis default TreeView
     SetDefaultTreeView(treeView)
     {
-        If (A_DefaultTreeView != treeView.Hwnd)
-        {
-            Gui, % this._hwnd ":TreeView", % treeView.Hwnd
-        }
+        Gui, % this._hwnd ":TreeView", % treeView.Hwnd
     }
 
     ; Set the guis default Tab control. Call with no param and the next controls will be outside of any tab control
@@ -277,7 +268,7 @@
     ; Searches all guis for the hwnd and returns the control object if found
     Static_GetControl(hwnd)
     {
-        local
+        local each, gui, ctrl
         For each, gui in GuiBase._instances
         {
             If (ctrl := gui.GetControl(hwnd))
