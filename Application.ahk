@@ -109,7 +109,7 @@
     {
         If (this._settingsGui == "" || this._settingsGui.IsDestroyed)
         {
-            title := Stronghold_Version().Format(GetLanguage().Title)
+            title := Format(GetLanguage().Title, Stronghold_Version())
             this._settingsGui := new SettingsGui(this._settingsController, this._settingsModel, title)
         }
         Return this._settingsGui
