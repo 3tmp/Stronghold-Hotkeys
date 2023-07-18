@@ -1,4 +1,5 @@
-﻿#NoEnv
+﻿#Requires AutoHotkey v1.1.36.0
+#NoEnv
 #Warn
 #KeyHistory, 0
 #SingleInstance, Force
